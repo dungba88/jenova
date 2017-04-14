@@ -14,7 +14,7 @@ class MessageResource(object):
             raise ValueError('msg cannot be empty')
 
         msg_name = msg.get('name')
-        msg_args = msg.get('args', None)
+        msg_args = msg.get('args', dict())
 
         app.APP_INSTANCE.trigger_manager.fire(msg_name, msg_args)
 
