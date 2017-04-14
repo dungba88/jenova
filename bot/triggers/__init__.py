@@ -1,7 +1,7 @@
 """Custom triggers"""
 
-from triggers.commands import sing
+from triggers.commands.sing import SingTrigger
 
 def init_all_triggers(manager):
     """initialize all triggers"""
-    sing.init_trigger(manager)
+    SingTrigger().init_trigger(manager)
