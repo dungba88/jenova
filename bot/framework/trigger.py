@@ -20,7 +20,7 @@ class TriggerManager(object):
 
     def __init__(self):
         self.triggers = list()
-        self.event_hook = {}
+        self.event_hook = dict()
 
     def add_hook(self, name, handler):
         """Register a handler with an event name"""
