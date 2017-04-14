@@ -47,4 +47,5 @@ class Application(object):
 
         logging.info('Trigger registered')
 
+# singleton instance
 APP_INSTANCE = Application()
