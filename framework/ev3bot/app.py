@@ -6,7 +6,7 @@ from os.path import join
 import json
 import falcon
 
-from framework.trigger import TriggerManager
+from ev3bot.trigger import TriggerManager
 
 class Application(object):
     """Main class, control application life-cycle and routing"""
