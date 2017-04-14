@@ -20,7 +20,8 @@ class Application(object):
     def run(self):
         """Run the application"""
         if self.bootstrap is not None:
-            self.bootstrap.app = self
+            app_context = ApplicationContext(self.trigger_manager, self.api)
+            self.bootstrap.app_context = app_context
             self.bootstrap.run()
 
     def get_config(self, name):
@@ -32,6 +33,12 @@ class Application(object):
             if obj is None:
                 break
         return obj
+
+class ApplicationContext(object):
+    """Application context"""
+    def __init__(self, trigger_manager, api):
+        self.trigger_manager = trigger_manager
+        self.api = api
 
 def load_configs():
     """Load all configurations"""

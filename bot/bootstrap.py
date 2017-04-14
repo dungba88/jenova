@@ -22,7 +22,7 @@ class ApplicationBootstrap(object):
 
     def register_error_handlers(self):
         """Register error handlers"""
-        api = self.app.api
+        api = self.app_context.api
         api.add_error_handler(ValueError, error.value_error_handler)
         api.add_error_handler(HTTPError, error.http_error_handler)
 
@@ -30,7 +30,7 @@ class ApplicationBootstrap(object):
         """Register REST routes"""
         logging.info('Registering route')
 
-        api = self.app.api
+        api = self.app_context.api
         api.add_route('/', IndexResource())
         api.add_route('/msg', MessageResource())
 
