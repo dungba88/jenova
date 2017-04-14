@@ -12,7 +12,7 @@ class ApplicationBootstrap(object):
     """Bootstrap class"""
 
     def __init__(self):
-        self.app = None
+        self.app_context = None
 
     def run(self):
         """Run the application"""
@@ -40,6 +40,6 @@ class ApplicationBootstrap(object):
         """Register triggers"""
         logging.info('Registering triggers')
 
-        triggers.init_all_triggers(self.app.trigger_manager)
+        triggers.init_all_triggers(self.app_context.trigger_manager)
 
         logging.info('Trigger registered')
