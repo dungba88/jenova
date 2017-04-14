@@ -20,6 +20,7 @@ class Application(object):
     def run(self):
         """Run the application"""
         if self.bootstrap is not None:
+            self.bootstrap.app = self
             self.bootstrap.run()
 
     def get_config(self, name):
