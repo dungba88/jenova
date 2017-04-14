@@ -3,7 +3,7 @@
 import random
 
 import app
-from framework import tts
+from utils import tts
 
 class SingTrigger(object):
     """Trigger class for singing a song"""
@@ -45,5 +45,5 @@ class VocalSongPlayer(object):
     """API for playing a song vocally"""
     def play(self, song):
         """Play a song by a TTS engine"""
-        tts_engine_name = app.get_config('engine').get('tts_engine')
+        tts_engine_name = app.get_config('engine.tts_engine')
         tts.say(tts_engine_name, song.get('lyrics'))
