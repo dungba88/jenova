@@ -1,7 +1,10 @@
 """Simple REST server"""
 
-from app import APP_INSTANCE
+from app import APP_INSTANCE as app
+from bootstrap import ApplicationBootstrap
+
+app.bootstrap = ApplicationBootstrap()
+app.run()
 
 # export WSGI application
-application = APP_INSTANCE.api
-APP_INSTANCE.run()
+application = app.api

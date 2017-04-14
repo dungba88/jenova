@@ -2,7 +2,7 @@
 
 import random
 
-import app
+from app import APP_INSTANCE as app
 from utils import tts
 
 class SingTrigger(object):

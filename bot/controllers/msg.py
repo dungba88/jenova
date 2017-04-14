@@ -1,7 +1,7 @@
 """Message view"""
 
 from framework import encode
-import app
+from app import APP_INSTANCE as app
 
 class MessageResource(object):
     """Controller for message resource"""
@@ -16,7 +16,7 @@ class MessageResource(object):
         msg_name = msg.get('name')
         msg_args = msg.get('args', dict())
 
-        app.APP_INSTANCE.trigger_manager.fire(msg_name, msg_args)
+        app.trigger_manager.fire(msg_name, msg_args)
 
         result = {
             'status': 0,

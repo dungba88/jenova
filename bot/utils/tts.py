@@ -2,7 +2,7 @@
 
 import logging
 
-import app
+from bootstrap import APP_INSTANCE as app
 
 from framework.tts import PyttsxEngine
 from framework.tts import EV3TTSEngine
