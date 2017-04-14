@@ -1,6 +1,6 @@
 """Message view"""
 
-from framework import encode
+from ev3bot import encode
 from app import APP_INSTANCE as app
 
 class MessageResource(object):

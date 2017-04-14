@@ -4,9 +4,9 @@ import logging
 
 from app import APP_INSTANCE as app
 
-from framework.tts import PyttsxEngine
-from framework.tts import EV3TTSEngine
-from framework.tts import OSXTTSEngine
+from ev3bot.tts import PyttsxEngine
+from ev3bot.tts import EV3TTSEngine
+from ev3bot.tts import OSXTTSEngine
 
 def say(engine_name, texts):
     """Speak texts with a specified engine"""

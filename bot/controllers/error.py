@@ -1,6 +1,6 @@
 """Error handling"""
 
-from framework import encode
+from ev3bot import encode
 
 def value_error_handler(ex, req, resp, params):
     """Error handler for ValueError"""

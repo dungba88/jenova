@@ -1,6 +1,6 @@
 """Application bootstrap"""
 
-from framework.app import Application
+from ev3bot import Application
 
 # singleton instance
 APP_INSTANCE = Application()

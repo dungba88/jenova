@@ -1,6 +1,6 @@
 """Index view"""
 
-from framework import encode
+from ev3bot import encode
 
 class IndexResource(object):
     """Controller for index resource"""
