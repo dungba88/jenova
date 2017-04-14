@@ -1,5 +1,5 @@
 """Package for TTS support"""
 
-from framework.tts.ev3 import EV3TTSEngine
-from framework.tts.python import PyttsxEngine
-from framework.tts.native import OSXTTSEngine
+from ev3bot.tts.ev3 import EV3TTSEngine
+from ev3bot.tts.python import PyttsxEngine
+from ev3bot.tts.native import OSXTTSEngine
