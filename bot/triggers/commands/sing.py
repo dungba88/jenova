@@ -3,9 +3,7 @@
 import random
 
 import app
-from framework.tts import PyttsxEngine
-from framework.tts import EV3TTSEngine
-from framework.tts import OSXTTSEngine
+from framework import tts
 
 class SingTrigger(object):
     """Trigger class for singing a song"""
@@ -48,10 +46,4 @@ class VocalSongPlayer(object):
     def play(self, song):
         """Play a song by a TTS engine"""
         tts_engine_name = app.get_config('engine').get('tts_engine')
-        tts_engines = {
-            'pyttsx': PyttsxEngine(),
-            'ev3': EV3TTSEngine(),
-            'osx': OSXTTSEngine()
-        }
-        engine = tts_engines.get(tts_engine_name)
-        engine.say(song.get('lyrics'))
+        tts.say(tts_engine_name, song.get('lyrics'))
