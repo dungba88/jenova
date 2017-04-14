@@ -1,6 +1,10 @@
 """Main application"""
 
+from os import listdir
+from os.path import join
+
 import logging
+import json
 import falcon
 from falcon import HTTPError
 
@@ -16,6 +20,18 @@ class Application(object):
     def __init__(self):
         self.api = falcon.API()
         self.trigger_manager = TriggerManager()
+        self.configs = self.load_configs()
+        print(self.configs)
+
+    def load_configs(self):
+        """Load all configurations"""
+        config = dict()
+        for name in listdir('configs'):
+            full_path = join('configs', name)
+            name = name.replace('.json', '')
+            with open(full_path) as f:
+                config[name] = json.load(f)
+        return config
 
     def run(self):
         """Run the application"""
@@ -49,3 +65,7 @@ class Application(object):
 
 # singleton instance
 APP_INSTANCE = Application()
+
+def get_config(name):
+    """Get a config by name"""
+    return APP_INSTANCE.configs.get(name, None)
