@@ -1,3 +1,6 @@
 {
-    "tts_engine": "osx"
+    "tts_engine": "osx",
+    "voices": {
+        "osx": "Fred"
+    }
 }

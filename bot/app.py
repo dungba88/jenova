@@ -68,4 +68,10 @@ APP_INSTANCE = Application()
 
 def get_config(name):
     """Get a config by name"""
-    return APP_INSTANCE.configs.get(name, None)
+    config_parts = name.split('.')
+    obj = APP_INSTANCE.configs
+    for part in config_parts:
+        obj = obj.get(part, None)
+        if obj is None:
+            break
+    return obj
