@@ -4,8 +4,11 @@ from os import system
 
 class OSXTTSEngine(object):
     """Wrapper class for OSX native TTS"""
+
+    def __init__(self, voice):
+        self.voice = voice
+
     def say(self, texts):
         """Speak the texts"""
         for text in texts:
-            # speak with Stephen Hawking-like voice :D
-            system('say -v Fred ' + text)
+            system('say -v ' + self.voice + ' ' + text)
