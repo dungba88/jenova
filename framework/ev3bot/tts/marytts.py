@@ -33,7 +33,7 @@ class MaryTTS(object):
         """Download a text from server"""
         query = self.build_query(text)
         http_client = Http()
-        url = "http://%s:%s/process?" % (self.config.host, self.config.port)
+        url = "http://" + self.config.get("host") + ":" + str(self.config.get("port")) + "/process?"
         resp, content = http_client.request(url, "POST", query)
         if resp["content-type"] == "audio/x-wav":
             self.save(text, content)
@@ -54,18 +54,18 @@ class MaryTTS(object):
 
     def get_cache_file(self, text):
         """Get cache file for a specific text"""
-        text_hash = hashlib.md5(text).hexdigest()
+        text_hash = hashlib.md5(text.encode('utf-8')).hexdigest()
         return "cache/sound/mary_" + text_hash + ".WAV"
 
     def build_query(self, text):
         """build a query to MaryTTS server"""
         query_hash = {
             "INPUT_TEXT": text,
-            "INPUT_TYPE": "TEXT", # Input text
-            "LOCALE": self.config.locale,
-            "VOICE": self.config.voice, # Voice informations  (need to be compatible)
+            "INPUT_TYPE": "TEXT",
+            "LOCALE": self.config.get('locale'),
+            "VOICE": self.config.get('voice'),
             "OUTPUT_TYPE": "AUDIO",
-            "AUDIO":"WAVE", # Audio informations (need both)
+            "AUDIO":"WAVE"
         }
 
         return urlencode(query_hash)
