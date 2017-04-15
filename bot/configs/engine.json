@@ -2,5 +2,6 @@
     "tts_engine": "osx",
     "voices": {
         "osx": "Fred"
-    }
+    },
+    "lang": "en"
 }
