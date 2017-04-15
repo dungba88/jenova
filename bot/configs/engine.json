@@ -1,6 +1,6 @@
 {
     "tts": {
-        "engine": "osx",
+        "engine": "mary_tts",
         "osx": {
             "voice": "Fred"
         },
@@ -11,7 +11,8 @@
             "host": "localhost",
             "port": 59125,
             "locale": "en_US",
-            "voice": "cmu-slt-hsmm"
+            "voice": "cmu-rms-hsmm",
+            "development": true
         }
     }
 }

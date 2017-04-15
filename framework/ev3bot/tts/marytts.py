@@ -25,6 +25,8 @@ class MaryTTS(object):
 
     def cache_file_exist(self, text):
         """Check if cache file exists for a specific text"""
+        if self.config.get('development', False):
+            return False
         cache_file_name = self.get_cache_file(text)
         cache_file = Path(cache_file_name)
         return cache_file.is_file()
