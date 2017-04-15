@@ -9,7 +9,7 @@
         },
         "mary_tts": {
             "host": "localhost",
-            "port": 1912,
+            "port": 59125,
             "locale": "en_US",
             "voice": "cmu-slt-hsmm"
         }
