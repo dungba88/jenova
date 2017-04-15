@@ -16,5 +16,5 @@ class SayTrigger(object):
         text = execution_context.event.get('text', None)
 
         if text is not None:
-            tts_engine_name = app.get_config('engine.tts_engine')
-            tts.say(tts_engine_name, [text])
+            tts.say([text])
+            

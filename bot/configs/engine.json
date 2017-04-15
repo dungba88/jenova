@@ -1,7 +1,17 @@
 {
-    "tts_engine": "osx",
-    "voices": {
-        "osx": "Fred"
-    },
-    "lang": "en"
+    "tts": {
+        "engine": "osx",
+        "osx": {
+            "voice": "Fred"
+        },
+        "gTTS": {
+            "lang": "en"
+        },
+        "mary_tts": {
+            "host": "localhost",
+            "port": 1912,
+            "locale": "en_US",
+            "voice": "cmu-slt-hsmm"
+        }
+    }
 }
