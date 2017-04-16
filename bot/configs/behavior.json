@@ -1,6 +1,6 @@
 {
     "stop": {
-        "pause_time": 0.5,
-        "reacts": ["um...ok", "Fine. I will stop", "ok ok"]
+        "pause_time": 1,
+        "reacts": ["um...ok", "Fine. I will stop", "ok ok", "I won't disturb you", "I will leave you alone"]
     }
 }
