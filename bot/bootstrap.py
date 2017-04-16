@@ -1,7 +1,6 @@
 """Application bootstrap"""
 
 import logging
-from falcon import HTTPError
 
 from controllers import error
 from controllers import IndexResource
@@ -23,9 +22,7 @@ class ApplicationBootstrap(object):
     def register_error_handlers(self):
         """Register error handlers"""
         api = self.app_context.api
-        api.add_error_handler(ValueError, error.value_error_handler)
-        api.add_error_handler(HTTPError, error.http_error_handler)
-        api.add_error_handler(BaseException, error.base_error_handler)
+        api.add_error_handler(BaseException, error.default_error_handler)
 
     def register_routes(self):
         """Register REST routes"""
