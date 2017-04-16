@@ -8,7 +8,9 @@ The following packages need to be installed via `pip`
 - **gunicorn**: lightweight WSGI HTTP Server
 - **Falcon**: super fast RESTful framework
 - **ev3dev**: library for Lego EV3
+- **pygame**: for audio playback
 - **pyttsx**: cross-platform TTS engine
+- **gTTS**: wrapper for Google Translate TTS
 - **mary-tts**: web server for TTS
 
 Python3 is required to run the application
@@ -16,17 +18,24 @@ Python3 is required to run the application
 ## installation
 
 1. Install the dependencies
+
+It depends on the operating system you are using, here are the example for Ubuntu 17.04
+
 ```bash
 sudo apt-get install python3
 sudo apt-get install python3-pip
 sudo pip3 install gunicorn
 sudo pip3 install Falcon
 sudo pip3 install ev3dev
+sudo pip3 install pygame
 sudo pip3 install pyttsx
+sudo pip3 install gTTS
 ```
 
 If you want to use `mary-tts` as TTS engine, it must be installed separately:
 https://github.com/marytts/marytts/wiki/Local-MaryTTS-Server-Installation
+
+*(Note that there are some problem with installing and running `pyttsx` with Python3. Checkout [this fork of pyttsx](https://github.com/Julian-O/pyttsx) instead)*
 
 2. Checkout the source code and install the framework
 ```bash
@@ -43,5 +52,14 @@ gunicorn main -b 0.0.0.0:8080 --reload
 
 Now the bot can be accessed from http://localhost:8080. If you install it to your Lego EV3, then change the url to your
 Lego EV3 IP address.
+
+4. Optionally configure the engine and voice
+
+Take a look at the file `bot/configs/engine.json`. Currently the following TTS engine are supported:
+- `pyttsx`: cross-platform
+- `osx`: only for MacOS via `say` command
+- `gTTS`: wrapper for Google Translate TTS. very limited support
+- `ev3dev`: wrapper for `espeak` in Linux. does not support voice change, but you can modify it to change the voice
+- `mary-tts`: client for MaryTTS. can support a wide range of voices. it supports caching of audio files for faster performance
 
 *to be continued*
