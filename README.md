@@ -41,7 +41,7 @@ https://github.com/marytts/marytts/wiki/Local-MaryTTS-Server-Installation
 ```bash
 git clone https://github.com/dungba88/ev3.git
 cd ev3
-sudo pip3 install framework
+sudo pip3 install framework/
 ```
 
 3. Run the bot
