@@ -1,5 +1,7 @@
 """Trigger framework"""
 
+from ev3bot import audio
+
 class TriggerExecutionContext(object):
     """The context a trigger can access whenever executed"""
 
@@ -32,9 +34,14 @@ class TriggerManager(object):
     def fire(self, name, event=None):
         """Fire the event, calling all handlers registered with the event"""
         if name not in self.event_hook:
-            return
+            raise ValueError("Event. " + name + ". not registered")
+        
+        self.stop_all_actions()
         for handler in self.event_hook[name]:
             handler(name, event)
+
+    def stop_all_actions(self):
+        audio.stop()
 
     @classmethod
     def create_trigger(cls, action):
