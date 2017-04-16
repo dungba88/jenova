@@ -11,12 +11,7 @@ class SingTrigger(object):
     def __init__(self):
         self.songs = app.get_config('songs')
 
-    def init_trigger(self, manager):
-        """create and register the trigger"""
-        trigger = manager.create_trigger(self.sing_a_song)
-        manager.register_trigger('sing', trigger)
-
-    def sing_a_song(self, execution_context):
+    def run(self, execution_context):
         """run the action"""
         song_id = execution_context.event.get('song_id', None)
         song = self.find_song(song_id)
