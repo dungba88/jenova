@@ -1,4 +1,7 @@
 {
+    "greetings": {
+        "reacts": ["Hello {name}", "Hi", "Yes, {name}", "Ok. I am here", "I am here {name}"]
+    },
     "stop": {
         "pause_time": 1,
         "reacts": ["um...ok", "Fine. I will stop", "ok ok", "I won't disturb you", "I will leave you alone"]
