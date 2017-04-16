@@ -5,36 +5,32 @@ import random
 from app import APP_INSTANCE as app
 from utils import tts
 
-class SingTrigger(object):
-    """Trigger class for singing a song"""
+def run(execution_context):
+    """run the action"""
+    song_id = execution_context.event.get('song_id', None)
+    song = find_song(song_id)
 
-    def __init__(self):
-        self.songs = app.get_config('songs')
+    if song is not None:
+        sing_the_song(song)
 
-    def run(self, execution_context):
-        """run the action"""
-        song_id = execution_context.event.get('song_id', None)
-        song = self.find_song(song_id)
+def find_song(song_id):
+    """Find a song by id, or pick a random song if song_id is None"""
+    songs = app.get_config('songs')
 
-        if song is not None:
-            self.sing_the_song(song)
+    if song_id is None:
+        num_song = len(songs)
+        rand_song_idx = random.randint(0, num_song - 1)
+        return songs[rand_song_idx]
+    else:
+        return next(filter(lambda s: s.id == song_id, songs), None)
 
-    def find_song(self, song_id):
-        """Find a song by id, or pick a random song if song_id is None"""
-        if song_id is None:
-            num_song = len(self.songs)
-            rand_song_idx = random.randint(0, num_song - 1)
-            return self.songs[rand_song_idx]
-        else:
-            return next(filter(lambda s: s.id == song_id, self.songs), None)
-
-    def sing_the_song(self, song):
-        """Sing a specified song"""
-        song_type = song.get('type')
-        song_players = {
-            'vocal': VocalSongPlayer()
-        }
-        song_players.get(song_type).play(song)
+def sing_the_song(song):
+    """Sing a specified song"""
+    song_type = song.get('type')
+    song_players = {
+        'vocal': VocalSongPlayer()
+    }
+    song_players.get(song_type).play(song)
 
 class VocalSongPlayer(object):
     """API for playing a song vocally"""

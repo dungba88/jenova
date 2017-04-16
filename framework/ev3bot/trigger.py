@@ -14,6 +14,7 @@ class Trigger(object):
     def __init__(self):
         self.condition = None
         self.action = None
+        self.stop_action = None
 
 class TriggerManager(object):
     """Manage all triggers"""
