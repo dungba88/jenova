@@ -10,8 +10,8 @@
         "mary_tts": {
             "host": "localhost",
             "port": 59125,
-            "locale": "en_US",
-            "voice": "cmu-rms-hsmm",
+            "locale": "en_GB",
+            "voice": "dfki-prudence",
             "development": true
         }
     }
