@@ -7,9 +7,17 @@
         "reacts": ["um...ok", "Fine. I will stop", "ok ok", "I won't disturb you", "I will leave you alone"]
     },
     "story": {
-        "opening": ["Ok. Here goes one", "How's about this stories", "I got one", "Listen, {name}"],
+        "opening": ["Ok. Here goes one", "How's about this stories", "I got one", "Listen {name}"],
         "no_story": ["Sorry {name}, but I don't know any story"],
         "pause_time": 1,
-        "stories": []
+        "stories": [{
+            "name": "Science Joke - OK",
+            "file": "science_joke_ok.txt",
+            "tags": ["joke"]
+        }, {
+            "name": "Science Joke - Half full glass or half empty glass",
+            "file": "science_joke_glass.txt",
+            "tags": ["joke"]
+        }]
     }
 }
