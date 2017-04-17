@@ -7,6 +7,7 @@ from utils import tts
 import traceback
 
 def distress_call(ex):
+    """Broadcast a distress call"""
     tts.say(["Alert! " + str(ex) + ". Please check urgently!"])
 
 def default_error_handler(ex, req, resp, params):
