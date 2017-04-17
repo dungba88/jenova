@@ -17,6 +17,11 @@ def run(execution_context):
     no_story = app.get_config('behavior.story.no_story')
     pause_time = app.get_config('behavior.story.pause_time')
     stories = app.get_config('behavior.story.stories')
+    tag = execution_context.event.get('tag', None)
+
+    if tag is not None:
+        # filter stories based on tags
+        stories = list(filter(lambda story: tag in story.get('tags'), stories))
 
     if len(stories) == 0:
         tts.say_random(no_story)
@@ -30,7 +35,7 @@ def run(execution_context):
         return
 
     story = stories[random.randint(0, len(stories) - 1)]
-    with open('cache/stories/' + story) as data_file:
+    with open('cache/stories/' + story.get('file')) as data_file:
         text = data_file.read()
         read_long_text(text)
 
