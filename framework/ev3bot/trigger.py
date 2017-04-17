@@ -31,7 +31,7 @@ class TriggerManager(object):
         self.event_hook = dict()
         self.executor = ThreadPoolExecutor(max_workers=1)
         self.current_trigger = None
-
+ 
     def add_hook(self, name, handler):
         """Register a handler with an event name"""
         if name not in self.event_hook:
@@ -86,3 +86,10 @@ class TriggerManager(object):
             trigger.action(execution_context)
         except Exception as e:
             logging.getLogger(__name__).error(e)
+
+def register_trigger(manager, event_name, action, stop_action=None, condition=None):
+    """create and register the trigger"""
+    trigger = manager.create_trigger(action)
+    trigger.condition = condition
+    trigger.stop_action = stop_action
+    manager.register_trigger(event_name, trigger)
