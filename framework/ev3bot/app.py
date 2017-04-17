@@ -19,8 +19,9 @@ class Application(object):
 
     def run(self):
         """Run the application"""
+        app_context = ApplicationContext(trigger_manager=self.trigger_manager,
+                                         api=self.api)
         if self.bootstrap is not None:
-            app_context = ApplicationContext(self.trigger_manager, self.api)
             self.bootstrap.app_context = app_context
             self.bootstrap.run()
 
@@ -43,7 +44,8 @@ class ApplicationContext(object):
 def load_configs():
     """Load all configurations"""
     config = dict()
-    for name in listdir('configs'):
+    files = filter(lambda file: ".json" in file, listdir('configs'))
+    for name in files:
         full_path = join('configs', name)
         name = name.replace('.json', '')
         with open(full_path) as data_file:
