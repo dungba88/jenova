@@ -2,6 +2,7 @@
 
 import time
 import random
+import logging
 from concurrent.futures import ThreadPoolExecutor
 
 from ev3bot import audio
@@ -77,8 +78,11 @@ class TriggerManager(object):
         self.current_trigger = trigger
         execution_context = TriggerExecutionContext(event, name, trigger)
 
-        if trigger.condition is not None:
-            if not trigger.condition.satisfied_by(execution_context):
-                return
+        try:
+            if trigger.condition is not None:
+                if not trigger.condition.satisfied_by(execution_context):
+                    return
 
-        trigger.action(execution_context)
+            trigger.action(execution_context)
+        except Exception as e:
+            logging.getLogger(__name__).error(e)
