@@ -1,5 +1,7 @@
 """Audio utilities"""
 
+import time
+
 from pygame import mixer
 
 def play(file, frequency=16000):
@@ -10,6 +12,9 @@ def play(file, frequency=16000):
     mixer.init(frequency=frequency)
     mixer.music.load(file)
     mixer.music.play()
+
+    while mixer.music.get_busy():
+        time.sleep(0.1)
 
 def stop():
     """Stop currently playing audio"""
