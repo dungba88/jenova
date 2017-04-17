@@ -5,5 +5,11 @@
     "stop": {
         "pause_time": 1,
         "reacts": ["um...ok", "Fine. I will stop", "ok ok", "I won't disturb you", "I will leave you alone"]
+    },
+    "story": {
+        "opening": ["Ok. Here goes one", "How's about this stories", "I got one", "Listen, {name}"],
+        "no_story": ["Sorry {name}, but I don't know any story"],
+        "pause_time": 1,
+        "stories": []
     }
 }
