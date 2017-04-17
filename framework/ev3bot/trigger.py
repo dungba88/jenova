@@ -1,5 +1,9 @@
 """Trigger framework"""
 
+import time
+import random
+from concurrent.futures import ThreadPoolExecutor
+
 from ev3bot import audio
 
 class TriggerExecutionContext(object):
@@ -24,6 +28,8 @@ class TriggerManager(object):
     def __init__(self):
         self.triggers = list()
         self.event_hook = dict()
+        self.executor = ThreadPoolExecutor(max_workers=1)
+        self.current_trigger = None
 
     def add_hook(self, name, handler):
         """Register a handler with an event name"""
@@ -35,12 +41,18 @@ class TriggerManager(object):
         """Fire the event, calling all handlers registered with the event"""
         if name not in self.event_hook:
             raise ValueError("Event. " + name + ". not registered")
-        
+
         self.stop_all_actions()
-        for handler in self.event_hook[name]:
-            handler(name, event)
+        handlers = self.event_hook[name]
+        handler = handlers[random.randint(0, len(handlers) - 1)]
+        self.executor.submit(handler, name, event)
 
     def stop_all_actions(self):
+        """stop all executing actions"""
+        if self.current_trigger is not None:
+            if self.current_trigger.stop_action is not None:
+                self.current_trigger.stop_action()
+        time.sleep(0.1)
         audio.stop()
 
     @classmethod
@@ -62,6 +74,7 @@ class TriggerManager(object):
 
     def run_trigger(self, name, event, trigger):
         """Run the trigger"""
+        self.current_trigger = trigger
         execution_context = TriggerExecutionContext(event, name, trigger)
 
         if trigger.condition is not None:
