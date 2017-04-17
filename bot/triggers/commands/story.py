@@ -22,18 +22,23 @@ def run(execution_context):
         tts.say_random(no_story)
         return
 
-    story = stories[random.randint(0, len(stories) - 1)]
-
     tts.say_random(openings)
+
     time.sleep(pause_time)
+
     if FLAGS["stop"]:
         return
+
+    story = stories[random.randint(0, len(stories) - 1)]
     with open('cache/stories/' + story) as data_file:
         text = data_file.read()
-        for line in text.splitlines():
-            if not FLAGS["stop"]:
-                if len(line) > 0:
-                    tts.say([line])
+        read_long_text(text)
+
+def read_long_text(text):
+    """Read a possibly long text"""
+    for line in text.splitlines():
+        if not FLAGS["stop"] and len(line) > 0:
+            tts.say([line])
 
 def stop_story():
     """stop reading the story"""
