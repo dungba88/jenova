@@ -1,6 +1,7 @@
 """TTS utility"""
 
 import logging
+import random
 import re
 
 from app import APP_INSTANCE as app
@@ -12,6 +13,11 @@ from ev3bot.tts import OSXTTSEngine
 from ev3bot.tts import MaryTTS
 
 REGEX = re.compile(r'\{([^\}]*)\}')
+
+def say_random(texts):
+    """Speak a random text from a list"""
+    text = texts[random.randint(0, len(texts) - 1)]
+    say([text])
 
 def say(texts):
     """Speak texts with a specified engine"""
