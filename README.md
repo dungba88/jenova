@@ -23,12 +23,7 @@ It depends on the operating system you are using, here are the example for Ubunt
 ```bash
 sudo apt-get install python3
 sudo apt-get install python3-pip
-sudo pip3 install gunicorn
-sudo pip3 install Falcon
-sudo pip3 install ev3dev
-sudo pip3 install pygame
-sudo pip3 install pyttsx
-sudo pip3 install gTTS
+sudo pip3 install gunicorn Falcon pygame pyttsx gTTS ev3dev
 ```
 
 If you want to use `mary-tts` as TTS engine, it must be installed separately:
