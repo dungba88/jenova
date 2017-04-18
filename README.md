@@ -20,8 +20,7 @@ Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) 
 It depends on the operating system you are using, here are the example for Ubuntu 17.04
 
 ```bash
-sudo apt-get install python3
-sudo apt-get install python3-pip
+sudo apt-get install python3 python3-pip python3-ev3dev
 sudo pip3 install gunicorn Falcon pygame pyttsx gTTS ev3dev
 ```
 
