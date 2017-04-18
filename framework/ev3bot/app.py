@@ -40,6 +40,7 @@ class ApplicationContext(object):
     def __init__(self, trigger_manager, api):
         self.trigger_manager = trigger_manager
         self.api = api
+        self.params = dict()
 
 def load_configs():
     """Load all configurations"""
