@@ -11,7 +11,6 @@ The following packages need to be installed via `pip`
 - **pygame**: for audio playback
 - **pyttsx**: cross-platform TTS engine
 - **gTTS**: wrapper for Google Translate TTS
-- **mary-tts**: web server for TTS
 
 Python3 is required to run the application
 
