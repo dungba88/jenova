@@ -7,12 +7,11 @@ A simple but extensible EV3 bot written in Python and run on ev3dev platform.
 The following packages need to be installed via `pip`
 - **gunicorn**: lightweight WSGI HTTP Server
 - **Falcon**: super fast RESTful framework
-- **ev3dev**: library for Lego EV3
 - **pygame**: for audio playback
 - **pyttsx**: cross-platform TTS engine
 - **gTTS**: wrapper for Google Translate TTS
 
-Python3 is required to run the application
+Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) are also required to run the application
 
 ## installation
 
