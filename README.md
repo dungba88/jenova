@@ -7,13 +7,11 @@ A simple but extensible EV3 bot written in Python and run on ev3dev platform.
 The following packages need to be installed via `pip`
 - **gunicorn**: lightweight WSGI HTTP Server
 - **Falcon**: super fast RESTful framework
-- **ev3dev**: library for Lego EV3
 - **pygame**: for audio playback
 - **pyttsx**: cross-platform TTS engine
 - **gTTS**: wrapper for Google Translate TTS
-- **mary-tts**: web server for TTS
 
-Python3 is required to run the application
+Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) are also required to run the application
 
 ## installation
 
@@ -22,14 +20,8 @@ Python3 is required to run the application
 It depends on the operating system you are using, here are the example for Ubuntu 17.04
 
 ```bash
-sudo apt-get install python3
-sudo apt-get install python3-pip
-sudo pip3 install gunicorn
-sudo pip3 install Falcon
-sudo pip3 install ev3dev
-sudo pip3 install pygame
-sudo pip3 install pyttsx
-sudo pip3 install gTTS
+sudo apt-get install python3 python3-pip python3-ev3dev
+sudo pip3 install gunicorn Falcon pygame pyttsx gTTS ev3dev
 ```
 
 If you want to use `mary-tts` as TTS engine, it must be installed separately:
