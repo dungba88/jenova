@@ -16,14 +16,29 @@ class Application(object):
         self.trigger_manager = TriggerManager()
         self.configs = load_configs()
         self.bootstrap = None
+        self.app_context = ApplicationContext(trigger_manager=self.trigger_manager,
+                                              api=self.api,
+                                              configs=self.configs)
 
     def run(self):
         """Run the application"""
-        app_context = ApplicationContext(trigger_manager=self.trigger_manager,
-                                         api=self.api)
         if self.bootstrap is not None:
-            self.bootstrap.app_context = app_context
+            self.bootstrap.app_context = self.app_context
             self.bootstrap.run()
+
+    def get_config(self, name):
+        """Get a config by name"""
+        if self.app_context is not None:
+            return self.app_context.get_config(name)
+        return None
+
+class ApplicationContext(object):
+    """Application context"""
+    def __init__(self, trigger_manager, api, configs):
+        self.trigger_manager = trigger_manager
+        self.api = api
+        self.configs = configs
+        self.params = dict()
 
     def get_config(self, name):
         """Get a config by name"""
@@ -34,13 +49,6 @@ class Application(object):
             if obj is None:
                 break
         return obj
-
-class ApplicationContext(object):
-    """Application context"""
-    def __init__(self, trigger_manager, api):
-        self.trigger_manager = trigger_manager
-        self.api = api
-        self.params = dict()
 
 def load_configs():
     """Load all configurations"""
