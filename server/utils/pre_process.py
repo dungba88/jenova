@@ -5,8 +5,6 @@ import re
 from nltk import PorterStemmer
 from nltk.corpus import stopwords
 
-from sklearn.feature_extraction.text import CountVectorizer
-
 def vectorize_new_input(text, data_vocab):
     """vectorize new input based on vectorized data"""
     text = clean_text(text)
@@ -51,16 +49,9 @@ def clean_text(raw_text):
     # join together
     return " ".join(stemmed_words)
 
-def vectorize(texts):
-    """vectorize a text"""
-    vectorizer = CountVectorizer(analyzer="word",
-                                 tokenizer=None,
-                                 preprocessor=None,
-                                 stop_words=None,
-                                 max_features=5000)
-
-    features = vectorizer.fit_transform(texts).toarray()
-    return (features, vectorizer)
+def vectorize(vectorizer, texts):
+    """vectorize list of texts"""
+    return vectorizer.fit_transform(texts).toarray()
 
 def parse_csv(reader):
     """parse the csv file"""
@@ -72,10 +63,10 @@ def parse_csv(reader):
         output_texts.append(",".join(row))
     return input_texts, output_texts
 
-def vectorize_data(reader):
+def vectorize_data(reader, vectorizer):
     """vectorize the data"""
     input_texts, output_texts = parse_csv(reader)
-    input_vectorized_texts, input_vectorizer = vectorize(input_texts)
+    input_vectorized_texts = vectorize(vectorizer, input_texts)
     output_vectorized_texts = []
     output_vocab = []
 
@@ -90,6 +81,6 @@ def vectorize_data(reader):
     return {
         'data': input_vectorized_texts.tolist(),
         'target': output_vectorized_texts,
-        'data_vocab': input_vectorizer.get_feature_names(),
+        'data_vocab': vectorizer.get_feature_names(),
         'target_vocab': output_vocab
     }

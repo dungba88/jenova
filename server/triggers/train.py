@@ -3,6 +3,7 @@
 import csv
 import json
 
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import GaussianNB
 from sklearn.externals import joblib
 
@@ -17,7 +18,13 @@ def run(execution_context):
 
 def train_data(reader, data_name):
     """train the data file"""
-    vectorized_data = pre_process.vectorize_data(reader)
+    vectorizer = CountVectorizer(analyzer="word",
+                                 tokenizer=None,
+                                 preprocessor=None,
+                                 stop_words=None,
+                                 max_features=5000)
+
+    vectorized_data = pre_process.vectorize_data(reader, vectorizer)
 
     # save the data
     save_data(data_name, vectorized_data)
