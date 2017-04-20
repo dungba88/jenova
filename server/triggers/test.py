@@ -4,10 +4,12 @@ import json
 
 from sklearn.externals import joblib
 
+from app import APP_INSTANCE as app
 from utils import pre_process
 
 def run(execution_context):
     """run the action"""
+    remove_stop_words = app.get_config('train.remove_stop_words')
     data_name = execution_context.event.get('data_name', 'default')
     text = execution_context.event.get('text')
     if text is None:
@@ -16,6 +18,8 @@ def run(execution_context):
     vocab = load_vocab_file(data_name)
     model = load_model_file(data_name)
 
+
+    text = pre_process.clean_text(text, remove_stop_words)
     vectorized_text = pre_process.vectorize_new_input(text, vocab.get('data_vocab'))
     ypred = model.predict([vectorized_text])
     print(vocab.get('target_vocab')[ypred[0]])

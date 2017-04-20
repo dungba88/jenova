@@ -19,8 +19,10 @@ def run(execution_context):
 
 def train_data(reader, data_name):
     """train the data file"""
+    input_texts, output_texts = parse_csv(reader)
+
     vectorizer = get_vectorizer()
-    vectorized_data = pre_process.vectorize_data(reader, vectorizer)
+    vectorized_data = pre_process.vectorize_data(input_texts, output_texts, vectorizer)
 
     # save the data
     save_data(data_name, vectorized_data)
@@ -31,6 +33,18 @@ def train_data(reader, data_name):
 
     # save the model
     save_model(data_name, model)
+
+def parse_csv(reader):
+    """parse the csv file"""
+    remove_stop_words = app.get_config('train.remove_stop_words')
+    input_texts = []
+    output_texts = []
+
+    for row in reader:
+        input_texts.append(pre_process.clean_text(row[0], remove_stop_words))
+        row.pop(0)
+        output_texts.append(",".join(row))
+    return input_texts, output_texts
 
 def get_vectorizer():
     """get the vectorizer based on config"""
