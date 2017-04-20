@@ -3,11 +3,12 @@
 import csv
 import json
 
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import GaussianNB
 from sklearn.externals import joblib
 
+from app import APP_INSTANCE as app
 from utils import pre_process
+from utils.factory.vectorizer import VectorizerFactory
+from utils.factory.algorithm import AlgorithmFactory
 
 def run(execution_context):
     """run the action"""
@@ -18,23 +19,28 @@ def run(execution_context):
 
 def train_data(reader, data_name):
     """train the data file"""
-    vectorizer = CountVectorizer(analyzer="word",
-                                 tokenizer=None,
-                                 preprocessor=None,
-                                 stop_words=None,
-                                 max_features=5000)
-
+    vectorizer = get_vectorizer()
     vectorized_data = pre_process.vectorize_data(reader, vectorizer)
 
     # save the data
     save_data(data_name, vectorized_data)
 
     # train the data
-    gnb = GaussianNB()
-    model = gnb.fit(vectorized_data.get('data'), vectorized_data.get('target'))
+    algorithm = get_algorithm()
+    model = algorithm.fit(vectorized_data.get('data'), vectorized_data.get('target'))
 
     # save the model
     save_model(data_name, model)
+
+def get_vectorizer():
+    """get the vectorizer based on config"""
+    vectorizer_config = app.get_config('train.vectorizer')
+    return VectorizerFactory.get_vectorizer(vectorizer_config)
+
+def get_algorithm():
+    """get the algorithm based on config"""
+    algo_config = app.get_config('train.algorithm')
+    return AlgorithmFactory.get_algorithm(algo_config)
 
 def save_data(data_name, vectorized_data):
     """save the preprocessed data as file"""
