@@ -14,6 +14,7 @@ For the bot, these packages are required:
 
 For the server, these packages are required:
 - `sklearn`, `nltk`: for machine learning algorithms and utilities
+- `numpy`, `scipy`: libraries used by `sklearn`
 
 Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) are also required to run the application
 
@@ -25,7 +26,7 @@ It depends on the operating system you are using, here are the example for Ubunt
 
 ```bash
 sudo apt-get install python3 python3-pip python3-ev3dev
-sudo pip3 install gunicorn Falcon pygame pyttsx gTTS ev3dev
+sudo pip3 install gunicorn Falcon pygame pyttsx gTTS numpy scipy sklearn nltk
 ```
 
 If you want to use `mary-tts` as TTS engine, it must be installed separately:
