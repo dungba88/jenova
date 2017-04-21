@@ -16,7 +16,7 @@ For the server, these packages are required:
 - `sklearn`, `nltk`: for machine learning algorithms and utilities
 - `numpy`, `scipy`: libraries used by `sklearn`
 
-Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) are also required to run the application
+Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) are also required to run the application. It's ok to run the application without `ev3dev`, but you won't have the features related to Lego EV3 like motor controlling.
 
 ## installation
 
