@@ -5,7 +5,7 @@
     "lyrics": [
         "Happy birthday to you",
         "Happy birthday to you",
-        "Happy birthday to {name}",
+        "Happy birthday to {owner}",
         "Happy birthday to you"
     ]
 }]
