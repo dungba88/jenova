@@ -25,7 +25,7 @@ class VectorizerFactory(object):
 
     def get_tf_idf(self):
         """get tf-idf vectorizer"""
-        return CountVectorizer(analyzer="word",
+        return TfidfVectorizer(analyzer="word",
                                tokenizer=None,
                                preprocessor=None,
                                stop_words=None,
