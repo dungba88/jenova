@@ -35,14 +35,14 @@ def clean_text(raw_text, remove_stop_words):
     # Convert to lower case, split into individual words
     words = letters_only.lower().split()
 
-    # Remove stop words if requested
-    if remove_stop_words:
-        stop_words = set(stopwords.words("english"))
-        words = [w for w in words if not w in stop_words]
-
     # stem words
     stemmer = PorterStemmer()
     stemmed_words = map(stemmer.stem, words)
+
+    # Remove stop words if requested
+    if remove_stop_words:
+        stop_words = set(stopwords.words("english"))
+        stemmed_words = [w for w in stemmed_words if not w in stop_words]
 
     # join together
     return " ".join(stemmed_words)
