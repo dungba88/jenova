@@ -5,6 +5,8 @@ import re
 from nltk import PorterStemmer
 from nltk.corpus import stopwords
 
+from utils.learn import persist
+
 def vectorize_new_input(text, data_vocab):
     """vectorize new input based on vectorized data"""
     word_count = count_words(text)
@@ -16,6 +18,19 @@ def vectorize_new_input(text, data_vocab):
         else:
             vectorized_text.append(0)
     return vectorized_text
+
+def predict(text, data_name):
+    """predict the intent of a text"""
+    vocab = persist.load_vocab_file(data_name)
+    model = persist.load_model_file(data_name)
+
+    vectorized_text = vectorize_new_input(text, vocab.get('data_vocab'))
+    ypred = model.predict([vectorized_text])[0]
+    proba = model.predict_proba([vectorized_text])[0]
+
+    result_proba = proba[ypred]
+    result_word = vocab.get('target_vocab')[ypred]
+    return result_word, result_proba
 
 def count_words(text):
     """count words in text"""
