@@ -2,13 +2,17 @@
 
 from ev3bot import encode
 from falcon import HTTPError
+import logging
 
 from utils import tts
 import traceback
 
+logger = logging.getLogger(__name__)
+
 def distress_call(ex):
     """Broadcast a distress call"""
     tts.say(["Alert! " + str(ex) + ". Please check urgently!"])
+    logger.error(ex)
 
 def default_error_handler(ex, req, resp, params):
     """Error handler for all exceptions"""
