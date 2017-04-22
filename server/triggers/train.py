@@ -6,7 +6,7 @@ import json
 from sklearn.externals import joblib
 
 from app import APP_INSTANCE as app
-from utils import pre_process
+from utils.learn import pre_process
 from utils.factory.vectorizer import VectorizerFactory
 from utils.factory.algorithm import AlgorithmFactory
 
