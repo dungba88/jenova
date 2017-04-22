@@ -13,8 +13,11 @@ class MessageResource(object):
         if msg is None:
             raise ValueError('msg cannot be empty')
 
-        msg_name = msg.get('name')
+        msg_name = msg.get('name', None)
         msg_args = msg.get('args', dict())
+
+        if msg_name is None:
+            raise ValueError('name cannot be empty')
 
         app.trigger_manager.fire(msg_name, msg_args)
 
@@ -23,4 +26,3 @@ class MessageResource(object):
             'message': msg_name
         }
         res.body = encode.encode(result)
-        
