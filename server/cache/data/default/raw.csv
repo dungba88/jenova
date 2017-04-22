@@ -4,8 +4,14 @@ good morning,greetings
 good afternoon,greetings
 good evening,greetings
 thank you,thank
-are you ok,inquire,health
-tell me a story,inquire,story
-what is your name,inquire,name
-i'm sad,express,sad
-i'm happy,express,happy
+are you ok,inquire.health
+tell me a story,inquire.story
+do you have any story,inquire.story
+story,inquire.story
+what is your name,inquire.name
+i'm sad,express
+i'm happy,express
+stop,stop
+leave me alone,stop
+sing a song,sing
+do you know any song,sing
