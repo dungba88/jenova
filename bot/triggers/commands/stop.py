@@ -1,7 +1,6 @@
 """Trigger implementation to stop all actions"""
 
 import time
-import random
 
 from app import APP_INSTANCE as app
 from utils import tts
