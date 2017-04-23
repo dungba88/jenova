@@ -1,0 +1,18 @@
+{
+    "tts": {
+        "engine": "osx",
+        "osx": {
+            "voice": "Kyoko"
+        },
+        "gTTS": {
+            "lang": "en"
+        },
+        "mary_tts": {
+            "host": "localhost",
+            "port": 59125,
+            "locale": "en_US",
+            "voice": "cmu-rms-hsmm",
+            "development": true
+        }
+    }
+}

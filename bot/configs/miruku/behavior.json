@@ -1,0 +1,22 @@
+{
+    "react": {
+        "greetings_morning": ["おはようございます"],
+        "greetings_afternoon": ["こんにちは"],
+        "greetings_evening": ["こんばんは"],
+        "thank": ["どういたしまして"]
+    },
+    "inquire": {
+        "no_data": ["Sorry, I don't have any information about that", "Sorry, I can't answer that question"],
+        "health": ["{health_react}"],
+        "battery": ["My battery level is {battery_level}%"],
+        "name": ["あたしは{name}, です"],
+        "eat": ["私はロボトです、それで食べません", "エレクトリックがいっぱい食べたわ"]
+    },
+    "stop": {
+        "pause_time": 1,
+        "reacts": ["um...ok", "Fine. I will stop", "ok ok", "I won't disturb you", "I will leave you alone"]
+    },
+    "health_react": {
+        "ok": ["元気です", "まま", "私のシステムは完全に機能している", "すべてのパラメータは制限内です"]
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "opening": ["はい、これです", "この話はどうだった？", "いっぱいです", "そうね {owner}"],
+    "no_story": ["すみません。１話なだけ知りません"],
+    "pause_time": 1,
+    "stories": [{
+        "name": "ねずみの相撲",
+        "file": "chuot_dau_vat_sumo.txt",
+        "tags": []
+    }]
+}
