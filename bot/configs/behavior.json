@@ -14,6 +14,6 @@
         "reacts": ["um...ok", "Fine. I will stop", "ok ok", "I won't disturb you", "I will leave you alone"]
     },
     "health_react": {
-        "ok": ["I'm fine", "I'm good", "Nothing wrong with my system", "All parameters are within limit"]
+        "ok": ["I am fine", "I am good", "Nothing wrong with my system", "All parameters are within limit"]
     }
 }
