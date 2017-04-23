@@ -1,14 +1,16 @@
-hello,greetings
-hi,greetings
-good morning,greetings
-good afternoon,greetings
-good evening,greetings
-thank you,thank
+hello,react.greetings
+hi,react.greetings
+good morning,react.greetings
+good afternoon,react.greetings
+good evening,react.greetings
+thank you,react.thank
 are you ok,inquire.health
-tell me a story,inquire.story
-do you have any story,inquire.story
-story,inquire.story
+tell me a story,tell_story
+do you have any story,tell_story
+story,tell_story
 what is your name,inquire.name
+who are you,inquire.personal
+tell me about yourself,inquire.personal
 i'm sad,express
 i'm happy,express
 stop,stop
