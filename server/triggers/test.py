@@ -8,6 +8,8 @@ import nltk
 
 from app import APP_INSTANCE as app
 from utils.learn import pre_process
+from utils.learn import persist
+from utils.factory.tokenizer import TokenizerFactory
 
 LOGGER = logging.getLogger(__name__)
 
@@ -21,8 +23,14 @@ def run(execution_context):
     if text is None:
         raise ValueError('text cannot be null')
 
-    text = pre_process.clean_text(text, remove_stop_words)
-    result_word, result_proba = pre_process.predict(text, data_name)
+    config = persist.get_data_config(data_name)
+    tokenizer = TokenizerFactory.get_tokenizer(config.get('tokenizer'))
+
+    if config.get('clean_text'):
+        text = pre_process.clean_text(text, remove_stop_words)
+
+    tokenized_text = tokenizer(text)
+    result_word, result_proba = pre_process.predict(tokenized_text, data_name)
 
     LOGGER.warning('predict %s with probability %2f %%', result_word, result_proba * 100)
 

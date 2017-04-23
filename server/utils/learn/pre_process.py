@@ -35,7 +35,7 @@ def predict(text, data_name):
 def count_words(text):
     """count words in text"""
     word_count = {}
-    for word in text.split(' '):
+    for word in text:
         if word not in word_count:
             word_count[word] = 1
         else:

@@ -7,26 +7,26 @@ class VectorizerFactory(object):
     """factory class for vectorizers"""
 
     @classmethod
-    def get_vectorizer(cls, name):
+    def get_vectorizer(cls, name, tokenizer):
         """get the vectorizer based on name"""
         factory = VectorizerFactory()
         factory_method = getattr(factory, 'get_' + name)
         if factory_method is None:
             raise ValueError('vectorizer ' + name + ' is not defined')
-        return factory_method()
+        return factory_method(tokenizer)
 
-    def get_bag_of_word(self):
+    def get_bag_of_word(self, tokenizer):
         """get bag of word vectorizer"""
         return CountVectorizer(analyzer="word",
-                               tokenizer=None,
+                               tokenizer=tokenizer,
                                preprocessor=None,
                                stop_words=None,
                                max_features=5000)
 
-    def get_tf_idf(self):
+    def get_tf_idf(self, tokenizer):
         """get tf-idf vectorizer"""
         return TfidfVectorizer(analyzer="word",
-                               tokenizer=None,
+                               tokenizer=tokenizer,
                                preprocessor=None,
                                stop_words=None,
                                max_features=5000)
