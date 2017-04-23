@@ -30,7 +30,7 @@ def run(execution_context):
     filtered_text = \
         [(w, word_type) for w, word_type in pos_tagged_text if not word_type in filtered_word_type]
 
-#    send_msg(result_word, result_proba, filtered_text)
+    send_msg(result_word, result_proba, filtered_text)
 
 def send_msg(result_word, result_proba, filtered_text):
     """send the message to bot"""
@@ -49,4 +49,4 @@ def send_msg(result_word, result_proba, filtered_text):
         headers={'Content-Type': 'application/json; charset=UTF-8'},
         body=json.dumps(msg),
     )
-    logger.info('response from bot: %s', content)
+    LOGGER.warning('response from bot: %s', content)
