@@ -5,6 +5,7 @@ import random
 import re
 
 from app import APP_INSTANCE as app
+from utils import dynamic_facts
 
 from ev3bot.tts import PyttsxEngine
 from ev3bot.tts import GTTSEngine
@@ -47,8 +48,18 @@ def normalize(texts):
 
 def normalize_text(text):
     """normalize a single text"""
-    facts = app.get_config('facts')
     groups = REGEX.findall(text)
     for group in groups:
-        text = text.replace('{' + group + '}', facts.get(group, 'unknown'))
+        text = text.replace('{' + group + '}', get_fact(group))
     return text
+
+def get_fact(group):
+    """get fact by name"""
+    facts = app.get_config('facts')
+    fact = facts.get(group)
+    if fact is not None:
+        return fact
+    method = getattr(dynamic_facts, 'get_' + group, None)
+    if method is None:
+        return "unknown"
+    return method()
