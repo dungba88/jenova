@@ -9,7 +9,7 @@ import nltk
 from app import APP_INSTANCE as app
 from utils.learn import pre_process
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 def run(execution_context):
     """run the action"""
@@ -24,7 +24,7 @@ def run(execution_context):
     text = pre_process.clean_text(text, remove_stop_words)
     result_word, result_proba = pre_process.predict(text, data_name)
 
-    logger.warning('predict %s with probability %2f %%', result_word, result_proba * 100)
+    LOGGER.warning('predict %s with probability %2f %%', result_word, result_proba * 100)
 
     pos_tagged_text = nltk.pos_tag(nltk.word_tokenize(text))
     filtered_text = \
