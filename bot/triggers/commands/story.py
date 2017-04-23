@@ -13,10 +13,10 @@ FLAGS = {
 def run(execution_context):
     """run the action"""
     FLAGS["stop"] = False
-    openings = app.get_config('behavior.story.opening')
-    no_story = app.get_config('behavior.story.no_story')
-    pause_time = app.get_config('behavior.story.pause_time')
-    stories = app.get_config('behavior.story.stories')
+    openings = app.get_config('story.opening')
+    no_story = app.get_config('story.no_story')
+    pause_time = app.get_config('story.pause_time')
+    stories = app.get_config('story.stories')
     tag = execution_context.event.get('tag', None)
 
     if tag is not None:
