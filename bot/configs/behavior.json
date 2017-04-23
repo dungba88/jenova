@@ -3,22 +3,17 @@
         "greetings": ["Hello {owner}", "Hi", "Yes, {owner}", "Yes. I am here", "I am here {owner}"],
         "thank": ["Not at all", "You are welcome", "My pleasure, {owner}"]
     },
+    "inquire": {
+        "no_data": ["Sorry, I don't have any information about that", "Sorry, I can't answer that question"],
+        "health": ["{health_react}"],
+        "battery": ["My battery level is {battery_level}%"],
+        "name": ["My name is {name}", "I am {name}", "Does that matter?"]
+    },
     "stop": {
         "pause_time": 1,
         "reacts": ["um...ok", "Fine. I will stop", "ok ok", "I won't disturb you", "I will leave you alone"]
     },
-    "story": {
-        "opening": ["Ok. Here goes one", "How's about this stories", "I got one", "Listen {owner}"],
-        "no_story": ["Sorry {owner}, but I don't know any story"],
-        "pause_time": 1,
-        "stories": [{
-            "name": "Science Joke - OK",
-            "file": "science_joke_ok.txt",
-            "tags": ["joke"]
-        }, {
-            "name": "Science Joke - Half full glass or half empty glass",
-            "file": "science_joke_glass.txt",
-            "tags": ["joke"]
-        }]
+    "health_react": {
+        "ok": ["I'm fine", "I'm good", "Nothing wrong with my system", "All parameters are within limit"]
     }
 }

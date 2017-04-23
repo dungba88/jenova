@@ -1,3 +1,5 @@
 {
-    "owner": "maker"
+    "owner": "maker",
+    "name": "Sam",
+    "health": "ok"
 }

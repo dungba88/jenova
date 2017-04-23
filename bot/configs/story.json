@@ -1,0 +1,18 @@
+{
+    "opening": ["Ok. Here goes one", "How's about this stories", "I got one", "Listen {owner}"],
+    "no_story": ["Sorry {owner}, but I don't know any story"],
+    "pause_time": 1,
+    "stories": [{
+        "name": "Harry Potter - Secret Chamber - Chapter 8",
+        "file": "harry_potter_secret_chamber_8.txt",
+        "tags": ["harry potter", "fantasy", "wizard"]
+    }, {
+        "name": "Science Joke - OK",
+        "file": "science_joke_ok.txt",
+        "tags": ["joke"]
+    }, {
+        "name": "Science Joke - Half full glass or half empty glass",
+        "file": "science_joke_glass.txt",
+        "tags": ["joke"]
+    }]
+}
