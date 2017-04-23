@@ -9,10 +9,20 @@ import traceback
 
 logger = logging.getLogger(__name__)
 
+class BotErrorHandler(object):
+    """error handler for bot"""
+
+    def handle_error(self, ex):
+        """handle error"""
+        default_error_handler(ex, None, None, None)
+
 def distress_call(ex):
     """Broadcast a distress call"""
     tts.say(["Alert! " + str(ex) + ". Please check urgently!"])
-    logger.error(ex)
+    traces = traceback.format_exception(None, # <- type(e) by docs, but ignored
+                                        ex, ex.__traceback__)
+    for trace in traces:
+        logger.error(trace)
 
 def default_error_handler(ex, req, resp, params):
     """Error handler for all exceptions"""
@@ -38,6 +48,8 @@ def value_error_handler(ex, req, resp, params):
 
 def base_error_handler(ex, req, resp, params):
     """Error handler for BaseException"""
+    if resp is None:
+        return
     resp.body = encode.encode({
         'status': 1,
         'msg': 'Uncaught exception: ' + str(ex),
