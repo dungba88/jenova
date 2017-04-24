@@ -1,19 +1,20 @@
 """Custom triggers"""
 
-from triggers.commands.sing import run as sing
-from triggers.commands.say import run as say
-from triggers.commands.stop import run as stop
-from triggers.commands.story import run as story
-from triggers.commands.story import stop_story as stop_story
-from triggers.misc.react import run as react
-from triggers.misc.inquire import run as inquire
+from triggers.commands import sing
+from triggers.commands import say
+from triggers.commands import stop
+from triggers.commands import story
+from triggers.misc import react
+from triggers.misc import inquire
 from ev3bot.trigger import register_trigger
 
 def init_all_triggers(manager):
     """initialize all triggers"""
-    register_trigger(manager, event_name='sing', action=sing)
-    register_trigger(manager, event_name='say', action=say)
-    register_trigger(manager, event_name='stop', action=stop)
-    register_trigger(manager, event_name='tell_story', action=story, stop_action=stop_story)
-    register_trigger(manager, event_name='react.*', action=react)
-    register_trigger(manager, event_name='inquire.*', action=inquire)
+    register_trigger(manager, event_name='sing', action=sing.run)
+    register_trigger(manager, event_name='say', action=say.run)
+    register_trigger(manager, event_name='stop', action=stop.run)
+    register_trigger(manager, event_name='tell_story',
+                     action=story.run,
+                     stop_action=story.stop_story)
+    register_trigger(manager, event_name='react.*', action=react.run)
+    register_trigger(manager, event_name='inquire.*', action=inquire.run)
