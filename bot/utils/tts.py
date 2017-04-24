@@ -44,7 +44,7 @@ def say(texts):
 
 def normalize(texts):
     """normalize texts"""
-    return map(normalize_text, texts)
+    return list(map(normalize_text, texts))
 
 def normalize_text(text):
     """normalize a single text"""
