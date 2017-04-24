@@ -10,7 +10,7 @@
         "no_data": ["Sorry, I don't have any information about that", "Sorry, I can't answer that question"],
         "health": ["{health_react}"],
         "battery": ["My battery level is {battery_level}%"],
-        "name": ["My name is {name}", "I am {name}", "Does that matter?"]
+        "name": ["My name is {name}", "I am {name}", "You named me, don't you remember?"]
     },
     "stop": {
         "pause_time": 1,
