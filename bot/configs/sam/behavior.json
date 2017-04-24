@@ -11,13 +11,14 @@
         "health": ["{health_react}"],
         "battery": ["My battery level is {battery_level}%"],
         "name": ["My name is {name}", "I am {name}", "You named me, don't you remember?"],
-        "personal": ["I am {name}, your trustworthy AI. You have taught me to speak and think."]
+        "personal": ["I am {name}, your trustworthy A.I. You have taught me to speak and think."],
+        "eat": ["I am a robot. I do not need to eat."]
     },
     "stop": {
         "pause_time": 1,
         "reacts": ["um...ok", "Fine. I will stop", "ok ok", "I won't disturb you", "I will leave you alone"]
     },
     "health_react": {
-        "ok": ["I am fine", "I am good", "Nothing wrong with my system", "All parameters are within limit"]
+        "ok": ["I am fine. Thank you for asking.", "I am good", "Nothing wrong with my system", "All parameters are within limit"]
     }
 }

@@ -1,6 +1,6 @@
 {
     "tts": {
-        "engine": "osx",
+        "engine": "mary_tts",
         "osx": {
             "voice": "Fred"
         },
