@@ -8,6 +8,9 @@ class MessageResource(object):
 
     def on_post(self, req, res):
         """Handle POST method"""
+        res.set_header('Access-Control-Allow-Origin', '*')
+        res.set_header("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
+        res.set_header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
 
         msg = encode.decode_from_request(req)
         if msg is None:
@@ -20,7 +23,6 @@ class MessageResource(object):
 
         result = {
             'status': 0,
-            'message': msg_name
+            'msg': msg_name
         }
         res.body = encode.encode(result)
-        
