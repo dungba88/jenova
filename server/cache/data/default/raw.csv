@@ -7,6 +7,7 @@ thank you,react.thank
 are you ok,inquire.health
 how are you,inquire.health
 how do you do,inquire.health
+are you hungry,inquire.eat
 tell me a story,tell_story
 do you have any story,tell_story
 story,tell_story
