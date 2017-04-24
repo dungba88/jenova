@@ -1,21 +1,15 @@
 <html>
     <head>
-        <style>
-            #response {
-                height: 300px;
-                overflow: auto;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="static/style.css">
     </head>
     <body>
         <h1>Bot Interface</h1>
         <h2>Version 0.1</h2>
         <hr/>
         <p>
-            Type something below or click the audio icon
+            Type something below or click the speak icon
+            <button id="audio" onclick="startDictation()">audio</button>
         </p>
-        <input onkeydown="handleKeyDown(event)" type="text" id="text" />
-        <button onclick="startDictation()">audio</button>
         <p>
             <div>
                 <select id="lang" onchange="handleLanguageChange(event)">
@@ -27,9 +21,8 @@
         <hr/>
 
         <p>
-            <div id="response">
-
-            </div>
+            <ul id="response" class="shell-body">
+            </ul>
         </p>
 
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -40,6 +33,7 @@
             var SERVER_URL = 'http://localhost:8080/msg';
             var LANG = "en-US";
             var DATA_NANE = "default";
+            var ALLOW_TYPING = true;
 
             function handleLanguageChange(event) {
                 LANG = $('#lang').val();
@@ -50,6 +44,8 @@
             }
 
             function startDictation() {
+                $('#audio').prop('disabled', true);
+                $('#audio').html('Speak now...');
                 var recognition = new webkitSpeechRecognition();
 
                 recognition.continuous = false;
@@ -59,12 +55,17 @@
                 recognition.start();
 
                 recognition.onresult = function(e) {
+                    $('#audio').prop('disabled', false);
+                    $('#audio').html('Speak');
                     transcript = e.results[0][0].transcript;
                     recognition.stop();
+                    add_command(transcript);
                     call_service(transcript);
                 };
 
                 recognition.onerror = function(e) {
+                    $('#audio').prop('disabled', false);
+                    $('#audio').html('Speak');
                     recognition.stop();
                 }                
             }
@@ -75,10 +76,13 @@
                 text = $('#text').val();
                 if (text == "")
                     return;
+                $('#text').val('');
+                add_command(text);
                 call_service(text);
             }
 
             function call_service(text) {
+                ALLOW_TYPING = false;
                 $.post(SERVER_URL, JSON.stringify({
                     "name": "test",
                     "args": {
@@ -86,18 +90,70 @@
                         "text": text
                     }
                 }), function(res) {
+                    ALLOW_TYPING = true;
                     if (res.status == 1) {
-                        alert(res.msg);
-                        return;
+                        add_error(res.msg);
+                    } else {
+                        add_response(res.msg);
                     }
-                    $('#text').val('');
-                    handle_response(text, res);
+                }).fail(function(xhr, status, err) {
+                    ALLOW_TYPING = true;
+                    if (xhr.readyState == 0) {
+                        add_error('Cannot connect to server');
+                    }
                 });
             }
 
-            function handle_response(text, res) {
-                $('#response').append('<div>' + text + '</div><div>' + res.msg + '</div>');
+            function add_command(text) {
+                $('#response').append('<li class="command">' + text + '</li>');
             }
+
+            function add_response(text) {
+                $('#response').append('<li class="resp">' + text + '</li>');
+                add_command('');
+                $('#response').scrollTop($('#response')[0].scrollHeight);
+            }
+
+            function add_error(err) {
+                $('#response').append('<li class="error resp">' + err + '</li>');
+                add_command('');
+            }
+
+            document.addEventListener('keydown', function(e) {
+                if (!ALLOW_TYPING)
+                    return;
+                element = $('#response li:last');
+                if (e.keyCode == 13) {
+                    if (element.length == 0 || !element.hasClass('command'))
+                        return;
+                    text = element.text();
+                    if (text == 'clear') {
+                        $('#response').text('');
+                        add_command('');
+                        return;
+                    }
+                    call_service(text);
+                    return;
+                }
+                if (e.keyCode == 8) {
+                    if (element.length == 0 || !element.hasClass('command'))
+                        return;
+                    text = element.text();
+                    element.text(text.substr(0, text.length - 1))
+                    return;
+                }
+                if ((e.keyCode != 32 && e.keyCode <= 40) || e.keyCode == 91)
+                    return;
+                if (e.ctrlKey || e.altKey || e.metaKey)
+                    return;
+                if (element.length == 0 || !element.hasClass('command')) {
+                    add_command("");
+                    element = $('#response li:last');
+                }
+                element.append(e.key);
+            });
+
+            add_command("");    
         </script>
     </body>
 </html>
