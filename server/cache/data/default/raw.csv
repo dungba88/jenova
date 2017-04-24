@@ -1,8 +1,8 @@
 hello,react.greetings
 hi,react.greetings
-good morning,react.greetings
-good afternoon,react.greetings
-good evening,react.greetings
+good morning,react.greetings_morning
+good afternoon,react.greetings_afternoon
+good evening,react.greetings_evening
 thank you,react.thank
 are you ok,inquire.health
 how are you,inquire.health

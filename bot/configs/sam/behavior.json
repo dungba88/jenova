@@ -1,13 +1,17 @@
 {
     "react": {
         "greetings": ["Hello {owner}", "Hi", "Yes, {owner}", "Yes. I am here", "I am here {owner}"],
+        "greetings_morning": ["Good morning", "Morning, {owner}"],
+        "greetings_afternoon": ["Good afternoon, {owner}"],
+        "greetings_evening": ["Good evening, {owner}"],
         "thank": ["Not at all", "You are welcome", "My pleasure, {owner}"]
     },
     "inquire": {
         "no_data": ["Sorry, I don't have any information about that", "Sorry, I can't answer that question"],
         "health": ["{health_react}"],
         "battery": ["My battery level is {battery_level}%"],
-        "name": ["My name is {name}", "I am {name}", "Does that matter?"]
+        "name": ["My name is {name}", "I am {name}", "You named me, don't you remember?"],
+        "personal": ["I am {name}, your trustworthy AI. You have taught me to speak and think."]
     },
     "stop": {
         "pause_time": 1,
