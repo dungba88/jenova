@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <style>
+            #response {
+                height: 300px;
+                overflow: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Bot Interface</h1>
+        <h2>Version 0.1</h2>
+        <hr/>
+        <p>
+            Type something below or click the audio icon
+        </p>
+        <input onkeydown="handleKeyDown(event)" type="text" id="text" />
+        <button onclick="startDictation()">audio</button>
+        <p>
+            <div>
+                <select id="lang" onchange="handleLanguageChange(event)">
+                    <option value="en-US">English US</option>
+                    <option value="ja-JP">Japanese</option>
+                </select>
+            </div>
+        </p>
+        <hr/>
+
+        <p>
+            <div id="response">
+
+            </div>
+        </p>
+
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+                integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+                crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            var SERVER_URL = 'http://localhost:8080/msg';
+            var LANG = "en-US";
+            var DATA_NANE = "default";
+
+            function handleLanguageChange(event) {
+                LANG = $('#lang').val();
+                if (LANG == 'en-US')
+                    DATA_NANE = 'default';
+                else if (LANG == 'ja-JP')
+                    DATA_NANE = 'japanese';
+            }
+
+            function startDictation() {
+                var recognition = new webkitSpeechRecognition();
+
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.lang = LANG;
+                recognition.start();
+
+                recognition.onresult = function(e) {
+                    transcript = e.results[0][0].transcript;
+                    recognition.stop();
+                    call_service(transcript);
+                };
+
+                recognition.onerror = function(e) {
+                    recognition.stop();
+                }                
+            }
+
+            function handleKeyDown(event) {
+                if (event.keyCode != 13)
+                    return;
+                text = $('#text').val();
+                if (text == "")
+                    return;
+                call_service(text);
+            }
+
+            function call_service(text) {
+                $.post(SERVER_URL, JSON.stringify({
+                    "name": "test",
+                    "args": {
+                        "data_name": DATA_NANE,
+                        "text": text
+                    }
+                }), function(res) {
+                    if (res.status == 1) {
+                        alert(res.msg);
+                        return;
+                    }
+                    $('#text').val('');
+                    handle_response(text, res);
+                });
+            }
+
+            function handle_response(text, res) {
+                $('#response').append('<div>' + text + '</div><div>' + res.msg + '</div>');
+            }
+        </script>
+    </body>
+</html>
