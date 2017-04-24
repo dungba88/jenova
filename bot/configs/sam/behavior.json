@@ -1,6 +1,9 @@
 {
     "react": {
         "greetings": ["Hello {owner}", "Hi", "Yes, {owner}", "Yes. I am here", "I am here {owner}"],
+        "greetings_morning": ["Good morning", "Morning, {owner}"],
+        "greetings_afternoon": ["Good afternoon, {owner}"],
+        "greetings_evening": ["Good evening, {owner}"],
         "thank": ["Not at all", "You are welcome", "My pleasure, {owner}"]
     },
     "inquire": {
