@@ -1,4 +1,6 @@
 var ALLOW_TYPING = true;
+var current_idx = -1;
+var command_histories = [];
 
 function startDictation() {
     $('#audio').prop('disabled', true);
@@ -59,6 +61,9 @@ function call_raw(text) {
 
 function add_command(text) {
     $('#response').append('<li class="command">' + text + '</li>');
+    if (text == '') {
+        $('#response').scrollTop($('#response')[0].scrollHeight);
+    }
 }
 
 function add_response(text, skip_next_command) {
@@ -75,6 +80,9 @@ function add_error(err) {
 }
 
 function run_command(text) {
+    command_histories.push(text);
+    current_idx = command_histories.length;
+
     commands = text.split(' ');
     command = commands[0];
     if (command == '') {
@@ -99,6 +107,7 @@ command_helps = {
     audio: 'Start dictation',
     raw: 'Send a raw command to the bot server',
     servinfo: 'Get server information',
+    info: 'Get client information',
     help: 'Print help',
     man: 'Alias for help'
 }
@@ -108,6 +117,8 @@ bot_commands = {
     clear: function() {
         $('#response').text('');
         add_command('');
+        command_histories = [];
+        current_idx = -1;
     },
 
     talk: function(text) {
@@ -152,6 +163,14 @@ bot_commands = {
 
     servinfo: function(text) {
         add_response('Server configured at: <a target="_blank" href="' + SERVER_URL + '">'+SERVER_URL+'</a>');
+    },
+
+    info: function(text) {
+        for(key in navigator) {
+            if (typeof navigator[key] == 'string')
+                add_response('<b>' + key + '</b>: ' + navigator[key], true);
+        }
+        add_command('');
     }
 }
 
@@ -190,9 +209,39 @@ document.addEventListener('keydown', function(e) {
         e.preventDefault();
         return;
     }
-    if ((e.keyCode != 32 && e.keyCode <= 40) || e.keyCode == 91)
-        return;
     if (e.keyCode >= 112 && e.keyCode <= 123)
+        return;
+    if (e.keyCode == 38) {
+        if (element.length == 0 || !element.hasClass('command'))
+            return;
+        if (current_idx < 0) {
+            current_idx = command_histories.length - 1;
+        }
+        if (current_idx > 0)
+            current_idx--;
+        if (current_idx >= 0 && current_idx <= command_histories.length - 1) {
+            element.text(command_histories[current_idx]);
+        }
+        e.preventDefault();
+        return;
+    }
+    if (e.keyCode == 40) {
+        if (element.length == 0 || !element.hasClass('command'))
+            return;
+        if (current_idx < 0) {
+            current_idx = command_histories.length - 1;
+        }
+        if (current_idx < command_histories.length)
+            current_idx++;
+        if (current_idx >= 0 && current_idx <= command_histories.length - 1) {
+            element.text(command_histories[current_idx]);
+        } else {
+            element.text('');
+        }
+        e.preventDefault();
+        return;
+    }
+    if ((e.keyCode != 32 && e.keyCode <= 40) || e.keyCode == 91)
         return;
     if (e.ctrlKey || e.altKey || e.metaKey)
         return;
