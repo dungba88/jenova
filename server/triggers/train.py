@@ -22,6 +22,8 @@ def run(execution_context):
         reader = csv.reader(data_file)
         train_data(reader, data_name, config)
 
+    execution_context.finish('train done')
+
 def train_data(reader, data_name, config):
     """train the data file"""
     input_texts, output_texts = parse_csv(reader, config)
