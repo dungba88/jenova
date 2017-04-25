@@ -24,8 +24,12 @@ def run(execution_context):
         stories = list(filter(lambda story: tag in story.get('tags'), stories))
 
     if len(stories) == 0:
+        execution_context.finish('no story')
         tts.say_random(no_story)
         return
+
+    story = stories[random.randint(0, len(stories) - 1)]
+    execution_context.finish(story.get('name'))
 
     tts.say_random(openings)
 
@@ -34,7 +38,6 @@ def run(execution_context):
     if FLAGS["stop"]:
         return
 
-    story = stories[random.randint(0, len(stories) - 1)]
     with open('cache/stories/' + story.get('file')) as data_file:
         text = data_file.read()
         read_long_text(text)

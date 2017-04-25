@@ -15,6 +15,8 @@ def run(execution_context):
     txt_no_data = app.get_config('behavior.inquire.no_data')
     if reacts is None or len(reacts) == 0:
         LOGGER.warning('No behavior configured for ' + config_name)
+        execution_context.finish('No behavior configured for ' + config_name)
         tts.say_random(txt_no_data)
         return
+    execution_context.finish()
     tts.say_random(reacts)

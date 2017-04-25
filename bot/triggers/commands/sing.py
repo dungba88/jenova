@@ -9,6 +9,7 @@ def run(execution_context):
     """run the action"""
     song_id = execution_context.event.get('song_id', None)
     song = find_song(song_id)
+    execution_context.finish('singing ' + song.get('name'))
 
     if song is not None:
         sing_the_song(song)
