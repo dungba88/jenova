@@ -108,6 +108,7 @@ command_helps = {
     raw: 'Send a raw command to the bot server',
     servinfo: 'Get server information',
     info: 'Get client information',
+    eval: 'Execute javascript code. Usage: eval {statement}',
     help: 'Print help',
     man: 'Alias for help'
 }
@@ -171,6 +172,11 @@ bot_commands = {
                 add_response('<b>' + key + '</b>: ' + navigator[key], true);
         }
         add_command('');
+    },
+
+    eval: function(text) {
+        result = eval(text);
+        add_response(result);
     }
 }
 
