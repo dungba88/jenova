@@ -49,3 +49,7 @@ li.resp {
 .shell-body li.resp {
   padding: 0;
 }
+
+.shell-body li a {
+  color: orange;
+}

@@ -41,6 +41,7 @@
                 train: 'Train the bot server',
                 audio: 'Start dictation',
                 raw: 'Send a raw command to the bot server',
+                servinfo: 'Get server information',
                 help: 'Print help',
                 man: 'Alias for help'
             }
@@ -70,11 +71,11 @@
                             add_error('No help found for command: ' + text);
                             return;
                         }
-                        add_response(text + ': ' + COMMAND_HELPS[text]);
+                        add_response('<b>' + text + '</b>: ' + COMMAND_HELPS[text]);
                         return;
                     }
                     for(var command in COMMAND_HELPS) {
-                        add_response(command + ': ' + COMMAND_HELPS[command], true);
+                        add_response('<b>' + command + '</b>: ' + COMMAND_HELPS[command], true);
                     }
                     add_command('');
                 },
@@ -90,6 +91,10 @@
                             "data_name": DATA_NANE
                         }
                     }));
+                },
+
+                servinfo: function(text) {
+                    add_response('Server configured at: <a target="_blank" href="' + SERVER_URL + '">'+SERVER_URL+'</a>');
                 }
             }
 
@@ -224,7 +229,7 @@
                 element.append(e.key);
             });
 
-            run_command("help");
+            add_response("Type <b>help</b> for all available commands");
         </script>
     </body>
 </html>
