@@ -106,6 +106,7 @@ function run_command(text) {
     commands = text.split(' ');
     command = commands[0];
     if (command == '') {
+        add_command('');
         return;
     }
     if (bot_commands[command] == undefined) {
@@ -283,8 +284,13 @@ document.addEventListener('keydown', function(e) {
     }
     if ((e.keyCode != 32 && e.keyCode <= 40) || e.keyCode == 91)
         return;
+    if (e.ctrlKey && e.key == 'c') {
+        add_command('');
+        return;
+    }
     if (e.ctrlKey || e.altKey || e.metaKey)
         return;
+    if (e.ctrlKey == "5")
     if (element.length == 0 || !element.hasClass('command')) {
         add_command("");
         element = $('#response li:last');

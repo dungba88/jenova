@@ -52,7 +52,12 @@ li.resp {
 }
 
 .shell-body li a {
-  color: orange;
+  color: bisque;
+  text-decoration: none;
+}
+
+.shell-body li a:hover {
+  text-decoration: underline;
 }
 
 .helpitem {
