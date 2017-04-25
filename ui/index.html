@@ -37,11 +37,12 @@
 
             var COMMAND_HELPS = {
                 clear: 'Clear the console interface',
-                say: 'Say a text to the bot server',
+                talk: 'Send a text to the bot server',
                 train: 'Train the bot server',
                 audio: 'Start dictation',
                 raw: 'Send a raw command to the bot server',
-                help: 'Print help'
+                help: 'Print help',
+                man: 'Alias for help'
             }
 
             var BOT_COMMANDS = {
@@ -51,7 +52,7 @@
                     add_command('');
                 },
 
-                say: function(text) {
+                talk: function(text) {
                     call_service(text);
                 },
 
@@ -59,7 +60,19 @@
                     call_raw(text);
                 },
 
+                man: function(text) {
+                    this.help(text);
+                },
+
                 help: function(text) {
+                    if (text != undefined && text != '') {
+                        if (COMMAND_HELPS[text] == undefined) {
+                            add_error('No help found for command: ' + text);
+                            return;
+                        }
+                        add_response(text + ': ' + COMMAND_HELPS[text]);
+                        return;
+                    }
                     for(var command in COMMAND_HELPS) {
                         add_response(command + ': ' + COMMAND_HELPS[command], true);
                     }
@@ -71,7 +84,12 @@
                 },
 
                 train: function(text) {
-                    throw new Error('Unsupported Operation');
+                    call_raw(JSON.stringify({
+                        "name": "train",
+                        "args": {
+                            "data_name": DATA_NANE
+                        }
+                    }));
                 }
             }
 
@@ -99,7 +117,7 @@
                     $('#audio').html('Speak');
                     transcript = e.results[0][0].transcript;
                     recognition.stop();
-                    add_command(transcript);
+                    add_command('talk ' + transcript);
                     call_service(transcript);
                 };
 
