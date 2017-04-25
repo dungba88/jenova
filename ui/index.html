@@ -8,7 +8,7 @@
         <hr/>
         <p>
             Type something or click the speak icon
-            <button id="audio" onclick="startDictation()">audio</button>
+            <button id="audio" onclick="add_command('audio');startDictation()">Speak</button>
         </p>
         <p>
             <div>
@@ -37,8 +37,10 @@
 
             var COMMAND_HELPS = {
                 clear: 'Clear the console interface',
-                say: 'Say a text to the bot',
-                train: 'Train the bot',
+                say: 'Say a text to the bot server',
+                train: 'Train the bot server',
+                audio: 'Start dictation',
+                raw: 'Send a raw command to the bot server',
                 help: 'Print help'
             }
 
@@ -53,11 +55,19 @@
                     call_service(text);
                 },
 
+                raw: function(text) {
+                    call_raw(text);
+                },
+
                 help: function(text) {
                     for(var command in COMMAND_HELPS) {
                         add_response(command + ': ' + COMMAND_HELPS[command], true);
                     }
                     add_command('');
+                },
+
+                audio: function(text) {
+                    startDictation();
                 },
 
                 train: function(text) {
@@ -97,18 +107,23 @@
                     $('#audio').prop('disabled', false);
                     $('#audio').html('Speak');
                     recognition.stop();
+                    add_error('Audio failed: ' + e.error);
                 }                
             }
 
             function call_service(text) {
-                ALLOW_TYPING = false;
-                $.post(SERVER_URL, JSON.stringify({
+                call_raw(JSON.stringify({
                     "name": "test",
                     "args": {
                         "data_name": DATA_NANE,
                         "text": text
                     }
-                }), function(res) {
+                }));
+            }
+
+            function call_raw(text) {
+                ALLOW_TYPING = false;
+                $.post(SERVER_URL, text, function(res) {
                     ALLOW_TYPING = true;
                     if (res.status == 1) {
                         add_error(res.msg);
@@ -119,6 +134,8 @@
                     ALLOW_TYPING = true;
                     if (xhr.readyState == 0) {
                         add_error('Cannot connect to server');
+                    } else {
+                        add_error('Error from server: ' + err);
                     }
                 });
             }
@@ -150,6 +167,9 @@
                     text = element.text();
                     commands = text.split(' ');
                     command = commands[0];
+                    if (command == '') {
+                        return;
+                    }
                     if (BOT_COMMANDS[command] == undefined) {
                         add_error(command + ': command not found. Type help for available commands.')
                         return;
