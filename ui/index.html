@@ -7,7 +7,7 @@
         <h2>Version 0.1</h2>
         <hr/>
         <p>
-            Type something below or click the speak icon
+            Type something or click the speak icon
             <button id="audio" onclick="startDictation()">audio</button>
         </p>
         <p>
@@ -54,7 +54,7 @@
                 },
 
                 help: function(text) {
-                    for(var command in BOT_COMMANDS) {
+                    for(var command in COMMAND_HELPS) {
                         add_response(command + ': ' + COMMAND_HELPS[command], true);
                     }
                     add_command('');
@@ -151,7 +151,7 @@
                     commands = text.split(' ');
                     command = commands[0];
                     if (BOT_COMMANDS[command] == undefined) {
-                        add_error('Command ' + command + ' not found. Type help for available commands.')
+                        add_error(command + ': command not found. Type help for available commands.')
                         return;
                     }
                     commands.splice(0, 1);
