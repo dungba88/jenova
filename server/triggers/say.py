@@ -13,5 +13,6 @@ def run(execution_context):
             'text': text
         }
     }
+    execution_context.finish()
     http.call(url, msg)
     
