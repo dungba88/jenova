@@ -2,6 +2,25 @@ var ALLOW_TYPING = true;
 var current_idx = -1;
 var command_histories = [];
 
+var command_helps = {
+    interface_commands: {
+        clear: 'Clear the console interface',
+        info: 'Get client information',
+        servinfo: 'Get server information',
+        eval: 'Execute javascript code. Usage: eval {statement}'
+    },
+    bot_commands: {
+        talk: 'Send a text to the bot server. Usage: talk {sentence}',
+        train: 'Train the bot server',
+        audio: 'Start dictation',
+        raw: 'Send a raw command to the bot server'
+    },
+    misc: {
+        help: 'Print help',
+        man: 'Alias for help'
+    }
+}
+
 function startDictation() {
     $('#audio').prop('disabled', true);
     $('#audio').html('Speak now...');
@@ -96,21 +115,8 @@ function run_command(text) {
     try {
         bot_commands[command](commands.join(' '));
     } catch(ex) {
-        add_error('Uncaught Exception: ' + ex);
+        add_error(ex);
     }
-}
-
-command_helps = {
-    clear: 'Clear the console interface',
-    talk: 'Send a text to the bot server',
-    train: 'Train the bot server',
-    audio: 'Start dictation',
-    raw: 'Send a raw command to the bot server',
-    servinfo: 'Get server information',
-    info: 'Get client information',
-    eval: 'Execute javascript code. Usage: eval {statement}',
-    help: 'Print help',
-    man: 'Alias for help'
 }
 
 bot_commands = {
@@ -123,6 +129,9 @@ bot_commands = {
     },
 
     talk: function(text) {
+        if (!text) {
+            throw new Error('Sentence is empty');
+        }
         call_service(text);
     },
 
@@ -136,15 +145,19 @@ bot_commands = {
 
     help: function(text) {
         if (text != undefined && text != '') {
-            if (command_helps[text] == undefined) {
+            helpText = findCommandHelp(text);
+            if (helpText == undefined) {
                 add_error('No help found for command: ' + text);
                 return;
             }
-            add_response('<b>' + text + '</b>: ' + command_helps[text]);
+            add_response('<b>' + text + '</b>: ' + helpText);
             return;
         }
-        for(var command in command_helps) {
-            add_response('<b>' + command + '</b>: ' + command_helps[command], true);
+        for(var category in command_helps) {
+            add_response('<a><b>' + category + '</b></a>', true);
+            for(var command in command_helps[category]) {
+                add_response(' - <div class="helpitem">' + command + '</div>: ' + command_helps[category][command], true);
+            }
         }
         add_command('');
     },
@@ -175,8 +188,19 @@ bot_commands = {
     },
 
     eval: function(text) {
+        if (!text) {
+            throw new Error('Statement is empty');
+        }
         result = eval(text);
         add_response(result);
+    }
+}
+
+function findCommandHelp(command) {
+    for(var category in command_helps) {
+        if (command_helps[category][command] != undefined) {
+            return command_helps[category][command];
+        }
     }
 }
 
@@ -257,3 +281,8 @@ document.addEventListener('keydown', function(e) {
     }
     element.append(e.key);
 });
+
+for(var command in bot_commands) {
+    if (window[command] == undefined)
+        window[command] = bot_commands[command];
+}

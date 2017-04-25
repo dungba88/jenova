@@ -44,6 +44,7 @@ li.resp {
   word-wrap: break-word;
   position: relative;
   padding: 0 0 0 20px;
+  min-height: 20px;
 }
 
 .shell-body li.resp {
@@ -52,4 +53,9 @@ li.resp {
 
 .shell-body li a {
   color: orange;
+}
+
+.helpitem {
+  width: 100px;
+  display: inline-block;
 }
