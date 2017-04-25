@@ -35,6 +35,36 @@
             var DATA_NANE = "default";
             var ALLOW_TYPING = true;
 
+            var COMMAND_HELPS = {
+                clear: 'Clear the console interface',
+                say: 'Say a text to the bot',
+                train: 'Train the bot',
+                help: 'Print help'
+            }
+
+            var BOT_COMMANDS = {
+
+                clear: function() {
+                    $('#response').text('');
+                    add_command('');
+                },
+
+                say: function(text) {
+                    call_service(text);
+                },
+
+                help: function(text) {
+                    for(var command in BOT_COMMANDS) {
+                        add_response(command + ': ' + COMMAND_HELPS[command], true);
+                    }
+                    add_command('');
+                },
+
+                train: function(text) {
+                    throw new Error('Unsupported Operation');
+                }
+            }
+
             function handleLanguageChange(event) {
                 LANG = $('#lang').val();
                 if (LANG == 'en-US')
@@ -70,17 +100,6 @@
                 }                
             }
 
-            function handleKeyDown(event) {
-                if (event.keyCode != 13)
-                    return;
-                text = $('#text').val();
-                if (text == "")
-                    return;
-                $('#text').val('');
-                add_command(text);
-                call_service(text);
-            }
-
             function call_service(text) {
                 ALLOW_TYPING = false;
                 $.post(SERVER_URL, JSON.stringify({
@@ -108,9 +127,11 @@
                 $('#response').append('<li class="command">' + text + '</li>');
             }
 
-            function add_response(text) {
+            function add_response(text, skip_next_command) {
                 $('#response').append('<li class="resp">' + text + '</li>');
-                add_command('');
+                if (!skip_next_command) {
+                    add_command('');
+                }
                 $('#response').scrollTop($('#response')[0].scrollHeight);
             }
 
@@ -127,12 +148,18 @@
                     if (element.length == 0 || !element.hasClass('command'))
                         return;
                     text = element.text();
-                    if (text == 'clear') {
-                        $('#response').text('');
-                        add_command('');
+                    commands = text.split(' ');
+                    command = commands[0];
+                    if (BOT_COMMANDS[command] == undefined) {
+                        add_error('Command ' + command + ' not found. Type help for available commands.')
                         return;
                     }
-                    call_service(text);
+                    commands.splice(0, 1);
+                    try {
+                        BOT_COMMANDS[command](commands.join(' '));
+                    } catch(ex) {
+                        add_error('Uncaught Exception: ' + ex);
+                    }
                     return;
                 }
                 if (e.keyCode == 8) {
