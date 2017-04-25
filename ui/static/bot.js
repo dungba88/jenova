@@ -155,6 +155,16 @@ bot_commands = {
     }
 }
 
+function autosuggest(element) {
+    text = element.text();
+    for(command in bot_commands) {
+        if (command.startsWith(text)) {
+            element.text(command);
+            return;
+        }
+    }
+}
+
 document.addEventListener('keydown', function(e) {
     if (!ALLOW_TYPING)
         return;
@@ -171,6 +181,13 @@ document.addEventListener('keydown', function(e) {
             return;
         text = element.text();
         element.text(text.substr(0, text.length - 1))
+        return;
+    }
+    if (e.keyCode == 9) {
+        if (element.length == 0 || !element.hasClass('command'))
+            return;
+        autosuggest(element);
+        e.preventDefault();
         return;
     }
     if ((e.keyCode != 32 && e.keyCode <= 40) || e.keyCode == 91)
