@@ -19,10 +19,16 @@ class MessageResource(object):
         msg_name = msg.get('name')
         msg_args = msg.get('args', dict())
 
-        app.trigger_manager.fire(msg_name, msg_args)
+        try:
+            result = app.trigger_manager.fire(msg_name, msg_args)
+            result = {
+                'status': 0,
+                'msg': result
+            }
+        except Exception as ex:
+            result = {
+                'status': 1,
+                'msg': type(ex).__name__ + ': ' + str(ex)
+            }
 
-        result = {
-            'status': 0,
-            'msg': msg_name
-        }
         res.body = encode.encode(result)
