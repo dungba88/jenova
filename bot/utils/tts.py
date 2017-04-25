@@ -17,11 +17,15 @@ REGEX = re.compile(r'\{([^\}]*)\}')
 
 def say_random(texts):
     """Speak a random text from a list"""
+    if texts is None:
+        return
     text = texts[random.randint(0, len(texts) - 1)]
     say([text])
 
 def say(texts):
     """Speak texts with a specified engine"""
+    if texts is None:
+        return
     texts = normalize(texts)
 
     engine_name = app.get_config('engine.tts.engine')
