@@ -4,7 +4,6 @@
     </head>
     <body>
         <h1>Bot Interface</h1>
-        <h2>Version 0.1</h2>
         <hr/>
         <p>
             Type something or click the speak icon
@@ -35,6 +34,7 @@
             window.SERVER_URL = 'http://localhost:8080/msg';
             window.LANG = "en-US";
             window.DATA_NANE = "default";
+            window.BOT_VERSION = "0.1"
             
             function handleLanguageChange(event) {
                 LANG = $('#lang').val();
@@ -44,6 +44,7 @@
                     DATA_NANE = 'japanese';
             }
 
+            add_response("Bot Interface - v" + BOT_VERSION, true);
             add_response("Type <b>help</b> for all available commands");
         </script>
     </body>

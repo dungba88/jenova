@@ -11,8 +11,9 @@ var command_helps = {
     },
     bot_commands: {
         talk: 'Send a text to the bot server. Usage: talk {sentence}',
-        train: 'Train the bot server',
         audio: 'Start dictation',
+        say: 'Make the robot say a sentence. Usage: say {sentence}',
+        train: 'Train the bot server',
         raw: 'Send a raw command to the bot server'
     },
     misc: {
@@ -150,13 +151,13 @@ bot_commands = {
                 add_error('No help found for command: ' + text);
                 return;
             }
-            add_response('<b>' + text + '</b>: ' + helpText);
+            add_response(helpText);
             return;
         }
         for(var category in command_helps) {
             add_response('<a><b>' + category + '</b></a>', true);
             for(var command in command_helps[category]) {
-                add_response(' - <div class="helpitem">' + command + '</div>: ' + command_helps[category][command], true);
+                add_response(' - <div class="helpitem">' + command + '</div>' + command_helps[category][command], true);
             }
         }
         add_command('');
@@ -171,6 +172,15 @@ bot_commands = {
             "name": "train",
             "args": {
                 "data_name": DATA_NANE
+            }
+        }));
+    },
+
+    say: function(text) {
+        call_raw(JSON.stringify({
+            "name": "say",
+            "args": {
+                "text": text
             }
         }));
     },
