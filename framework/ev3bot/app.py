@@ -2,7 +2,6 @@
 
 from os import listdir
 from os.path import join
-from pathlib import Path
 
 import json
 import falcon
@@ -20,6 +19,10 @@ class Application(object):
         self.app_context = ApplicationContext(trigger_manager=self.trigger_manager,
                                               api=self.api,
                                               configs=self.configs)
+
+    def reload_config(self):
+        """reload configuration"""
+        self.configs = load_configs()
 
     def run(self):
         """Run the application"""
