@@ -19,6 +19,9 @@ class ApplicationBootstrap(object):
         self.register_routes()
         self.register_triggers()
 
+        import locale
+        locale.setlocale(locale.LC_ALL, self.app_context.get_config('facts.locale'))
+
     def register_error_handlers(self):
         """Register error handlers"""
         api = self.app_context.api
