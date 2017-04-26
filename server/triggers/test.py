@@ -35,12 +35,14 @@ def run(execution_context):
 
     LOGGER.warning('predict %s with probability %2f %%', result_word, result_proba)
 
-    pos_tagged_text = nltk.pos_tag(nltk.word_tokenize(text))
+    pos_tagged_text = nltk.pos_tag(tokenizer(text))
     filtered_text = \
         [(w, word_type) for w, word_type in pos_tagged_text if not word_type in filtered_word_type]
 
     result = 'predict: ' + result_word + ' with probability: ' \
-                + str((int)(result_proba)) + '%'
+                + str((int)(result_proba)) + '%' \
+                + ' tagged words: ' + ' ' \
+                + ' '.join(list(map(lambda w: '(' + w[0] + ' ' + w[1] + ')', filtered_text)))
     execution_context.finish(result)
     resp, content = send_msg(result_word, result_proba, filtered_text)
     # result = 'predict: ' + result_word + ' with probability: ' \
