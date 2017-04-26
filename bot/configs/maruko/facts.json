@@ -1,5 +1,8 @@
 {
     "owner": "ミルク",
     "name": "マルコ",
-    "health": "ok"
+    "interests": ["音楽を聞く", "木を植える", "花をいける", "ギタを引く", "買い物をいく", "料理をする"],
+    "tokenized_interests": ["音楽", "木", "花", "ギタ", "買い物", "料理"],
+    "health": "ok",
+    "locale": "ja_jp"
 }
