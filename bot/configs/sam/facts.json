@@ -1,5 +1,8 @@
 {
     "owner": "maker",
     "name": "Sam",
-    "health": "ok"
+    "interests": ["playing games", "stargazing", "astronomy", "reading books"],
+    "tokenized_interests": ["game", "stargaz", "astronomi", "book"],
+    "health": "ok",
+    "locale": "en_us"
 }
