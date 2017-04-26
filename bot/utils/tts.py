@@ -54,7 +54,10 @@ def normalize_text(text):
     """normalize a single text"""
     groups = REGEX.findall(text)
     for group in groups:
-        text = text.replace('{' + group + '}', get_fact(group))
+        fact = get_fact(group)
+        if isinstance(fact, list):
+            fact = fact[random.randint(0, len(fact) - 1)]
+        text = text.replace('{' + group + '}', fact)
     return text
 
 def get_fact(group):
