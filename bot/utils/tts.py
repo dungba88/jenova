@@ -15,18 +15,18 @@ from ev3bot.tts import MaryTTS
 
 REGEX = re.compile(r'\{([^\}]*)\}')
 
-def say_random(texts):
+def say_random(texts, params=None):
     """Speak a random text from a list"""
     if texts is None:
         return
     text = texts[random.randint(0, len(texts) - 1)]
-    say([text])
+    say([text], params)
 
-def say(texts):
+def say(texts, params=None):
     """Speak texts with a specified engine"""
     if texts is None:
         return
-    texts = normalize(texts)
+    texts = normalize(texts, params)
 
     engine_name = app.get_config('engine.tts.engine')
     osx_voice = app.get_config('engine.tts.osx.voice')
@@ -46,18 +46,22 @@ def say(texts):
         return
     engine.say(texts)
 
-def normalize(texts):
+def normalize(texts, params):
     """normalize texts"""
-    return list(map(normalize_text, texts))
+    return list(map(lambda text: normalize_text(text, params), texts))
 
-def normalize_text(text):
+def normalize_text(text, params):
     """normalize a single text"""
     groups = REGEX.findall(text)
     for group in groups:
-        fact = get_fact(group)
-        if isinstance(fact, list):
-            fact = fact[random.randint(0, len(fact) - 1)]
-        text = text.replace('{' + group + '}', fact)
+        fact = None
+        if params is not None and group in params:
+            fact = params[group]
+        if fact is None:
+            fact = get_fact(group)
+            if isinstance(fact, list):
+                fact = fact[random.randint(0, len(fact) - 1)]
+        text = text.replace('{' + group + '}', str(fact))
     return text
 
 def get_fact(group):

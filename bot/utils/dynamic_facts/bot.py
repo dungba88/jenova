@@ -1,6 +1,5 @@
-"""dynamic facts"""
+"""bot facts"""
 
-import time
 import random
 
 from app import APP_INSTANCE as app
@@ -16,15 +15,3 @@ def get_health_react():
     health = app.get_config('facts.health')
     reacts = app.get_config('behavior.health_react.' + health)
     return reacts[random.randint(0, len(reacts) - 1)]
-
-def get_today():
-    """get today"""
-    return time.strftime("%x")
-
-def get_time():
-    """get current time"""
-    return time.strftime("%X")
-
-def get_day():
-    """get today's day"""
-    return time.strftime("%A")
