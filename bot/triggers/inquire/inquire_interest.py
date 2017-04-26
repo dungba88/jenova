@@ -11,7 +11,7 @@ def run(execution_context):
     no_interest_react = app.get_config('behavior.interest_react.no')
 
     for word in tagged_text:
-        if word[1] == 'JJ' or word[1] == 'NN':
+        if word[1] == 'JJ' or word[1] == 'NN' or word[1] == 'NNS':
             if word[0] in interests:
                 execution_context.finish('yes')
                 tts.say_random(has_interest_react)

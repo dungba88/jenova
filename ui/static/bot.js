@@ -82,9 +82,7 @@ function call_raw(text) {
 
 function add_command(text) {
     $('#response').append('<li class="command">' + text + '</li>');
-    if (text == '') {
-        $('#response').scrollTop($('#response')[0].scrollHeight);
-    }
+    $('#response').scrollTop($('#response')[0].scrollHeight);
 }
 
 function add_response(text, skip_next_command) {
