@@ -14,7 +14,8 @@ var command_helps = {
         audio: 'Start dictation',
         say: 'Make the robot say a sentence. Usage: say {sentence}',
         train: 'Train the bot server',
-        raw: 'Send a raw command to the bot server'
+        raw: 'Send a raw command to the bot server',
+        reload: 'Reload bot configurations'
     },
     misc: {
         help: 'Print help',
@@ -39,7 +40,7 @@ function startDictation() {
         transcript = e.results[0][0].transcript;
         recognition.stop();
         add_command('talk ' + transcript);
-        call_service(transcript);
+        run_command('talk ' + transcript);
     };
 
     recognition.onerror = function(e) {
@@ -173,6 +174,14 @@ bot_commands = {
             "name": "train",
             "args": {
                 "data_name": DATA_NANE
+            }
+        }));
+    },
+
+    reload: function(text) {
+        call_raw(JSON.stringify({
+            "name": "reload",
+            "args": {
             }
         }));
     },
