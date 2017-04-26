@@ -12,11 +12,19 @@
         "battery": ["My battery level is {battery_level}%"],
         "name": ["My name is {name}", "I am {name}", "You named me, don't you remember?"],
         "personal": ["I am {name}, your trustworthy A.I. You have taught me to speak and think."],
-        "eat": ["I am a robot. I do not need to eat."]
+        "eat": ["I am a robot. I do not need to eat."],
+        "date": ["Today is {today}", "It is {today}"],
+        "day": ["Today is {day}", "It is {day}"],
+        "time": ["It is {time} now", "{time}"],
+        "interests": ["I am interested in {interests}", "I like {interests}", "My favourite is {interests}", "I admire {interests}"]
     },
     "stop": {
         "pause_time": 1,
         "reacts": ["um...ok", "Fine. I will stop", "ok ok", "I won't disturb you", "I will leave you alone"]
+    },
+    "interest_react": {
+        "yes": ["Yes. That is one of my favourite", "Yeah yeah. Of course", "Very much"],
+        "no": ["No, I am not interested", "No", "I doubt it"]
     },
     "health_react": {
         "ok": ["I am fine. Thank you for asking.", "I am good", "Nothing wrong with my system", "All parameters are within limit"]
