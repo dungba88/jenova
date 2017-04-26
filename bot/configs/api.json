@@ -1,0 +1,7 @@
+{
+    "weather": {
+        "key": "3117d55abbddbebb7594036abe542bc8",
+        "city": "singapore",
+        "time_to_live": 600
+    }
+}
