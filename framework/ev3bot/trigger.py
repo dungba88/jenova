@@ -77,6 +77,7 @@ class TriggerManager(object):
                 return execution_context.result
             if time.time() - start > self.timeout:
                 break
+            time.sleep(0.001)
 
     def get_handlers(self, name):
         """get all handlers registered for an event"""
