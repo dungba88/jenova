@@ -11,4 +11,4 @@ class OSXTTSEngine(object):
     def say(self, texts):
         """Speak the texts"""
         for text in texts:
-            system('say -v ' + self.voice + ' ' + text)
+            system('say -v ' + self.voice + ' "' + text + '"')
