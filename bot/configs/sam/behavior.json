@@ -26,6 +26,14 @@
         "yes": ["Yes. That is one of my favourite", "Yeah yeah. Of course", "Very much"],
         "no": ["No, I am not interested", "No", "I doubt it"]
     },
+    "weather_react": {
+        "main.Clouds": ["It is cloudy, {owner}."],
+        "main.Rain": ["It is rainy. Please bring umbrella with you when you go out", "It is raining. I would stay at home and sleep"],
+        "clouds": ["Cloud is {clouds} percent"],
+        "temp": ["Temperature is {temp} Celsius degree"],
+        "pressure": ["Pressure: {pressure} millibars"],
+        "humidity": ["Humidity: {humidity} percent"]
+    },
     "health_react": {
         "ok": ["I am fine. Thank you for asking.", "I am good", "Nothing wrong with my system", "All parameters are within limit"]
     }
