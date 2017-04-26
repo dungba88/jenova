@@ -20,3 +20,14 @@ stop,stop
 leave me alone,stop
 sing a song,sing
 do you know any song,sing
+what is your favourite?,inquire.interests
+what is your hobby?,inquire.interests
+do you like computer games?,inquire.interest
+do you like football?,inquire.interest
+what is the date?,inquire.date
+what is the date today?,inquire.date
+what date is today?,inquire.date
+what day is it today?,inquire.day
+what today's day?,inquire.day
+what time is it?,inquire.time
+what is current time?,inquire.time

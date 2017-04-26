@@ -5,3 +5,6 @@
 お元気ですか,inquire.health
 お名前は,inquire.name
 ご飯をたべたの,inquire.eat
+趣味はなんですか？,inquire.interests
+ゲムが好きですか？,inquire.interest
+花が好きですか？,inquire.interest
