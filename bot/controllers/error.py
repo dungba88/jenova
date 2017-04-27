@@ -31,11 +31,12 @@ def default_error_handler(ex, req, resp, params):
         HTTPError: http_error_handler,
         BaseException: base_error_handler
     }
-    for ex_type in error_handlers:
-        if isinstance(ex, ex_type):
-            handler = error_handlers.get(ex_type)
-            handler(ex, req, resp, params)
-            break
+    if resp is not None:
+        for ex_type in error_handlers:
+            if isinstance(ex, ex_type):
+                handler = error_handlers.get(ex_type)
+                handler(ex, req, resp, params)
+                break
 
     distress_call(ex)
 
