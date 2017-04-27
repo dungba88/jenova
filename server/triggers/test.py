@@ -43,12 +43,12 @@ def run(execution_context):
                 + str((int)(result_proba)) + '%' \
                 + ' tagged words: ' + ' ' \
                 + ' '.join(list(map(lambda w: '(' + w[0] + ' ' + w[1] + ')', filtered_text)))
-    execution_context.finish(result)
-    resp, content = send_msg(result_word, result_proba, filtered_text)
-    # result = 'predict: ' + result_word + ' with probability: ' \
-    #             + str((int)(result_proba)) + '%. response from bot: ' \
-    #             + str(content)
     # execution_context.finish(result)
+    resp, content = send_msg(result_word, result_proba, filtered_text)
+    result = 'predict: ' + result_word + ' with probability: ' \
+                + str((int)(result_proba)) + '%. response from bot: ' \
+                + str(content)
+    execution_context.finish(result)
 
 def send_msg(result_word, result_proba, filtered_text):
     """send the message to bot"""
