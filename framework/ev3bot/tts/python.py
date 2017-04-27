@@ -1,14 +1,13 @@
 """TTS Engine by Python"""
 
 from tempfile import NamedTemporaryFile
-from gtts import gTTS
-import pyttsx
 from ev3bot import audio
 
 class PyttsxEngine(object):
     """Wrapper class for pyttsx"""
     def say(self, texts):
         """Speak the texts"""
+        import pyttsx
         engine = pyttsx.init()
         for text in texts:
             engine.say(text)
@@ -26,6 +25,7 @@ class GTTSEngine(object):
 
     def speak_text(self, text):
         """Speak a single text"""
+        from gtts import gTTS
         tts = gTTS(text=text, lang=self.lang)
         # save the speech to temp file
         tmp_file = NamedTemporaryFile()
