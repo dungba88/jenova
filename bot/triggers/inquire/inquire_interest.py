@@ -13,9 +13,7 @@ def run(execution_context):
     for word in tagged_text:
         if word[1] == 'JJ' or word[1] == 'NN' or word[1] == 'NNS':
             if word[0] in interests:
-                execution_context.finish('yes')
-                tts.say_random(has_interest_react)
+                tts.say_random_finish(has_interest_react, execution_context)
                 return
 
-    execution_context.finish('no')
-    tts.say_random(no_interest_react)
+    tts.say_random_finish(no_interest_react, execution_context)

@@ -29,7 +29,7 @@ def run(execution_context):
         return
 
     story = stories[random.randint(0, len(stories) - 1)]
-    execution_context.finish(story.get('name'))
+    execution_context.finish('telling ' + story.get('name'))
 
     tts.say_random(openings)
 

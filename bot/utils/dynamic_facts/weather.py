@@ -27,7 +27,7 @@ def get_weather(city=None):
         city = app.get_config('api.weather.city')
     server_url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&APPID=' + app_id
     res, content = http.call(server_url, None, 'GET')
-    result = json.loads(content)
+    result = json.loads(content.decode('utf-8'))
     if result is None or result.get('cod') != 200:
         LOGGER.warning('Result from api server: ' + str(content))
         return None

@@ -15,18 +15,30 @@ from ev3bot.tts import MaryTTS
 
 REGEX = re.compile(r'\{([^\}]*)\}')
 
-def say_random(texts, params=None):
-    """Speak a random text from a list"""
+def say_random_finish(texts, execution_context, params=None):
+    """Speak a random text then finish"""
+    text = get_random(texts, params)
+    execution_context.finish(text)
+    say([text], do_normalize=False)
+
+def get_random(texts, params=None):
+    """Get a random text from a list"""
     if texts is None or len(texts) == 0:
         return
     text = texts[random.randint(0, len(texts) - 1)]
-    say([text], params)
+    return normalize_text(text, params)
 
-def say(texts, params=None):
+def say_random(texts, params=None):
+    """Speak a random text from a list"""
+    text = get_random(texts, params)
+    say([text], do_normalize=False)
+
+def say(texts, params=None, do_normalize=True):
     """Speak texts with a specified engine"""
     if texts is None:
         return
-    texts = normalize(texts, params)
+    if do_normalize:
+        texts = normalize(texts, params)
 
     engine_name = app.get_config('engine.tts.engine')
     osx_voice = app.get_config('engine.tts.osx.voice')

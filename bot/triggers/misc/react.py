@@ -12,5 +12,4 @@ def run(execution_context):
         execution_context.finish('No react')
         return
 
-    execution_context.finish()
-    tts.say_random(reacts)
+    tts.say_random_finish(reacts, execution_context)

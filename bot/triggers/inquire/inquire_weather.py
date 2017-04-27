@@ -8,7 +8,6 @@ def run(execution_context):
     """run the action"""
     weather = dynamic_facts.get_weather()
     main_weather = weather['weather'][0]['main']
-    execution_context.finish(main_weather)
     clouds = weather['clouds']['all']
     temp = weather['main']['temp'] - 273 # convert from Kelvin
     pressure = weather['main']['pressure']
@@ -22,7 +21,7 @@ def run(execution_context):
     pressure_react = react_config.get('pressure', [])
     humidity_react = react_config.get('humidity', [])
 
-    tts.say_random(main_weather_react)
+    tts.say_random_finish(main_weather_react, execution_context)
     tts.say_random(clouds_react, {'clouds' : clouds})
     tts.say_random(temp_react, {'temp' : int(temp)})
     tts.say_random(pressure_react, {'pressure' : pressure})
