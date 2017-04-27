@@ -8,3 +8,7 @@
 趣味はなんですか？,inquire.interests
 ゲムが好きですか？,inquire.interest
 花が好きですか？,inquire.interest
+天気はどうですか？,inquire.weather
+今日はなんにちですか？,inquire.date
+今は何時ですか？,inquire.time
+今日は何曜日ですか？,inquire.day

@@ -9,12 +9,12 @@
         "no_data": ["Sorry, I don't have any information about that", "Sorry, I can't answer that question"],
         "health": ["{health_react}"],
         "battery": ["My battery level is {battery_level}%"],
-        "name": ["あたしは{name}, です"],
-        "eat": ["私はロボトです、それで食べません", "エレクトリックがいっぱい食べたわ"],
+        "name": ["{owner}。あたしは{name}, です"],
+        "eat": ["{owner}。私はロボトです、それで食べません", "エレクトリックがいっぱい食べたわ"],
         "date": ["きょうは {today}"],
         "day": ["今日は {day}"],
         "time": ["今は　{time}", "{time}"],
-        "interests": ["私の趣味は{interests}", "{interests}"]
+        "interests": ["{owner}。私の趣味は{interests}", "{interests}"]
     },
     "stop": {
         "pause_time": 1,
@@ -23,6 +23,15 @@
     "interest_react": {
         "yes": ["はい、好きです", "はい、大好きですよ", "はい"],
         "no": ["いいえ、好きじゃありません", "いいえ、好きない"]
+    },
+    "weather_react": {
+        "main.Clouds": ["{owner}。今は曇りです, "],
+        "main.Rain": ["{owner}。雨が降っています. 服を洗濯しないほうがいいですよ", "雨が降っています。出かけの場合は傘を持っていますよ"],
+        "main.Thunderstorm": ["{owner}。今は荒れています"],
+        "clouds": ["雲は {clouds} パーセント"],
+        "temp": ["温度は {temp} 度です"],
+        "pressure": ["気圧: {pressure} millibars"],
+        "humidity": ["湿度: {humidity} パーセント"]
     },
     "health_react": {
         "ok": ["元気です", "まま", "私のシステムは完全に機能している", "すべてのパラメータは制限内です"]
