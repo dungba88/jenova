@@ -43,20 +43,19 @@ sudo pip3 install framework/
 
 3. Run the bot
 ```bash
-cd bot #assuming you are in ev3/ folder
-gunicorn main -b 0.0.0.0:8080 --reload
+cd bot # assuming you are in ev3/ folder
+gunicorn main -b 0.0.0.0:8081 --reload
 ```
 
-Now the bot can be accessed from http://localhost:8080. If you install it to your Lego EV3, then change the url to your
-Lego EV3 IP address.
+4. Run the server
+```bash
+cd ../server # assuming you are in bot/ folder
+gunicorn main -b 0.0.0.0:8080 --reload
 
-4. Optionally configure the engine and voice
+Now the bot can be accessed from http://localhost:8081 and the server can be accessed from http://localhost:8080
 
-Take a look at the file `bot/configs/engine.json`. Currently the following TTS engine are supported:
-- `pyttsx`: cross-platform
-- `osx`: only for MacOS via `say` command
-- `gTTS`: wrapper for Google Translate TTS. very limited support
-- `ev3dev`: wrapper for `espeak` in Linux. does not support voice change, but you can modify it to change the voice
-- `mary-tts`: client for MaryTTS. can support a wide range of voices. it supports caching of audio files for faster performance
+5. Start the UI
+
+For this, you need to install a web server which supports static files, like `Apache` or `nginx`, and make the ui/ folder accessible by HTTP. Setup will depend on which web server you choose.
 
 *to be continued*
