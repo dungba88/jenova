@@ -2,6 +2,10 @@
 
 A simple but extensible EV3 bot written in Python and run on ev3dev platform.
 
+## demo
+
+A demo can be found at: http://ev3.dungba.org/ui/
+
 ## requirements
 
 The following packages need to be installed via `pip`
