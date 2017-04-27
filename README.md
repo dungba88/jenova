@@ -58,19 +58,15 @@ sudo pip3 install framework/
 
 3. Run the bot
 ```bash
-cd bot # assuming you are in ev3/ folder
-gunicorn main -b 0.0.0.0:8081 --reload
+gunicorn main --chdir bot/ -b 0.0.0.0:8081 --reload
+gunicorn main --chdir server/ -b 0.0.0.0:8080 --reload
 ```
 
-4. Run the server
-```bash
-cd ../server # assuming you are in bot/ folder
-gunicorn main -b 0.0.0.0:8080 --reload
-```
+(You may need to run with `nohup` command)
 
 Now the bot can be accessed from http://localhost:8081 and the server can be accessed from http://localhost:8080
 
-5. Start the UI
+4. Start the UI
 
 For this, you need to install a web server which supports static files, like `Apache` or `nginx`, and make the ui/ folder accessible by HTTP. Setup will depend on which web server you choose.
 
