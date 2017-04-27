@@ -17,7 +17,7 @@ REGEX = re.compile(r'\{([^\}]*)\}')
 
 def say_random(texts, params=None):
     """Speak a random text from a list"""
-    if texts is None:
+    if texts is None or len(texts) == 0:
         return
     text = texts[random.randint(0, len(texts) - 1)]
     say([text], params)
