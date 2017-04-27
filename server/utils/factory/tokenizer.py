@@ -1,7 +1,5 @@
 """factory for vectorizers"""
 
-from tinysegmenter import TinySegmenter
-
 class TokenizerFactory(object):
     """factory class for vectorizers"""
 
@@ -16,6 +14,7 @@ class TokenizerFactory(object):
 
     def get_tiny_segmenter(self):
         """get japan vectorizer"""
+        from tinysegmenter import TinySegmenter
         return TinySegmenter().tokenize
 
     def get_english_tokenizer(self):
