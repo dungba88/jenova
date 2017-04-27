@@ -6,7 +6,7 @@ A simple but extensible EV3 bot written in Python and run on ev3dev platform.
 
 The following packages need to be installed via `pip`
 - `gunicorn`: lightweight WSGI HTTP Server
-- `Falcon`: super fast RESTful framework
+- `falcon`: super fast RESTful framework
 - `httplib2`: HTTP client
 
 For the bot, these packages are required:
@@ -41,7 +41,7 @@ It depends on the operating system you are using, here are the example for Ubunt
 
 ```bash
 sudo apt-get install python3 python3-pip python3-ev3dev
-sudo pip3 install gunicorn Falcon pygame pyttsx gTTS numpy scipy sklearn nltk
+sudo pip3 install gunicorn falcon httplib2 pygame pyttsx gTTS numpy scipy sklearn nltk
 ```
 
 If you want to use `mary-tts` as TTS engine, it must be installed separately:
