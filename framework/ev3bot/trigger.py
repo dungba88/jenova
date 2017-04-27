@@ -4,7 +4,6 @@ import re
 import time
 import random
 import logging
-import time
 from concurrent.futures import ThreadPoolExecutor
 
 class TriggerExecutionContext(object):
@@ -129,11 +128,11 @@ class TriggerManager(object):
 
             return trigger.action(execution_context)
         except Exception as e:
+            execution_context.reject(e)
             if self.error_handler is not None:
                 self.error_handler.handle_error(e)
             else:
                 logging.getLogger(__name__).error(e)
-            execution_context.reject(e)
 
 def register_trigger(manager, event_name, action, stop_action=None, condition=None):
     """create and register the trigger"""
