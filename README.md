@@ -7,6 +7,7 @@ A simple but extensible EV3 bot written in Python and run on ev3dev platform.
 The following packages need to be installed via `pip`
 - `gunicorn`: lightweight WSGI HTTP Server
 - `Falcon`: super fast RESTful framework
+- `httplib2`: HTTP client
 
 For the bot, these packages are required:
 - `pygame`: for audio playback
