@@ -29,6 +29,7 @@
     "weather_react": {
         "main.Clouds": ["It is cloudy, {owner}."],
         "main.Rain": ["It is rainy. Please bring umbrella with you when you go out", "It is raining. I would stay at home and sleep", "It is still raining"],
+        "main.Thunderstorm": ["It is under a thunderstorm, please be careful"],
         "clouds": ["Cloud is {clouds} percent"],
         "temp": ["Temperature is {temp} Celsius degree"],
         "pressure": ["Pressure: {pressure} millibars"],
