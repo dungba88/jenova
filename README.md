@@ -16,6 +16,7 @@ For the bot, these packages are required:
 For the server, these packages are required:
 - `sklearn`, `nltk`: for machine learning algorithms and utilities
 - `numpy`, `scipy`: libraries used by `sklearn`
+- `tinysegmenter`: Japanese tokenizer
 
 Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) are also required to run the application. It's ok to run the application without `ev3dev`, but you won't have the features related to Lego EV3 like motor controlling.
 
@@ -41,7 +42,7 @@ It depends on the operating system you are using, here are the example for Ubunt
 
 ```bash
 sudo apt-get install python3 python3-pip python3-ev3dev
-sudo pip3 install gunicorn falcon httplib2 pygame pyttsx gTTS numpy scipy sklearn nltk
+sudo pip3 install gunicorn falcon httplib2 pygame pyttsx gTTS numpy scipy sklearn nltk tinysegmenter
 ```
 
 If you want to use `mary-tts` as TTS engine, it must be installed separately:
