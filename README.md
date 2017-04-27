@@ -51,6 +51,7 @@ gunicorn main -b 0.0.0.0:8081 --reload
 ```bash
 cd ../server # assuming you are in bot/ folder
 gunicorn main -b 0.0.0.0:8080 --reload
+```
 
 Now the bot can be accessed from http://localhost:8081 and the server can be accessed from http://localhost:8080
 
