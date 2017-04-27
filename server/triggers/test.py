@@ -1,5 +1,6 @@
 """Trigger implementation for testing trained model"""
 
+import json
 import logging
 
 import nltk
@@ -45,9 +46,10 @@ def run(execution_context):
                 + ' '.join(list(map(lambda w: '(' + w[0] + ' ' + w[1] + ')', filtered_text)))
     # execution_context.finish(result)
     resp, content = send_msg(result_word, result_proba, filtered_text)
+    content_obj = json.loads(content.decode('utf-8'))
     result = 'predict: ' + result_word + ' with probability: ' \
                 + str((int)(result_proba)) + '%. response from bot: ' \
-                + str(content)
+                + str(content_obj.get('msg'))
     execution_context.finish(result)
 
 def send_msg(result_word, result_proba, filtered_text):
