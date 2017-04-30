@@ -35,5 +35,5 @@ what is the weather like?,inquire.weather
 what the weather?,inquire.weather
 what is the headlines?,inquire.news
 what is the latest news?,inquire.news
-anything new?,inquire.news
+any news?,inquire.news
 what on trend?,inquire.news
