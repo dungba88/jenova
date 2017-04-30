@@ -33,6 +33,14 @@
         "pressure": ["気圧: {pressure} millibars"],
         "humidity": ["湿度: {humidity} パーセント"]
     },
+    "news_react": {
+        "lang": "ja",
+        "opening": [""],
+        "no_data": [""],
+        "has_data": [""],
+        "templates": ["{text}"],
+        "count": 200
+    },
     "health_react": {
         "ok": ["元気です", "まま", "私のシステムは完全に機能している", "すべてのパラメータは制限内です"]
     }

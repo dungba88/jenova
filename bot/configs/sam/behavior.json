@@ -35,6 +35,14 @@
         "pressure": ["Pressure: {pressure} millibars"],
         "humidity": ["Humidity: {humidity} percent"]
     },
+    "news_react": {
+        "lang": "en",
+        "opening": ["Hold on", "Let me find", "Wait a sec"],
+        "no_data": ["Hm. Nothing new", "Not any recent news that I know"],
+        "has_data": ["Ok, I got one", "Here goes one"],
+        "templates": ["{text} . From {user}"],
+        "count": 200
+    },
     "health_react": {
         "ok": ["I am fine. Thank you for asking.", "I am good", "Nothing wrong with my system", "All parameters are within limit"]
     }

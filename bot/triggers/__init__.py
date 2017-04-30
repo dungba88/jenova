@@ -8,6 +8,7 @@ from triggers.misc import react
 from triggers.inquire import base as inquire
 from triggers.inquire import inquire_interest
 from triggers.inquire import inquire_weather
+from triggers.inquire import inquire_news
 from triggers.admin import reload_conf
 from ev3bot.trigger import register_trigger
 
@@ -23,5 +24,6 @@ def init_all_triggers(manager):
     register_trigger(manager, event_name='inquire.*', action=inquire.run)
     register_trigger(manager, event_name='inquire.interest', action=inquire_interest.run)
     register_trigger(manager, event_name='inquire.weather', action=inquire_weather.run)
+    register_trigger(manager, event_name='inquire.news', action=inquire_news.run)
 
     register_trigger(manager, event_name='reload', action=reload_conf.run)
