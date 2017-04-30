@@ -13,5 +13,5 @@ def run(execution_context):
         'args': {
         }
     }
-    execution_context.finish()
+    execution_context.finish('reload done')
     http.call(url, msg)
