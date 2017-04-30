@@ -27,6 +27,8 @@
         "no": ["No, I am not interested", "No", "I doubt it"]
     },
     "weather_react": {
+        "main.Clear": ["The sky is clear", "It is clear. A very beautiful sky"],
+        "main.Haze": ["The sky is hazy", "It is hazy. Not good for your health"],
         "main.Clouds": ["It is cloudy, {owner}."],
         "main.Rain": ["It is rainy. Please bring umbrella with you when you go out", "It is raining. I would stay at home and sleep", "It is still raining"],
         "main.Thunderstorm": ["It is under a thunderstorm, please be careful"],
