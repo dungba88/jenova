@@ -3,5 +3,11 @@
         "key": "3117d55abbddbebb7594036abe542bc8",
         "city": "singapore",
         "time_to_live": 600
+    },
+    "twitter": {
+        "access_token": "",
+        "access_secret": "",
+        "consumer_key": "",
+        "consumer_secret": ""
     }
 }
