@@ -33,3 +33,7 @@ what time is it?,inquire.time
 what is current time?,inquire.time
 what is the weather like?,inquire.weather
 what the weather?,inquire.weather
+what is the headlines?,inquire.news
+what is the latest news?,inquire.news
+anything new?,inquire.news
+what on trend?,inquire.news
