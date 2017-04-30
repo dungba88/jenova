@@ -4,12 +4,12 @@ import json
 import ssl
 from pathlib import Path
 
-from twitter import OAuth, Twitter
-
 from app import APP_INSTANCE as app
 
 def create_api():
     """create a twitter api"""
+    from twitter import OAuth, Twitter
+
     access_token = app.get_config('api.twitter.access_token')
     access_secret = app.get_config('api.twitter.access_secret')
     consumer_key = app.get_config('api.twitter.consumer_key')
