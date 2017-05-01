@@ -21,18 +21,6 @@ def parse_csv(reader, config, remove_stop_words):
         output_texts.append(",".join(row))
     return input_texts, output_texts
 
-def vectorize_new_input(text, data_vocab):
-    """vectorize new input based on vectorized data"""
-    word_count = count_words(text)
-    vectorized_text = []
-
-    for word in data_vocab:
-        if word in word_count:
-            vectorized_text.append(word_count[word])
-        else:
-            vectorized_text.append(0)
-    return vectorized_text
-
 def vectorize_target(outputs, data_name):
     """vectorize outputs"""
     vocab = persist.load_vocab_file(data_name)
@@ -63,16 +51,6 @@ def predict_list(texts, data_name):
     vectorizer = persist.load_vectorizer(data_name)
     vectorized_texts = vectorizer.transform(texts).toarray()
     return model.predict(vectorized_texts)
-
-def count_words(text):
-    """count words in text"""
-    word_count = {}
-    for word in text:
-        if word not in word_count:
-            word_count[word] = 1
-        else:
-            word_count[word] += 1
-    return word_count
 
 def clean_text(raw_text, remove_stop_words):
     """Clean raw text for bag-of-words model"""
