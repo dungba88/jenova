@@ -43,8 +43,9 @@ def run(execution_context):
     result = 'predict: ' + result_word + ' with probability: ' \
                 + str((int)(result_proba)) + '%. response from bot: ' \
                 + str(content_obj.get('msg')) \
-                + ' tagged words: ' + ' ' \
-                + ' '.join(list(map(lambda w: '(' + w[0] + ' ' + w[1] + ')', tagged_text)))
+                + ' [tagged words: ' + ' ' \
+                + ' '.join(list(map(lambda w: '(' + w[0] + ' ' + w[1] + ')', tagged_text))) \
+                + ']'
     execution_context.finish(result)
 
 def tag_text(tokenized_text):
