@@ -26,6 +26,9 @@ class ApplicationBootstrap(object):
         api.add_error_handler(ValueError, error.value_error_handler)
         api.add_error_handler(HTTPError, error.http_error_handler)
 
+        trigger_manager = self.app_context.trigger_manager
+        trigger_manager.error_handler = error.DefaultErrorHandler()
+
     def register_routes(self):
         """Register REST routes"""
         logging.info('Registering route')
