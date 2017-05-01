@@ -10,7 +10,7 @@ class VectorizerFactory(object):
     def get_vectorizer(cls, name, tokenizer):
         """get the vectorizer based on name"""
         factory = VectorizerFactory()
-        factory_method = getattr(factory, 'get_' + name)
+        factory_method = getattr(factory, 'get_' + name, None)
         if factory_method is None:
             raise ValueError('vectorizer ' + name + ' is not defined')
         return factory_method(tokenizer)
