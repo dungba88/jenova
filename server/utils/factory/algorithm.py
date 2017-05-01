@@ -31,5 +31,5 @@ class AlgorithmFactory(object):
 
     def get_svm(self):
         """get support vector machine algorithm"""
-        return SGDClassifier(loss='log', penalty='l2',
+        return SGDClassifier(loss='hinge', penalty='l2',
                              alpha=1e-3, n_iter=5, random_state=42)
