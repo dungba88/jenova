@@ -100,15 +100,15 @@ function add_error(err) {
 }
 
 function run_command(text) {
+    if (text == undefined || text.trim() == '') {
+        add_command('');
+        return;
+    }
     command_histories.push(text);
     current_idx = command_histories.length;
 
     commands = text.split(' ');
     command = commands[0];
-    if (command == '') {
-        add_command('');
-        return;
-    }
     if (bot_commands[command] == undefined) {
         add_error(command + ': command not found. Type help for available commands.')
         return;
