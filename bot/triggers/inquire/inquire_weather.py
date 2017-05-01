@@ -6,6 +6,10 @@ from utils import dynamic_facts
 
 def run(execution_context):
     """run the action"""
+    opening_reacts = app.get_config('behavior.weather_react.opening')
+    tts.say_random(opening_reacts)
+
+    # get weather info
     weather = dynamic_facts.get_weather()
     main_weather = weather['weather'][0]['main']
     clouds = weather['clouds']['all']
