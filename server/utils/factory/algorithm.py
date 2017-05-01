@@ -3,7 +3,7 @@
 from sklearn.naive_bayes import GaussianNB
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
-from sklearn.linear_model import SGDClassifier
+from sklearn.svm import LinearSVC
 
 class AlgorithmFactory(object):
     """factory class for algorithms"""
@@ -31,5 +31,4 @@ class AlgorithmFactory(object):
 
     def get_svm(self):
         """get support vector machine algorithm"""
-        return SGDClassifier(loss='hinge', penalty='l2',
-                             alpha=1e-3, n_iter=5, random_state=42)
+        return LinearSVC()
