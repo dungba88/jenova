@@ -4,6 +4,7 @@ import csv
 import logging
 
 from app import APP_INSTANCE as app
+from utils.learn import classifier
 from utils.learn import pre_process
 from utils.learn import persist
 
@@ -27,7 +28,7 @@ def test_data(reader, data_name, config):
 
     input_texts, output_texts = pre_process.parse_csv(reader, config, remove_stop_words)
     target = pre_process.vectorize_target(output_texts, data_name)
-    result = pre_process.predict_list(input_texts, data_name)
+    result = classifier.predict_list(input_texts, data_name)
 
     missed = (target != result).sum()
 
