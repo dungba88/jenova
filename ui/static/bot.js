@@ -14,6 +14,7 @@ var command_helps = {
         audio: 'Start dictation',
         say: 'Make the robot say a sentence. Usage: say {sentence}',
         train: 'Train the bot server',
+        test: 'Test the model against cross validation data',
         raw: 'Send a raw command to the bot server',
         reload: 'Reload bot configurations'
     },
@@ -53,7 +54,7 @@ function startDictation() {
 
 function call_service(text) {
     call_raw(JSON.stringify({
-        "name": "test",
+        "name": "predict",
         "args": {
             "data_name": DATA_NANE,
             "text": text
@@ -134,6 +135,15 @@ bot_commands = {
             throw new Error('Sentence is empty');
         }
         call_service(text);
+    },
+
+    test: function(text) {
+        call_raw(JSON.stringify({
+            "name": "test",
+            "args": {
+                "data_name": DATA_NANE
+            }
+        }));
     },
 
     raw: function(text) {
