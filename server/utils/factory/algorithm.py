@@ -1,6 +1,7 @@
 """factory for algorithms"""
 
 from sklearn.naive_bayes import GaussianNB
+from sklearn.linear_model import LogisticRegression
 
 class AlgorithmFactory(object):
     """factory class for algorithms"""
@@ -17,3 +18,7 @@ class AlgorithmFactory(object):
     def get_naive_bayes(self):
         """get naive bayes algorithm"""
         return GaussianNB()
+
+    def get_logistic(self):
+        """get logistic regression algorithm"""
+        return LogisticRegression(solver='lbfgs', multi_class='multinomial')
