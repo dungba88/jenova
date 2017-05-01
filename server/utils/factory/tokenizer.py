@@ -19,7 +19,8 @@ class TokenizerFactory(object):
 
     def get_english_tokenizer(self):
         """get english vectorizer"""
-        def tokenize(text):
-            """tokenize by space"""
-            return text.split(' ')
-        return tokenize
+        return tokenize_spaces
+
+def tokenize_spaces(text):
+    """tokenize by space"""
+    return text.split(' ')
