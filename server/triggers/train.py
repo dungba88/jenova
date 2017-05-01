@@ -3,9 +3,6 @@
 import csv
 import json
 
-from sklearn.externals import joblib
-import tinysegmenter
-
 from app import APP_INSTANCE as app
 from utils.learn import pre_process
 from utils.learn import persist
@@ -26,7 +23,8 @@ def run(execution_context):
 
 def train_data(reader, data_name, config):
     """train the data file"""
-    input_texts, output_texts = parse_csv(reader, config)
+    remove_stop_words = app.get_config('train.remove_stop_words')
+    input_texts, output_texts = pre_process.parse_csv(reader, config, remove_stop_words)
 
     vectorizer = get_vectorizer(config)
     vectorized_data = pre_process.vectorize_data(input_texts, output_texts, vectorizer)
@@ -38,23 +36,11 @@ def train_data(reader, data_name, config):
     algorithm = get_algorithm()
     model = algorithm.fit(vectorized_data.get('data'), vectorized_data.get('target'))
 
+    # save the vectorizer
+    persist.save_vectorizer(data_name, vectorizer)
+
     # save the model
-    save_model(data_name, model)
-
-def parse_csv(reader, config):
-    """parse the csv file"""
-    remove_stop_words = app.get_config('train.remove_stop_words')
-    input_texts = []
-    output_texts = []
-
-    for row in reader:
-        text = row[0]
-        if config.get('clean_text'):
-            text = pre_process.clean_text(row[0], remove_stop_words)
-        input_texts.append(text)
-        row.pop(0)
-        output_texts.append(",".join(row))
-    return input_texts, output_texts
+    persist.save_model(data_name, model)
 
 def get_vectorizer(config):
     """get the vectorizer based on config"""
@@ -83,7 +69,3 @@ def save_data(data_name, vectorized_data):
 
     with open('cache/data/' + data_name + '/vocab.json', 'w') as vocab_file:
         json.dump(vocab_file_data, vocab_file)
-
-def save_model(data_name, model):
-    """save the trained model to file"""
-    joblib.dump(model, 'cache/data/' + data_name + '/model.pkl')

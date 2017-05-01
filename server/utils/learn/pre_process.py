@@ -7,6 +7,20 @@ from nltk.corpus import stopwords
 
 from utils.learn import persist
 
+def parse_csv(reader, config, remove_stop_words):
+    """parse the csv file"""
+    input_texts = []
+    output_texts = []
+
+    for row in reader:
+        text = row[0]
+        if config.get('clean_text'):
+            text = clean_text(row[0], remove_stop_words)
+        input_texts.append(text)
+        row.pop(0)
+        output_texts.append(",".join(row))
+    return input_texts, output_texts
+
 def vectorize_new_input(text, data_vocab):
     """vectorize new input based on vectorized data"""
     word_count = count_words(text)
@@ -19,18 +33,36 @@ def vectorize_new_input(text, data_vocab):
             vectorized_text.append(0)
     return vectorized_text
 
+def vectorize_target(outputs, data_name):
+    """vectorize outputs"""
+    vocab = persist.load_vocab_file(data_name)
+    target_vocab = vocab.get('target_vocab')
+
+    target_map = {v: k for k, v in enumerate(target_vocab)}
+
+    return [target_map.get(output) for output in outputs]
+
 def predict(text, data_name):
     """predict the intent of a text"""
     vocab = persist.load_vocab_file(data_name)
     model = persist.load_model_file(data_name)
+    vectorizer = persist.load_vectorizer(data_name)
 
-    vectorized_text = vectorize_new_input(text, vocab.get('data_vocab'))
-    ypred = model.predict([vectorized_text])[0]
-    proba = model.predict_proba([vectorized_text])[0]
+    vectorized_text = vectorizer.transform([text]).toarray()
+
+    ypred = model.predict(vectorized_text)[0]
+    proba = model.predict_proba(vectorized_text)[0]
 
     result_proba = proba[ypred]
     result_word = vocab.get('target_vocab')[ypred]
     return result_word, result_proba
+
+def predict_list(texts, data_name):
+    """predict the intent of texts"""
+    model = persist.load_model_file(data_name)
+    vectorizer = persist.load_vectorizer(data_name)
+    vectorized_texts = vectorizer.transform(texts).toarray()
+    return model.predict(vectorized_texts)
 
 def count_words(text):
     """count words in text"""
