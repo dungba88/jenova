@@ -11,11 +11,18 @@ def predict(text, data_name):
     vectorized_text = vectorizer.transform([text]).toarray()
 
     ypred = model.predict(vectorized_text)[0]
-    proba = model.predict_proba(vectorized_text)[0]
+    result_proba = 0
 
-    result_proba = proba[ypred]
+    if probabilistic_model(model):
+        proba = model.predict_proba(vectorized_text)[0]
+        result_proba = proba[ypred]
+
     result_word = vocab.get('target_vocab')[ypred]
     return result_word, result_proba
+
+def probabilistic_model(model):
+    """check if the model is a probablistic model"""
+    return callable(getattr(model, 'predict_proba', None))
 
 def predict_list(texts, data_name):
     """predict the intent of texts"""
