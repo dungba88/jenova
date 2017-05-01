@@ -18,7 +18,10 @@ class ApplicationBootstrap(object):
         self.register_error_handlers()
         self.register_routes()
         self.register_triggers()
+        self.register_locale()
 
+    def register_locale(self):
+        """register locale based on config"""
         import locale
         locale.setlocale(locale.LC_ALL, self.app_context.get_config('facts.locale'))
 
