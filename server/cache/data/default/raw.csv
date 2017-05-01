@@ -10,8 +10,9 @@ how do you do,inquire.health
 are you hungry,inquire.eat
 tell me a story,tell_story
 do you have any story,tell_story
-story,tell_story
+do you know any story,tell_story
 what is your name,inquire.name
+what your name,inquire.name
 who are you,inquire.personal
 tell me about yourself,inquire.personal
 i'm sad,express
@@ -32,8 +33,6 @@ what today's day?,inquire.day
 what time is it?,inquire.time
 what is current time?,inquire.time
 what is the weather like?,inquire.weather
-what the weather?,inquire.weather
 what is the headlines?,inquire.news
 what is the latest news?,inquire.news
-any news?,inquire.news
 what on trend?,inquire.news
