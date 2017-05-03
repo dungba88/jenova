@@ -15,6 +15,8 @@ from ev3bot.tts import MaryTTS
 
 REGEX = re.compile(r'\{([^\}]*)\}')
 
+LAST_SENTENCE = None
+
 def say_random_finish(texts, execution_context, params=None):
     """Speak a random text then finish"""
     text = get_random(texts, params)
@@ -39,6 +41,9 @@ def say(texts, params=None, do_normalize=True):
         return
     if do_normalize:
         texts = normalize(texts, params)
+
+    global LAST_SENTENCE
+    LAST_SENTENCE = texts
 
     engine_name = app.get_config('engine.tts.engine')
     osx_voice = app.get_config('engine.tts.osx.voice')
