@@ -38,3 +38,5 @@ what is the weather like?,inquire.weather
 what is the headlines?,inquire.news
 what is the latest news?,inquire.news
 what on trend?,inquire.news
+can you repeat?,repeat
+can you say again?,repeat
