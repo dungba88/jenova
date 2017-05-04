@@ -46,7 +46,10 @@ def run(execution_context):
                 + ' [tagged words: ' + ' ' \
                 + ' '.join(list(map(lambda w: '(' + w[0] + ' ' + w[1] + ')', tagged_text))) \
                 + ']'
-    execution_context.finish(result)
+    execution_context.finish({
+        'raw': result,
+        'bot_response': content_obj.get('msg')
+    })
 
 def tag_text(tokenized_text):
     """pos tagging text"""
