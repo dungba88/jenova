@@ -73,7 +73,7 @@ function call_raw(text) {
 
             if (window.ENABLE_TTS) {
                 utter = new SpeechSynthesisUtterance(res.msg.bot_response);
-                utter.voice = window.speechSynthesis.getVoices()[4];
+                // utter.voice = window.speechSynthesis.getVoices()[4];
                 window.speechSynthesis.speak(utter);
             }
         }
