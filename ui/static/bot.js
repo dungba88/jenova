@@ -70,6 +70,12 @@ function call_raw(text) {
             add_error(res.msg);
         } else {
             add_response(res.msg.raw);
+
+            if (window.ENABLE_TTS) {
+                utter = new SpeechSynthesisUtterance(res.msg.bot_response);
+                utter.voice = window.speechSynthesis.getVoices()[4];
+                window.speechSynthesis.speak(utter);
+            }
         }
     }).fail(function(xhr, status, err) {
         ALLOW_TYPING = true;
