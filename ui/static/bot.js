@@ -72,7 +72,8 @@ function call_raw(text) {
             add_response(res.msg.raw);
 
             if (window.ENABLE_TTS) {
-                utter = new SpeechSynthesisUtterance(res.msg.bot_response);
+                var text = res.msg.bot_response.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
+                utter = new SpeechSynthesisUtterance(text);
                 // utter.voice = window.speechSynthesis.getVoices()[4];
                 window.speechSynthesis.speak(utter);
             }
