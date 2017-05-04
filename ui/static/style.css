@@ -1,11 +1,3 @@
-li.error.resp {
-    color: red;
-}
-
-li.resp {
-    color: white;
-}
-
 .shell-body {
   margin: 0;
   padding: 5px;
@@ -25,7 +17,15 @@ li.resp {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
- 
+
+li.error.resp {
+  color: red;
+}
+
+li.resp {
+  color: white;
+}
+
 .shell-body li:before {
   content: '$';
   position: absolute;
@@ -63,4 +63,29 @@ li.resp {
 .helpitem {
   width: 100px;
   display: inline-block;
+}
+
+.theme-light.shell-body {
+  background: beige;
+  color: black;
+  font-family: Helvetica;
+  border: 1px solid #999;
+}
+
+.theme-light.shell-body li.resp {
+  color: black;
+  font-weight: normal;
+}
+
+.theme-light li.error.resp {
+  color: red;
+}
+
+.theme-light.shell-body li {
+  font-weight: bold;
+}
+
+.theme-light.shell-body li a {
+  color: orange;
+  font-weight: bold;
 }
