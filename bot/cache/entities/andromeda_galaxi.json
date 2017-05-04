@@ -1,0 +1,8 @@
+{
+    "name": "Andromeda Galaxy",
+    "def": "The Andromeda Galaxy, also known as Messier 31, M31, or NGC 224, is a spiral galaxy approximately 780 kiloparsecs (2.5 million light-years) from Earth. It is the nearest major galaxy to the Milky Way and was often referred to as the Great Andromeda Nebula in older texts. It received its name from the area of the sky in which it appears, the constellation of Andromeda, which was named after the mythological princess Andromeda.",
+    "type": "spiral galaxy",
+    "category": "astronomy",
+    "distance": "2.54 million light-years",
+    "size": "220 kilo light-years"
+}
