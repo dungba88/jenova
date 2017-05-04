@@ -50,3 +50,23 @@ what is the headlines?,inquire.news
 what is the latest news?,inquire.news
 what on trend?,inquire.news
 any news?,inquire.news
+can you repeat?,repeat
+can you say again?,repeat
+what is andromeda galaxy?,inquire.entity.def
+what is a constellation?,inquire.entity.def
+what is the constellation?,inquire.entity.def
+what is the type of andromeda galaxy?,inquire.entity.type
+what is the type of the earth?,inquire.entity.type
+what is the type of it?,inquire.entity.type
+how big is andromeda galaxy?,inquire.entity.size
+how big is the earth?,inquire.entity.size
+how big is it?,inquire.entity.size
+how large is andromeda galaxy?,inquire.entity.size
+how large is the earth?,inquire.entity.size
+how large is it?,inquire.entity.size
+how far is andromeda galaxy?,inquire.entity.distance
+how far is the earth?,inquire.entity.distance
+how far is it?,inquire.entity.distance
+what is the distance to andromeda galaxy,inquire.entity.distance
+what is the distance to the earth,inquire.entity.distance
+what is the distance to it,inquire.entity.distance
