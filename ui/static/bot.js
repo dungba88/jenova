@@ -69,13 +69,17 @@ function call_raw(text) {
         if (res.status == 1) {
             add_error(res.msg);
         } else {
-            add_response(res.msg.raw);
+            if (typeof res.msg == 'string') {
+                add_response(res.msg);
+            } else {
+                add_response(res.msg.raw);
 
-            if (window.ENABLE_TTS) {
-                var text = res.msg.bot_response.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
-                utter = new SpeechSynthesisUtterance(text);
-                // utter.voice = window.speechSynthesis.getVoices()[4];
-                window.speechSynthesis.speak(utter);
+                if (window.ENABLE_TTS) {
+                    var text = res.msg.bot_response.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
+                    utter = new SpeechSynthesisUtterance(text);
+                    // utter.voice = window.speechSynthesis.getVoices()[4];
+                    window.speechSynthesis.speak(utter);
+                }
             }
         }
     }).fail(function(xhr, status, err) {
