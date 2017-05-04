@@ -69,7 +69,7 @@ function call_raw(text) {
         if (res.status == 1) {
             add_error(res.msg);
         } else {
-            if (typeof res.msg == 'string') {
+            if (typeof res.msg == 'string' || res.msg == undefined) {
                 add_response(res.msg);
             } else {
                 add_response(res.msg.raw);
