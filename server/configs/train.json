@@ -1,5 +1,6 @@
 {
     "algorithm": "naive_bayes",
     "vectorizer": "tf_idf",
+    "filtered_word_types":  ["DT"],
     "remove_stop_words": false
 }

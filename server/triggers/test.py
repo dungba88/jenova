@@ -24,15 +24,23 @@ def run(execution_context):
 
 def test_data(reader, data_name, config):
     """test the model"""
-    remove_stop_words = app.get_config('train.remove_stop_words')
+    filtered_word_types = app.get_config('train.filtered_word_types')
 
-    input_texts, output_texts = pre_process.parse_csv(reader, config, remove_stop_words)
-    target = pre_process.vectorize_target(output_texts, data_name)
+    input_texts, output_texts = pre_process.parse_csv(reader, config, filtered_word_types)
+    target, target_vocab = pre_process.vectorize_target(output_texts, data_name)
     result = classifier.predict_list(input_texts, data_name)
 
-    missed = (target != result).sum()
+    missed = target != result
+    missed_count = missed.sum()
+    idxes = [idx for idx, value in enumerate(missed) if value]
+    missed_sentences = [build_sentence(idx, input_texts, target_vocab, result) for idx in idxes]
 
-    result_proba = (1 - missed / len(target)) * 100
+    result_proba = (1 - missed_count / len(target)) * 100
 
     return 'test against data name: ' + data_name + ' with accuracy: ' \
-                + str((int)(result_proba)) + '%'
+                + str((int)(result_proba)) + '%. Missed: ' \
+                + '. '.join(missed_sentences)
+
+def build_sentence(idx, input_texts, target_vocab, result):
+    """build a sentence"""
+    return input_texts[idx] + "(" + str(target_vocab[result[idx]]) + ")"
