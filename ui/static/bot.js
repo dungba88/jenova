@@ -69,7 +69,7 @@ function call_raw(text) {
         if (res.status == 1) {
             add_error(res.msg);
         } else {
-            add_response(res.msg);
+            add_response(res.msg.raw);
         }
     }).fail(function(xhr, status, err) {
         ALLOW_TYPING = true;
