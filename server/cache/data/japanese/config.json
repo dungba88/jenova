@@ -1,4 +1,5 @@
 {
     "clean_text": false,
-    "tokenizer": "tiny_segmenter"
+    "tokenizer": "tiny_segmenter",
+    "allow_teaching": false
 }

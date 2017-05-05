@@ -3,6 +3,7 @@
 import csv
 
 from app import APP_INSTANCE as app
+from utils.learn import persist
 
 def run(execution_context):
     """run the action"""
@@ -11,6 +12,10 @@ def run(execution_context):
     text = event.get('text')
 
     validate(text)
+
+    data_config = persist.get_data_config(data_name)
+    if not data_config.get('allow_teaching'):
+        raise ValueError('data_name ' + data_name + ' is not allowed to teach')
 
     with open("cache/data/" + data_name + '/raw.csv', 'a') as data_file:
         data_file.write(text)
