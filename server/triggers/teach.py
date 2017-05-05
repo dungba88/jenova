@@ -23,6 +23,8 @@ def run(execution_context):
     with open("cache/data/" + data_name + '/test.csv', 'a') as data_file:
         data_file.write('\n' + text)
 
+    execution_context.finish('teach done')
+
 def validate(text):
     """validate the input text"""
     if text is None or text is '':
