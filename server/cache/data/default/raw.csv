@@ -48,7 +48,11 @@ how big is x y?,inquire.entity.size
 how big is x?,inquire.entity.size
 how large is x y?,inquire.entity.size
 how large is x?,inquire.entity.size
+what is the size of x y?,inquire.entity.size
+what is the size of x?,inquire.entity.size
 how far is x y?,inquire.entity.distance
 how far is x?,inquire.entity.distance
 what is the distance to x y,inquire.entity.distance
 what is the distance to x,inquire.entity.distance
+where is x y?,inquire.entity.location
+where is x?,inquire.entity.location

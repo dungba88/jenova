@@ -64,9 +64,15 @@ how big is it?,inquire.entity.size
 how large is andromeda galaxy?,inquire.entity.size
 how large is the earth?,inquire.entity.size
 how large is it?,inquire.entity.size
+what is the size of andromeda galaxy?,inquire.entity.size
+what is the size of the earth?,inquire.entity.size
+what is the size of it?,inquire.entity.size
 how far is andromeda galaxy?,inquire.entity.distance
 how far is the earth?,inquire.entity.distance
 how far is it?,inquire.entity.distance
 what is the distance to andromeda galaxy,inquire.entity.distance
 what is the distance to the earth,inquire.entity.distance
 what is the distance to it,inquire.entity.distance
+where is andromeda galaxy,inquire.entity.location
+where is the earth,inquire.entity.location
+where is it,inquire.entity.location
