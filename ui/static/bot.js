@@ -62,6 +62,16 @@ function call_service(text) {
     }));
 }
 
+function speak(text) {
+    sentences = text.split(/[.!?]/).forEach(speak_sentence);
+}
+
+function speak_sentence(sentence) {
+    utter = new SpeechSynthesisUtterance(sentence);
+    // utter.voice = window.speechSynthesis.getVoices()[4];
+    window.speechSynthesis.speak(utter);
+}
+
 function call_raw(text) {
     ALLOW_TYPING = false;
     $.post(SERVER_URL, text, function(res) {
@@ -75,10 +85,7 @@ function call_raw(text) {
                 add_response(res.msg.raw);
 
                 if (window.ENABLE_TTS) {
-                    var text = res.msg.bot_response.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
-                    utter = new SpeechSynthesisUtterance(text);
-                    // utter.voice = window.speechSynthesis.getVoices()[4];
-                    window.speechSynthesis.speak(utter);
+                    speak(res.msg.bot_response.replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
                 }
             }
         }
