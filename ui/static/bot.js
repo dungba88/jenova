@@ -3,20 +3,21 @@ var current_idx = -1;
 var command_histories = [];
 
 var command_helps = {
+    bot_commands: {
+        talk: 'Send a text to the bot server. Usage: talk {sentence}',
+        audio: 'Start dictation',
+        say: 'Make the robot say a sentence. Usage: say {sentence}',
+        teach: 'Teach the robot. Usage: teach {sentence},{intent}',
+        train: 'Train the bot server',
+        test: 'Test the model against cross validation data',
+        raw: 'Send a raw command to the bot server',
+        reload: 'Reload bot configurations'
+    },
     interface_commands: {
         clear: 'Clear the console interface',
         info: 'Get client information',
         servinfo: 'Get server information',
         eval: 'Execute javascript code. Usage: eval {statement}'
-    },
-    bot_commands: {
-        talk: 'Send a text to the bot server. Usage: talk {sentence}',
-        audio: 'Start dictation',
-        say: 'Make the robot say a sentence. Usage: say {sentence}',
-        train: 'Train the bot server',
-        test: 'Test the model against cross validation data',
-        raw: 'Send a raw command to the bot server',
-        reload: 'Reload bot configurations'
     },
     misc: {
         help: 'Print help',
@@ -193,6 +194,16 @@ bot_commands = {
 
     audio: function(text) {
         startDictation();
+    },
+
+    teach: function(text) {
+        call_raw(JSON.stringify({
+            "name": "teach",
+            "args": {
+                "text": text,
+                "data_name": DATA_NANE
+            }
+        }));
     },
 
     train: function(text) {
