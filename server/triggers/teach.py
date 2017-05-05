@@ -18,10 +18,10 @@ def run(execution_context):
         raise ValueError('data_name ' + data_name + ' is not allowed to teach')
 
     with open("cache/data/" + data_name + '/raw.csv', 'a') as data_file:
-        data_file.write('\n' + text)
+        data_file.write(text + '\n')
 
     with open("cache/data/" + data_name + '/test.csv', 'a') as data_file:
-        data_file.write('\n' + text)
+        data_file.write(text + '\n')
 
     execution_context.finish('teach done')
 
