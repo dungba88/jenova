@@ -2,12 +2,12 @@
 
 import re
 
+import nltk
 from nltk import PorterStemmer
-from nltk.corpus import stopwords
 
 from utils.learn import persist
 
-def parse_csv(reader, config, remove_stop_words):
+def parse_csv(reader, config, filtered_word_types):
     """parse the csv file"""
     input_texts = []
     output_texts = []
@@ -15,7 +15,7 @@ def parse_csv(reader, config, remove_stop_words):
     for row in reader:
         text = row[0]
         if config.get('clean_text'):
-            text = clean_text(row[0], remove_stop_words)
+            text = clean_text(row[0], filtered_word_types)
         input_texts.append(text)
         row.pop(0)
         output_texts.append(",".join(row))
@@ -28,9 +28,9 @@ def vectorize_target(outputs, data_name):
 
     target_map = {v: k for k, v in enumerate(target_vocab)}
 
-    return [target_map.get(output) for output in outputs]
+    return [target_map.get(output) for output in outputs], target_vocab
 
-def clean_text(raw_text, remove_stop_words):
+def clean_text(raw_text, filtered_word_types):
     """Clean raw text for bag-of-words model"""
     # Remove non-letters
     letters_only = re.sub("[^a-zA-Z]", " ", raw_text)
@@ -40,12 +40,12 @@ def clean_text(raw_text, remove_stop_words):
 
     # stem words
     stemmer = PorterStemmer()
-    stemmed_words = map(stemmer.stem, words)
+    stemmed_words = list(map(stemmer.stem, words))
 
     # Remove stop words if requested
-    if remove_stop_words:
-        stop_words = set(stopwords.words("english"))
-        stemmed_words = [w for w in stemmed_words if not w in stop_words]
+    if filtered_word_types is not None:
+        tagged_text = nltk.pos_tag(stemmed_words)
+        stemmed_words = [w for w, wtype in tagged_text if not wtype in filtered_word_types]
 
     # join together
     return " ".join(stemmed_words)

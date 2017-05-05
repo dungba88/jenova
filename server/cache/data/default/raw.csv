@@ -8,7 +8,7 @@ are you ok,inquire.health
 how are you,inquire.health
 how do you do,inquire.health
 are you hungry,inquire.eat
-tell me a story,tell_story
+tell me story,tell_story
 do you have any story,tell_story
 do you know any story,tell_story
 what is your name,inquire.name
@@ -19,13 +19,13 @@ i'm sad,express
 i'm happy,express
 stop,stop
 leave me alone,stop
-sing a song,sing
+sing song,sing
 do you know any song,sing
 what are your interests?,inquire.interests
 what is your favourite?,inquire.interests
 what is your hobby?,inquire.interests
-do you like computer games?,inquire.interest
-do you like football?,inquire.interest
+do you like x?,inquire.interest
+do you like y?,inquire.interest
 are you interested in football?,inquire.interest
 what is the date?,inquire.date
 what is the date today?,inquire.date
@@ -40,3 +40,15 @@ what is the latest news?,inquire.news
 what on trend?,inquire.news
 can you repeat?,repeat
 can you say again?,repeat
+what is x y?,inquire.entity.def
+what is x?,inquire.entity.def
+what is the type of x y?,inquire.entity.type
+what is the type of x?,inquire.entity.type
+how big is x y?,inquire.entity.size
+how big is x?,inquire.entity.size
+how large is x y?,inquire.entity.size
+how large is x?,inquire.entity.size
+how far is x y?,inquire.entity.distance
+how far is x?,inquire.entity.distance
+what is the distance to x y,inquire.entity.distance
+what is the distance to x,inquire.entity.distance

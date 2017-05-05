@@ -23,8 +23,8 @@ def run(execution_context):
 
 def train_data(reader, data_name, config):
     """train the data file"""
-    remove_stop_words = app.get_config('train.remove_stop_words')
-    input_texts, output_texts = pre_process.parse_csv(reader, config, remove_stop_words)
+    filtered_word_types = app.get_config('train.filtered_word_types')
+    input_texts, output_texts = pre_process.parse_csv(reader, config, filtered_word_types)
 
     vectorizer = get_vectorizer(config)
     vectorized_data = pre_process.vectorize_data(input_texts, output_texts, vectorizer)

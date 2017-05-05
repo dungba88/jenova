@@ -46,6 +46,11 @@
         "templates": ["{text} . From {user}"],
         "count": 200
     },
+    "entity_react": {
+        "no_data": ["Sorry, I do not know about it", "Sorry, I don't have any information about that"],
+        "confused": ["I am confused. There are {count} matched entities: {entities}"],
+        "not_support": ["Sorry, I do not understand what you mean", "Sorry, that information is not supported"]
+    },
     "health_react": {
         "ok": ["I am fine. Thank you for asking.", "I am good", "Nothing wrong with my system", "All parameters are within limit"]
     }

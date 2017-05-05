@@ -16,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
 
 def run(execution_context):
     """run the action"""
-    remove_stop_words = app.get_config('train.remove_stop_words')
+    filtered_word_types = app.get_config('train.filtered_word_types')
 
     data_name = execution_context.event.get('data_name', 'default')
     text = execution_context.event.get('text')
@@ -28,7 +28,7 @@ def run(execution_context):
 
     # clean text if requested
     if config.get('clean_text'):
-        text = pre_process.clean_text(text, remove_stop_words)
+        text = pre_process.clean_text(text, filtered_word_types)
 
     # tokenize words and predict
     result_word, result_proba = classifier.predict(text, data_name)
