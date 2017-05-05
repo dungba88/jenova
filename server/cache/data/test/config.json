@@ -1,4 +1,5 @@
 {
     "clean_text": true,
-    "tokenizer": "english_tokenizer"
+    "tokenizer": "english_tokenizer",
+    "allow_teaching": false
 }
