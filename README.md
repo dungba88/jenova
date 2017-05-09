@@ -4,7 +4,7 @@ A simple and extensible friendly bot platform written in Python.
 
 ## what is Jenova?
 
-Jenova is a bot platform, which can be trained and programmed to do different sort of things. The bot will accept commands as raw plain text (or speech via Speech-to-Text recognition), then translates them into raw intents, and acts accordingly based on a configured set of code called triggers (see below). An user can extend the bot by train it to recognize new intents, and/or write trigger to handle the intent accordingly. Jenova is intended to run in Lego EV3 robot, but can be installed in PC as well.
+Jenova is a bot platform, which can be trained and programmed to do different sort of things. The bot will accept commands as raw plain text (or speech via Speech-to-Text recognition), then translates them into intents, and acts accordingly based on a configured set of code called triggers (see below). An user can extend the bot by train it to recognize new intents, and/or write trigger to handle the intent accordingly. Jenova is intended to run in Lego EV3 robot, but can be installed in PC as well.
 
 jenova consists of 3 main components: `bot`, `server`, and `ui`, all of them are under the folders of the same name.
 
