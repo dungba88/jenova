@@ -1,3 +1,3 @@
-# ev3
+# jenova
 
-This is the branch for ev3.dungba.org
+This is the branch for jenova.dungba.org
