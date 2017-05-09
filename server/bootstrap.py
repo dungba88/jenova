@@ -6,19 +6,18 @@ from falcon import HTTPError
 from controllers import error
 from controllers import IndexResource
 from controllers import MessageResource
-import triggers
 
 class ApplicationBootstrap(object):
     """Bootstrap class"""
 
     def __init__(self):
         self.app_context = None
+        self.trigger_manager = None
 
     def run(self):
         """Run the application"""
         self.register_error_handlers()
         self.register_routes()
-        self.register_triggers()
 
     def register_error_handlers(self):
         """Register error handlers"""
@@ -26,8 +25,7 @@ class ApplicationBootstrap(object):
         api.add_error_handler(ValueError, error.value_error_handler)
         api.add_error_handler(HTTPError, error.http_error_handler)
 
-        trigger_manager = self.app_context.trigger_manager
-        trigger_manager.error_handler = error.DefaultErrorHandler()
+        self.trigger_manager.error_handler = error.DefaultErrorHandler()
 
     def register_routes(self):
         """Register REST routes"""
@@ -38,11 +36,3 @@ class ApplicationBootstrap(object):
         api.add_route('/msg', MessageResource())
 
         logging.info('Route registered')
-
-    def register_triggers(self):
-        """Register triggers"""
-        logging.info('Registering triggers')
-
-        triggers.init_all_triggers(self.app_context.trigger_manager)
-
-        logging.info('Trigger registered')

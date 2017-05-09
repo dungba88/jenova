@@ -4,7 +4,6 @@ import logging
 import random
 import re
 
-from app import APP_INSTANCE as app
 from utils import dynamic_facts
 
 from ev3bot.tts import PyttsxEngine
@@ -45,6 +44,7 @@ def say(texts, params=None, do_normalize=True):
     global LAST_SENTENCE
     LAST_SENTENCE = texts
 
+    from app import APP_CONTEXT as app
     engine_name = app.get_config('engine.tts.engine')
     osx_voice = app.get_config('engine.tts.osx.voice')
     gtts_lang = app.get_config('engine.tts.gTTS.lang')
@@ -83,6 +83,7 @@ def normalize_text(text, params):
 
 def get_fact(group):
     """get fact by name"""
+    from app import APP_CONTEXT as app
     facts = app.get_config('facts')
     fact = facts.get(group)
     if fact is not None:

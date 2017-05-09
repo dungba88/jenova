@@ -1,18 +1,21 @@
 """Make the bot say"""
 
-from app import APP_INSTANCE as app
+from ev3bot.trigger import Trigger
+
 from utils import http
 
-def run(execution_context):
-    """run the action"""
-    text = execution_context.event.get('text')
-    url = app.get_config('bot.url')
-    msg = {
-        'name': 'say',
-        'args': {
-            'text': text
+class Say(Trigger):
+    """Trigger to make the bot say a specific text"""
+
+    def run(self, execution_context):
+        text = execution_context.event.get('text')
+        url = self.get_config('bot.url')
+        msg = {
+            'name': 'say',
+            'args': {
+                'text': text
+            }
         }
-    }
-    execution_context.finish(text)
-    http.call(url, msg)
-    
+        execution_context.finish(text)
+        http.call(url, msg)
+        

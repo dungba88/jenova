@@ -72,7 +72,7 @@ function call_raw(text) {
             if (typeof res.msg == 'string' || res.msg == undefined) {
                 add_response(res.msg);
             } else {
-                add_response(res.msg.raw);
+                add_response("Bot says: <i>" + res.msg.bot_response + "</i><br />" + res.msg.raw + "<br />");
 
                 if (window.ENABLE_TTS) {
                     var text = res.msg.bot_response.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');

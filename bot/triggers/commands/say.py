@@ -1,11 +1,15 @@
 """Trigger implementation to say"""
 
+from ev3bot.trigger import Trigger
+
 from utils import tts
 
-def run(execution_context):
-    """run the action"""
-    text = execution_context.event.get('text', None)
-    execution_context.finish(text)
+class Say(Trigger):
+    """Trigger to speak a text"""
 
-    if text is not None:
-        tts.say([text])
+    def run(self, execution_context):
+        text = execution_context.event.get('text', None)
+        execution_context.finish(text)
+
+        if text is not None:
+            tts.say([text])

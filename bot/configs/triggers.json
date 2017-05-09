@@ -1,0 +1,50 @@
+[
+    {
+        "event": "sing",
+        "action": "triggers.commands.sing.Sing"
+    },
+    {
+        "event": "say",
+        "action": "triggers.commands.say.Say"
+    },
+    {
+        "event": "stop",
+        "action": "triggers.commands.stop.Stop"
+    },
+    {
+        "event": "tell_story",
+        "action": "triggers.commands.story.Story"
+    },
+    {
+        "event": "react.*",
+        "action": "triggers.misc.react.React"
+    },
+    {
+        "event": "repeat",
+        "action": "triggers.misc.repeat.Repeat"
+    },
+    {
+        "event": "inquire.entity.*",
+        "action": "triggers.inquire.base.Inquire"
+    },
+    {
+        "event": "inquire.*",
+        "action": "triggers.inquire.inquire_entity.InquireEntity"
+    },
+    {
+        "event": "inquire.interest",
+        "action": "triggers.inquire.inquire_interest.InquireInterest"
+    },
+    {
+        "event": "inquire.weather",
+        "action": "triggers.inquire.inquire_weather.InquireWeather"
+    },
+    {
+        "event": "inquire.news",
+        "action": "triggers.inquire.inquire_news.InquireNews"
+    },
+    {
+        "event": "reload",
+        "action": "triggers.admin.reload_conf.Reload"
+    }
+]
