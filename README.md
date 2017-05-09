@@ -5,6 +5,13 @@ A simple and extensible friendly bot platform written in Python.
 ## what is Jenova?
 
 Jenova is a bot platform, which can be trained and programmed to do different sort of things. The bot will accept commands as raw plain text (or speech via Speech-to-Text recognition), then translates them into raw intents, and acts accordingly based on a configured set of code called triggers (see below). An user can extend the bot by train it to recognize new intents, and/or write trigger to handle the intent accordingly. Jenova is intended to run in Lego EV3 robot, but can be installed in PC as well.
+
+jenova consists of 3 main components: `bot`, `server`, and `ui`, all of them are under the folders of the same name.
+
+- **bot**: Receiving raw commands, like `say`, `tell_story`, `inquire.news`. User can write triggers to make it respond to different intents.
+- **server**: Translate the text to an intent-based command that the bot can understand using text classification algorithms
+- **ui**: A simple interface to the server, can `train`, `talk` and have speech recognition via [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
+
 A demo can be found at: http://jenova.dungba.org/ui/
 
 ## what is trigger?
@@ -14,14 +21,6 @@ Trigger is a piece of code which runs on a specific event. It allows application
 - If some `condition` holds true (e.g it's actually in the morning)
 - Then run some `actions` (e.g response with good morning)
 By dividing the application into triggers, the behavior of the bot can be configured, extended and modified easily. For illustration purpose, the jenova project is shipped with 2 separate bot: `sam` and `maruko`. Their configurations (like how to response, the language it speaks and what capabilities it can do) are different.
-
-## how it works
-
-jenova consists of 3 main components: `bot`, `server`, and `ui`, all of them are under the folders of the same name.
-
-- **bot**: Receiving raw commands, like `say`, `tell_story`, `inquire.news`. User can write triggers to make it respond to different intents.
-- **server**: Translate the text to an intent-based command that the bot can understand using text classification algorithms
-- **ui**: A simple interface to the server, can `train`, `talk` and have speech recognition via [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 
 ## requirements
 
