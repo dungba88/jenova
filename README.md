@@ -12,6 +12,8 @@ jenova consists of 3 main components: `bot`, `server`, and `ui`, all of them are
 - **server**: Translate the text to an intent-based command that the bot can understand using text classification algorithms
 - **ui**: A simple interface to the server, can `train`, `talk` and have speech recognition via [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 
+It can literally **listen** (via Speech-to-Text recognition) and **talk** (via TTS engine), so it almost looks like real bot.
+
 A demo can be found at: http://jenova.dungba.org/ui/
 
 ## what is trigger?
