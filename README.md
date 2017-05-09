@@ -1,10 +1,28 @@
-# ev3
+# jenova
 
-A simple but extensible EV3 bot written in Python and run on ev3dev platform.
+A simple and extensible friendly bot platform written in Python.
 
-## demo
+## what is Jenova?
 
-A demo can be found at: http://ev3.dungba.org/ui/
+Jenova is a bot platform, which can be trained and programmed to do different sort of things. The bot will accept commands as raw plain text (or speech via Speech-to-Text recognition), then translates them into intents, and acts accordingly based on a configured set of code called triggers (see below). An user can extend the bot by train it to recognize new intents, and/or write trigger to handle the intent accordingly. Jenova is intended to run in Lego EV3 robot, but can be installed in PC as well.
+
+jenova consists of 3 main components: `bot`, `server`, and `ui`, all of them are under the folders of the same name.
+
+- **bot**: Receiving raw commands, like `say`, `tell_story`, `inquire.news`. User can write triggers to make it respond to different intents.
+- **server**: Translate the text to an intent-based command that the bot can understand using text classification algorithms
+- **ui**: A simple interface to the server, can `train`, `talk` and have speech recognition via [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
+
+It can literally **listen** (via Speech-to-Text recognition) and **talk** (via TTS engine), so it almost looks like real bot.
+
+A demo can be found at: http://jenova.dungba.org/ui/
+
+## what is trigger?
+
+Trigger is a piece of code which runs on a specific event. It allows application to be divided into tiny and independence parts. A trigger consists of `event`, `condition` and `action`. Their roles are as below:
+- When an `event` occurs (e.g when user says 'good morning')
+- If some `condition` holds true (e.g it's actually in the morning)
+- Then run some `actions` (e.g response with good morning)
+By dividing the application into triggers, the behavior of the bot can be configured, extended and modified easily. For illustration purpose, the jenova project is shipped with 2 separate bot: `sam` and `maruko`. Their configurations (like how to response, the language it speaks and what capabilities it can do) are different.
 
 ## requirements
 
@@ -24,20 +42,6 @@ For the server, these packages are required:
 
 Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) are also required to run the application. It's ok to run the application without `ev3dev`, but you won't have the features related to Lego EV3 like motor controlling.
 
-## how it works
-
-ev3 consists of 3 main components: `ui`, `server` and `bot`, all of them are under the folders of the same name.
-
-- **bot**: Receiving raw commands, like `say`, `tell_story`
-- **server**: Translate the text to a intent-based command that the bot can understand
-- **ui**: An interface to the server, can `train`, `talk` and have speech recognition via [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
-
-The flow is like this:
-
-An user will use the `ui` to talk, the `ui` can then convert his voice to a text to send to the `server`. The `server` will use machine learning approach to extract the intent of the text. For example, a text like "What's the weather like" will have the intent like `inquire.weather`. The bot will then receive the intent from server and translate it to response by `triggers` and `configurations`.
-
-The `triggers` are just pieces of code which run on a specific event. The intent sent from server are treated as event in this sense.
-
 ## installation
 
 1. Install the dependencies
@@ -56,8 +60,8 @@ https://github.com/marytts/marytts/wiki/Local-MaryTTS-Server-Installation
 
 2. Checkout the source code and install the framework
 ```bash
-git clone https://github.com/dungba88/ev3.git
-cd ev3
+git clone https://github.com/dungba88/jenova.git
+cd jenova
 sudo pip3 install framework/
 ```
 

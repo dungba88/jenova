@@ -14,6 +14,8 @@ def parse_csv(reader, config, filtered_word_types):
 
     for row in reader:
         text = row[0]
+        if text == '':
+            continue
         if config.get('clean_text'):
             text = clean_text(row[0], filtered_word_types)
         input_texts.append(text)
