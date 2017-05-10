@@ -17,9 +17,9 @@ class Application(object):
         self.reload_config()
         self.bootstrap = None
 
-    def reload_config(self):
+    def reload_config(self, config_name=None):
         """reload configuration"""
-        self.configs = load_configs()
+        self.configs = load_configs(config_name)
         self.app_context = ApplicationContext(api=self.api,
                                               configs=self.configs)
         self.trigger_manager.app_context = self.app_context
@@ -66,10 +66,11 @@ class ApplicationContext(object):
         """Get a config by name"""
         return get_config(self.configs, name)
 
-def load_configs():
+def load_configs(domain_config_name=None):
     """Load all configurations"""
     config = load_configs_dir('configs')
-    domain_config_name = get_config(config, 'config.name')
+    if domain_config_name is None:
+        domain_config_name = get_config(config, 'config.name')
     domain_config = dict()
     if domain_config_name is not None:
         domain_config = load_configs_dir('configs/' + domain_config_name)

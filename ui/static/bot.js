@@ -7,6 +7,7 @@ var command_helps = {
         talk: 'Send a text to the bot server. Usage: talk {sentence}',
         audio: 'Start dictation',
         say: 'Make the robot say a sentence. Usage: say {sentence}',
+        switch: 'Switch the bot. Usage: switch {bot_name}',
         teach: 'Teach the robot. Usage: teach {sentence},{intent}',
         train: 'Train the bot server',
         test: 'Test the model against cross validation data',
@@ -225,9 +226,28 @@ bot_commands = {
 
     say: function(text) {
         call_raw(JSON.stringify({
-            "name": "say",
+            "name": "pass",
             "args": {
-                "text": text
+                "command": {
+                    "name": "say",
+                    "args": {
+                        "text": text
+                    }
+                }
+            }
+        }));
+    },
+
+    switch: function(text) {
+        call_raw(JSON.stringify({
+            "name": "pass",
+            "args": {
+                "command": {
+                    "name": "switch",
+                    "args": {
+                        "bot": text
+                    }
+                }
             }
         }));
     },
