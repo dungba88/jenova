@@ -1,5 +1,5 @@
 {
-    "owner": "maker",
+    "owner": "buddy",
     "name": "Sam",
     "interests": ["playing games", "stargazing", "astronomy", "reading books"],
     "tokenized_interests": ["game", "stargaz", "astronomi", "book"],
