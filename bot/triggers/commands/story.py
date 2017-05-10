@@ -3,51 +3,55 @@
 import time
 import random
 
-from app import APP_INSTANCE as app
+from ev3bot.trigger import Trigger
+
 from utils import tts
 
-FLAGS = {
-    "stop": False
-}
+class Story(Trigger):
+    """Trigger to tell a story"""
 
-def run(execution_context):
-    """run the action"""
-    FLAGS["stop"] = False
-    openings = app.get_config('story.opening')
-    no_story = app.get_config('story.no_story')
-    pause_time = app.get_config('story.pause_time')
-    stories = app.get_config('story.stories')
-    tag = execution_context.event.get('tag', None)
+    def __init__(self):
+        Trigger.__init__(self)
+        self.stopped = False
 
-    if tag is not None:
-        # filter stories based on tags
-        stories = list(filter(lambda story: tag in story.get('tags'), stories))
+    def run(self, execution_context):
+        """run the action"""
+        self.stopped = False
+        openings = self.get_config('story.opening')
+        no_story = self.get_config('story.no_story')
+        pause_time = self.get_config('story.pause_time')
+        stories = self.get_config('story.stories')
+        tag = execution_context.event.get('tag', None)
 
-    if len(stories) == 0:
-        execution_context.finish('no story')
-        tts.say_random(no_story)
-        return
+        if tag is not None:
+            # filter stories based on tags
+            stories = list(filter(lambda story: tag in story.get('tags'), stories))
 
-    story = stories[random.randint(0, len(stories) - 1)]
-    execution_context.finish('telling ' + story.get('name'))
+        if len(stories) == 0:
+            execution_context.finish('no story')
+            tts.say_random(no_story)
+            return
 
-    tts.say_random(openings)
+        story = stories[random.randint(0, len(stories) - 1)]
+        execution_context.finish('telling ' + story.get('name'))
 
-    time.sleep(pause_time)
+        tts.say_random(openings)
 
-    if FLAGS["stop"]:
-        return
+        time.sleep(pause_time)
 
-    with open('cache/stories/' + story.get('file')) as data_file:
-        text = data_file.read()
-        read_long_text(text)
+        if self.stopped:
+            return
 
-def read_long_text(text):
-    """Read a possibly long text"""
-    for line in text.splitlines():
-        if not FLAGS["stop"] and len(line) > 0:
-            tts.say([line])
+        with open('cache/stories/' + story.get('file')) as data_file:
+            text = data_file.read()
+            self.read_long_text(text)
 
-def stop_story():
-    """stop reading the story"""
-    FLAGS["stop"] = True
+    def read_long_text(self, text):
+        """Read a possibly long text"""
+        for line in text.splitlines():
+            if not self.stopped and len(line) > 0:
+                tts.say([line])
+
+    def stop(self):
+        """stop reading the story"""
+        self.stopped = True

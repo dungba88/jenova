@@ -7,6 +7,7 @@ var command_helps = {
         talk: 'Send a text to the bot server. Usage: talk {sentence}',
         audio: 'Start dictation',
         say: 'Make the robot say a sentence. Usage: say {sentence}',
+        switch: 'Switch the bot. Usage: switch {bot_name}',
         teach: 'Teach the robot. Usage: teach {sentence},{intent}',
         train: 'Train the bot server',
         test: 'Test the model against cross validation data',
@@ -83,7 +84,7 @@ function call_raw(text) {
             if (typeof res.msg == 'string' || res.msg == undefined) {
                 add_response(res.msg);
             } else {
-                add_response(res.msg.raw);
+                add_response("Bot says: <i>" + res.msg.bot_response + "</i><br />" + res.msg.raw + "<br />");
 
                 if (window.ENABLE_TTS) {
                     speak(res.msg.bot_response.replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
@@ -225,9 +226,28 @@ bot_commands = {
 
     say: function(text) {
         call_raw(JSON.stringify({
-            "name": "say",
+            "name": "pass",
             "args": {
-                "text": text
+                "command": {
+                    "name": "say",
+                    "args": {
+                        "text": text
+                    }
+                }
+            }
+        }));
+    },
+
+    switch: function(text) {
+        call_raw(JSON.stringify({
+            "name": "pass",
+            "args": {
+                "command": {
+                    "name": "switch",
+                    "args": {
+                        "bot": text
+                    }
+                }
             }
         }));
     },

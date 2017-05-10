@@ -4,7 +4,6 @@ import json
 import time
 import logging
 
-from app import APP_INSTANCE as app
 from utils import http
 
 LOGGER = logging.getLogger(__name__)
@@ -16,6 +15,7 @@ CACHED_DATA = {
 
 def get_weather(city=None):
     """get weather forecast"""
+    from app import APP_INSTANCE as app
     global CACHED_DATA
     time_to_live = app.get_config('api.weather.time_to_live')
     if has_cache(time_to_live):

@@ -1,0 +1,26 @@
+[
+    {
+        "event": "learn",
+        "action": "triggers.learn.Learn"
+    },
+    {
+        "event": "train",
+        "action": "triggers.train.Train"
+    },
+    {
+        "event": "test",
+        "action": "triggers.test.Test"
+    },
+    {
+        "event": "predict",
+        "action": "triggers.predict.Predict"
+    },
+    {
+        "event": "pass",
+        "action": "triggers.pass.Pass"
+    },
+    {
+        "event": "reload",
+        "action": "triggers.reload_conf.Reload"
+    }
+]

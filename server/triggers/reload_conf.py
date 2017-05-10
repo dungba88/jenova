@@ -1,17 +1,19 @@
 """Trigger implementation for reload configuration"""
 
-from app import APP_INSTANCE as app
+from ev3bot.trigger import Trigger
+
 from utils import http
 
-def run(execution_context):
-    """run the action"""
-    app.reload_config()
+class Reload(Trigger):
+    """Trigger to reload the configuration"""
+    def run(self, execution_context):
+        from app import APP_INSTANCE as app
+        app.reload_config()
 
-    url = app.get_config('bot.url')
-    msg = {
-        'name': 'reload',
-        'args': {
+        url = app.get_config('bot.url')
+        msg = {
+            'name': 'reload',
+            'args': {}
         }
-    }
-    execution_context.finish('reload done')
-    http.call(url, msg)
+        execution_context.finish('reload done')
+        http.call(url, msg)
