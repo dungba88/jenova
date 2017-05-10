@@ -16,8 +16,8 @@
         "action": "triggers.predict.Predict"
     },
     {
-        "event": "say",
-        "action": "triggers.say.Say"
+        "event": "pass",
+        "action": "triggers.pass.Pass"
     },
     {
         "event": "reload",
