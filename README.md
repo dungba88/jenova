@@ -14,8 +14,6 @@ jenova consists of 3 main components: `bot`, `server`, and `ui`, all of them are
 
 It can literally **listen** (via Speech-to-Text recognition) and **talk** (via TTS engine), so it almost looks like real bot.
 
-A demo can be found at: http://jenova.dungba.org/ui/
-
 ## what is trigger?
 
 Trigger is a piece of code which runs on a specific event. It allows application to be divided into tiny and independence parts. A trigger consists of `event`, `condition` and `action`. Their roles are as below:
@@ -44,6 +42,8 @@ Well, the bot capabilities depends on what you have trained him to understand, a
 - Inquire about entities: What is a galaxy? Where is Andromeda Galaxy?
 
 The questions are obviously not fixed, you can modify it as long as the main keywords are the same. The capabilities of bot will grow as you train him to understand more types of questions.
+
+A demo can be found at: http://jenova.dungba.org/ui/
 
 ## requirements
 
