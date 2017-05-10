@@ -9,4 +9,4 @@ class Switch(Trigger):
         bot_name = execution_context.event.get('bot')
         from app import APP_INSTANCE as app
         app.reload_config(bot_name)
-        execution_context.finish('switched')
+        execution_context.finish('switched to ' + bot_name)
