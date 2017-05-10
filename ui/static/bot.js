@@ -225,6 +225,9 @@ bot_commands = {
     },
 
     say: function(text) {
+        if (!text) {
+            throw new Error('Sentence is empty');
+        }
         call_raw(JSON.stringify({
             "name": "pass",
             "args": {
@@ -239,6 +242,9 @@ bot_commands = {
     },
 
     switch: function(text) {
+        if (!text) {
+            throw new Error('Bot name is empty');
+        }
         call_raw(JSON.stringify({
             "name": "pass",
             "args": {
