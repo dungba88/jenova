@@ -29,12 +29,16 @@ By dividing the application into triggers, the behavior of the bot can be config
 Well, the bot capabilities depends on what you have trained him to understand, and what intents you have implemented. The current built-in version supports the following types of questions:
 
 - Greetings questions, e.g:
-    + Hello/Hi/Good morning/Good afternoon/Good evening
+
+    + Hello/Hi/Good morning/Good afternoon/Good evening
     + What is your name?/How are you?/Who are you?
+
 - Inquire about some general information, e.g:
-    + What time is it?/What date is it?...
+    
+    + What time is it?/What date is it?...
     + What are your hobbies?/What are your interests?...
     + Do you like banana?/Do you like books?...
+
 - Inquire about news, e.g: What is the latest news? What is on trend?
 - Inquire about weather: What's the weather like?
 - Inquire about entities: What is a galaxy? Where is Andromeda Galaxy?
