@@ -25,11 +25,11 @@
     },
     {
         "event": "inquire.entity.*",
-        "action": "triggers.inquire.base.Inquire"
+        "action": "triggers.inquire.inquire_entity.InquireEntity"
     },
     {
         "event": "inquire.*",
-        "action": "triggers.inquire.inquire_entity.InquireEntity"
+        "action": "triggers.inquire.base.Inquire"
     },
     {
         "event": "inquire.interest",
@@ -46,5 +46,9 @@
     {
         "event": "reload",
         "action": "triggers.admin.reload_conf.Reload"
+    },
+    {
+        "event": "switch",
+        "action": "triggers.admin.switch.Switch"
     }
 ]
