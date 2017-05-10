@@ -24,6 +24,23 @@ Trigger is a piece of code which runs on a specific event. It allows application
 - Then run some `actions` (e.g response with good morning)
 By dividing the application into triggers, the behavior of the bot can be configured, extended and modified easily. For illustration purpose, the jenova project is shipped with 2 separate bot: `sam` and `maruko`. Their configurations (like how to response, the language it speaks and what capabilities it can do) are different.
 
+## what can it do
+
+Well, the bot capabilities depends on what you have trained him to understand, and what intents you have implemented. The current built-in version supports the following types of questions:
+
+- Greetings questions, e.g:
+    + Hello/Hi/Good morning/Good afternoon/Good evening
+    + What is your name?/How are you?/Who are you?
+- Inquire about some general information, e.g:
+    + What time is it?/What date is it?...
+    + What are your hobbies?/What are your interests?...
+    + Do you like banana?/Do you like books?...
+- Inquire about news, e.g: What is the latest news? What is on trend?
+- Inquire about weather: What's the weather like?
+- Inquire about entities: What is a galaxy? Where is Andromeda Galaxy?
+
+The questions are obviously not fixed, you can modify it as long as the main keywords are the same. The capabilities of bot will grow as you train him to understand more types of questions.
+
 ## requirements
 
 The following packages need to be installed via `pip`
