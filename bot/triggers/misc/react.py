@@ -12,7 +12,7 @@ class React(Trigger):
         config_name = 'behavior.react.' + event_name.split('.')[1]
         reacts = self.get_config(config_name)
         if reacts is None or len(reacts) == 0:
-            execution_context.finish('No react')
+            execution_context.finish('No react for ' + config_name)
             return
 
         tts.say_random_finish(reacts, execution_context)
