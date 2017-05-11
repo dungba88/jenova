@@ -20,6 +20,7 @@ Trigger is a piece of code which runs on a specific event. It allows application
 - When an `event` occurs (e.g when user says 'good morning')
 - If some `condition` holds true (e.g it's actually in the morning)
 - Then run some `actions` (e.g response with good morning)
+
 By dividing the application into triggers, the behavior of the bot can be configured, extended and modified easily. For illustration purpose, the jenova project is shipped with 2 separate bot: `sam` and `maruko`. Their configurations (like how to response, the language it speaks and what capabilities it can do) are different.
 
 ## what can it do
