@@ -46,59 +46,8 @@ The questions are obviously not fixed, you can modify it as long as the main key
 
 A demo can be found at: http://jenova.dungba.org/ui/
 
-## requirements
+## running jenova
 
-The following packages need to be installed via `pip`
-- `gunicorn`: lightweight WSGI HTTP Server
-- `falcon`: super fast RESTful framework
-- `httplib2`: HTTP client
-
-For the bot, these packages are required:
-- `pygame`: for audio playback
-- `pyttsx`, `gTTS`: TTS engines
-
-For the server, these packages are required:
-- `sklearn`, `nltk`: for machine learning algorithms and utilities
-- `numpy`, `scipy`: libraries used by `sklearn`
-- `tinysegmenter`: Japanese tokenizer
-
-Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) are also required to run the application. It's ok to run the application without `ev3dev`, but you won't have the features related to Lego EV3 like motor controlling.
-
-## installation
-
-1. Install the dependencies
-
-It depends on the operating system you are using, here are the example for Ubuntu 17.04
-
-```bash
-sudo apt-get install python3 python3-pip python3-ev3dev
-sudo pip3 install gunicorn falcon httplib2 pygame pyttsx gTTS numpy scipy sklearn nltk tinysegmenter
-```
-
-If you want to use `mary-tts` as TTS engine, it must be installed separately:
-https://github.com/marytts/marytts/wiki/Local-MaryTTS-Server-Installation
-
-*(Note that there are some problem with installing and running `pyttsx` with Python3. Checkout [this fork of pyttsx](https://github.com/Julian-O/pyttsx) instead)*
-
-2. Checkout the source code and install the framework
-```bash
-git clone https://github.com/dungba88/jenova.git
-cd jenova
-sudo pip3 install framework/
-```
-
-3. Run the bot
-```bash
-gunicorn main --chdir bot/ -b 0.0.0.0:8081 --reload
-gunicorn main --chdir server/ -b 0.0.0.0:8080 --reload
-```
-
-(You may need to run with `nohup` command)
-
-Now the bot can be accessed from http://localhost:8081 and the server can be accessed from http://localhost:8080
-
-4. Start the UI
-
-For this, you need to install a web server which supports static files, like `Apache` or `nginx`, and make the ui/ folder accessible by HTTP. Setup will depend on which web server you choose.
+See this wiki for requirements and installation: [Getting started](https://github.com/dungba88/jenova/wiki/Getting-started)
 
 *to be continued*
