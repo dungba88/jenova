@@ -31,6 +31,9 @@ class ApplicationBootstrap(object):
 
         self.trigger_manager.error_handler = error.BotErrorHandler()
 
+        from ev3bot import audio
+        self.trigger_manager.add_stop_hook(audio.stop)
+
     def register_routes(self):
         """Register REST routes"""
         logging.info('Registering route')
