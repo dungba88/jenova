@@ -2,10 +2,10 @@
 
 import time
 
-from pygame import mixer
-
 def play(file, frequency=16000):
     """Play a MP3 file"""
+    from pygame import mixer
+
     if mixer.get_init() is not None:
         mixer.quit()
 
@@ -18,5 +18,7 @@ def play(file, frequency=16000):
 
 def stop():
     """Stop currently playing audio"""
+    from pygame import mixer
+
     mixer.init()
     mixer.music.stop()
