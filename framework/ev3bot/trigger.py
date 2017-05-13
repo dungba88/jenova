@@ -85,6 +85,11 @@ class TriggerManager(object):
         self.error_handler = None
         self.timeout = 3
         self.app_context = None
+        self.stop_hooks = list()
+
+    def add_stop_hook(self, handler):
+        """Register a handler for when trigger needs to be stopped"""
+        self.stop_hooks.append(handler)
 
     def add_hook(self, name, handler):
         """Register a handler with an event name"""
@@ -147,6 +152,8 @@ class TriggerManager(object):
         if self.current_trigger is not None:
             self.current_trigger.stop()
         time.sleep(0.1)
+        for handler in self.stop_hooks:
+            handler()
 
     def create_trigger(self, trigger_name):
         """Create a trigger from class name"""
