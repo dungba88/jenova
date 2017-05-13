@@ -20,7 +20,7 @@ class InquireEntity(Trigger):
         tagged_text = execution_context.event.get('tagged_text')
         entity_name = [w[0] for w in tagged_text if w[1] == 'NN' or w[1] == 'JJ']
 
-        file_names = get_file_names(entity_name)
+        file_names = self.get_file_names(entity_name)
         no_files = len(file_names)
 
         # not found
@@ -30,14 +30,14 @@ class InquireEntity(Trigger):
 
         # duplicates found
         if no_files > 1:
-            entitie_names = [get_entity_name(f) for f in file_names]
+            entitie_names = [self.get_entity_name(f) for f in file_names]
             tts.say_random_finish(confused_react, execution_context, {
                 'count': no_files,
                 'entities': ', '.join(entitie_names)
             })
             return
 
-        entity = get_entity(file_names[0])
+        entity = self.get_entity(file_names[0])
         # not supported
         if inquire_type not in entity:
             tts.say_random_finish(not_support_react, execution_context)
