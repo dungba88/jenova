@@ -6,5 +6,4 @@ class EV3TTSEngine(object):
         """Speak the texts"""
         from ev3dev import ev3
         for text in texts:
-            ev3.Sound.speak(text)
-            
+            ev3.Sound.speak(text).wait()
