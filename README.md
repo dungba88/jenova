@@ -14,69 +14,40 @@ jenova consists of 3 main components: `bot`, `server`, and `ui`, all of them are
 
 It can literally **listen** (via Speech-to-Text recognition) and **talk** (via TTS engine), so it almost looks like real bot.
 
-A demo can be found at: http://jenova.dungba.org/ui/
-
 ## what is trigger?
 
 Trigger is a piece of code which runs on a specific event. It allows application to be divided into tiny and independence parts. A trigger consists of `event`, `condition` and `action`. Their roles are as below:
 - When an `event` occurs (e.g when user says 'good morning')
 - If some `condition` holds true (e.g it's actually in the morning)
 - Then run some `actions` (e.g response with good morning)
+
 By dividing the application into triggers, the behavior of the bot can be configured, extended and modified easily. For illustration purpose, the jenova project is shipped with 2 separate bot: `sam` and `maruko`. Their configurations (like how to response, the language it speaks and what capabilities it can do) are different.
 
-## requirements
+## what can it do
 
-The following packages need to be installed via `pip`
-- `gunicorn`: lightweight WSGI HTTP Server
-- `falcon`: super fast RESTful framework
-- `httplib2`: HTTP client
+Well, the bot capabilities depends on what you have trained him to understand, and what intents you have implemented. The current built-in version supports the following types of questions:
 
-For the bot, these packages are required:
-- `pygame`: for audio playback
-- `pyttsx`, `gTTS`: TTS engines
+- Greetings questions, e.g:
 
-For the server, these packages are required:
-- `sklearn`, `nltk`: for machine learning algorithms and utilities
-- `numpy`, `scipy`: libraries used by `sklearn`
-- `tinysegmenter`: Japanese tokenizer
+    + Hello/Hi/Good morning/Good afternoon/Good evening
+    + What is your name?/How are you?/Who are you?
 
-Python3 and [ev3dev-lang-python](https://github.com/rhempel/ev3dev-lang-python) are also required to run the application. It's ok to run the application without `ev3dev`, but you won't have the features related to Lego EV3 like motor controlling.
+- Inquire about some general information, e.g:
+    
+    + What time is it?/What date is it?...
+    + What are your hobbies?/What are your interests?...
+    + Do you like banana?/Do you like books?...
 
-## installation
+- Inquire about news, e.g: What is the latest news? What is on trend?
+- Inquire about weather: What's the weather like?
+- Inquire about entities: What is a galaxy? Where is Andromeda Galaxy?
 
-1. Install the dependencies
+The questions are obviously not fixed, you can modify it as long as the main keywords are the same. The capabilities of bot will grow as you train him to understand more types of questions.
 
-It depends on the operating system you are using, here are the example for Ubuntu 17.04
+A demo can be found at: http://jenova.dungba.org/ui/
 
-```bash
-sudo apt-get install python3 python3-pip python3-ev3dev
-sudo pip3 install gunicorn falcon httplib2 pygame pyttsx gTTS numpy scipy sklearn nltk tinysegmenter
-```
+## running jenova
 
-If you want to use `mary-tts` as TTS engine, it must be installed separately:
-https://github.com/marytts/marytts/wiki/Local-MaryTTS-Server-Installation
-
-*(Note that there are some problem with installing and running `pyttsx` with Python3. Checkout [this fork of pyttsx](https://github.com/Julian-O/pyttsx) instead)*
-
-2. Checkout the source code and install the framework
-```bash
-git clone https://github.com/dungba88/jenova.git
-cd jenova
-sudo pip3 install framework/
-```
-
-3. Run the bot
-```bash
-gunicorn main --chdir bot/ -b 0.0.0.0:8081 --reload
-gunicorn main --chdir server/ -b 0.0.0.0:8080 --reload
-```
-
-(You may need to run with `nohup` command)
-
-Now the bot can be accessed from http://localhost:8081 and the server can be accessed from http://localhost:8080
-
-4. Start the UI
-
-For this, you need to install a web server which supports static files, like `Apache` or `nginx`, and make the ui/ folder accessible by HTTP. Setup will depend on which web server you choose.
+See this wiki for requirements and installation: [Getting started](https://github.com/dungba88/jenova/wiki/Getting-started)
 
 *to be continued*
