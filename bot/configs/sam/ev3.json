@@ -4,7 +4,7 @@
         "behavior": {
             "default": "stop",
             "turn_left": ["blue_up"],
-            "turn right": ["red_up"],
+            "turn_right": ["red_up"],
             "turn_left_back": ["blue_down"],
             "turn_right_back": ["red_down"],
             "skate_up": ["red_up", "blue_up"],
