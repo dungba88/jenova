@@ -105,22 +105,31 @@ class TriggerManager(object):
 
     def fire(self, name, event=None):
         """Fire the event, calling all handlers registered with the event"""
-        handlers = self.get_handlers(name)
-        if len(handlers) == 0:
+        triggers = self.get_handlers(name)
+        if len(triggers) == 0:
             raise ValueError("Event. " + name + ". not registered")
-
-        self.stop_all_actions()
-
-        # if there are multiple handlers, pick a random one
-        handler = handlers[random.randint(0, len(handlers) - 1)]
 
         # build the execution context
         execution_context = TriggerExecutionContext(event, name, None)
 
+        trigger = self.get_matching_trigger(triggers, execution_context)
+        if trigger is None:
+            return
+
+        self.stop_all_actions()
+
         # run the trigger in executor
-        self.executor.submit(handler, execution_context)
+        execution_context.trigger = trigger
+        self.executor.submit(self.run_trigger, execution_context)
 
         return self.wait_for_finish(execution_context)
+
+    def get_matching_trigger(self, triggers, execution_context):
+        """get the first trigger which satisifies the condition"""
+        for trigger in triggers:
+            if trigger.check_condition(execution_context):
+                return trigger
+        return None
 
     def wait_for_finish(self, execution_context):
         """Wait for the execution to finish"""
@@ -175,12 +184,7 @@ class TriggerManager(object):
         if name is None:
             return
 
-        def run_trigger(execution_context):
-            """Run the closure trigger"""
-            execution_context.trigger = trigger
-            return self.run_trigger(execution_context)
-
-        self.add_hook(name, run_trigger)
+        self.add_hook(name, trigger)
 
     def run_trigger(self, execution_context):
         """Run the trigger"""
@@ -188,8 +192,7 @@ class TriggerManager(object):
         self.current_trigger = trigger
 
         try:
-            if trigger.check_condition(execution_context):
-                return trigger.run(execution_context)
+            return trigger.run(execution_context)
         except Exception as e:
             execution_context.reject(e)
             if self.error_handler is not None:
