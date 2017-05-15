@@ -6,18 +6,27 @@ from controllers import error
 from controllers import IndexResource
 from controllers import MessageResource
 
+from utils.ev3.sensor_readings import SensorReadings
+
 class ApplicationBootstrap(object):
     """Bootstrap class"""
 
     def __init__(self):
         self.app_context = None
         self.trigger_manager = None
+        self.sensor_readings = None
 
     def run(self):
         """Run the application"""
         self.register_error_handlers()
         self.register_routes()
         self.register_locale()
+        self.register_sensors()
+
+    def register_sensors(self):
+        """register sensors readings"""
+        self.sensor_readings = SensorReadings(self.trigger_manager, self.app_context)
+        self.sensor_readings.run()
 
     def register_locale(self):
         """register locale based on config"""
