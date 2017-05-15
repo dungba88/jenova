@@ -133,17 +133,20 @@ class TriggerManager(object):
         if self.is_eligible_for_stop(triggers, execution_context):
             self.stop_all_actions()
 
+        result = None
         for trigger in triggers:
             # build the execution context
             execution_context = TriggerExecutionContext(event, name, None)
             execution_context.trigger = trigger
             execution_context.trigger_manager = self
 
-            # run the trigger in executor
-            self.executor.submit(self.run_trigger, execution_context)
+            if wait:
+                self.executor.submit(self.run_trigger, execution_context)
+            else:
+                result = self.run_trigger(execution_context)
 
         if not wait:
-            return
+            return result
         return self.wait_for_finish(execution_context)
 
     def is_eligible_for_stop(self, triggers, execution_context):
