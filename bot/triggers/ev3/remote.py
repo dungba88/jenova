@@ -17,9 +17,11 @@ class RemoteControl(GoBase):
 
         for behavior in control_behaviors:
             if set(buttons_pressed) == set(control_behaviors[behavior]):
+                execution_context.finish(behavior)
                 self.run_behavior(behavior, power)
                 break
         else:
+            execution_context.finish(control_behaviors['default'])
             self.run_behavior(control_behaviors['default'], power)
 
     def stop(self):

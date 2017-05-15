@@ -63,4 +63,5 @@ class GoEV3(GoBase):
         self.motors = self.app_context.get_config('ev3.motors.wheels')
         power = execution_context.event['power']
         behavior = execution_context.event['behavior']
+        execution_context.finish(behavior)
         self.run_behavior(behavior, power)

@@ -7,6 +7,7 @@ var command_helps = {
         talk: 'Send a text to the bot server. Usage: talk {sentence}',
         audio: 'Start dictation',
         say: 'Make the robot say a sentence. Usage: say {sentence}',
+        go: 'Make the robot go',
         switch: 'Switch the bot. Usage: switch {bot_name}',
         teach: 'Teach the robot. Usage: teach {sentence},{intent}',
         train: 'Train the bot server',
@@ -235,6 +236,25 @@ bot_commands = {
                     "name": "say",
                     "args": {
                         "text": text
+                    }
+                }
+            }
+        }));
+    },
+
+    go: function(text) {
+        if (!text) {
+            throw new Error('Direction is empty');
+        }
+        frags = text.split(' ')
+        call_raw(JSON.stringify({
+            "name": "pass",
+            "args": {
+                "command": {
+                    "name": "go",
+                    "args": {
+                        "behavior": frags[0],
+                        "power": parseInt(frags[1])
                     }
                 }
             }

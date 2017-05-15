@@ -56,5 +56,10 @@
         "event": "sensor_fired",
         "action": "triggers.ev3.remote.RemoteControl",
         "stop_all_actions": "event.remote.buttons_pressed is not null and event.remote.buttons_pressed is not empty"
+    },
+    {
+        "event": "go",
+        "action": "triggers.ev3.go.GoEV3",
+        "stop_all_actions": true
     }
 ]
