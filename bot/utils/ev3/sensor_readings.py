@@ -19,7 +19,7 @@ class SensorReadings(object):
         if self.running:
             return
 
-        enabled = self.app_context.get_config('sensors.enabled')
+        enabled = self.app_context.get_config('ev3.sensors.enabled')
         if not enabled:
             return
 
@@ -55,15 +55,15 @@ class SensorMonitor(object):
         if len(self.sensor_objects) == 0:
             return
 
-        self.intervals_min = self.app_context.get_config('sensors.intervals_min')
-        self.intervals_max = self.app_context.get_config('sensors.intervals_max')
+        self.intervals_min = self.app_context.get_config('ev3.sensors.intervals_min')
+        self.intervals_max = self.app_context.get_config('ev3.sensors.intervals_max')
         self.intervals = self.intervals_min
 
         self.executor.submit(self.monitor)
 
     def load_sensor_objects(self):
         """load the sensor objects"""
-        sensors = self.app_context.get_config('sensors.monitorables')
+        sensors = self.app_context.get_config('ev3.sensors.monitorables')
         sensor_objects = dict()
         for sensor in sensors:
             if not sensor['enabled']:

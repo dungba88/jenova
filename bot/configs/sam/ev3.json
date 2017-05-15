@@ -1,13 +1,40 @@
 {
-    "remote_behavior": {
-        "turn_left": ["blue_up"],
-        "turn right": ["red_up"],
-        "turn_left_back": ["blue_down"],
-        "turn_right_back": ["red_down"],
-        "skate_up": ["red_up", "blue_up"],
-        "skate_down": ["red_down", "blue_down"],
-        "hard_turn_left": ["red_down", "blue_up"],
-        "hard_turn_right": ["red_up", "blue_down"],
-        "beacon": ["beacon"]
+    "remote": {
+        "power": 100,
+        "behavior": {
+            "turn_left": ["blue_up"],
+            "turn right": ["red_up"],
+            "turn_left_back": ["blue_down"],
+            "turn_right_back": ["red_down"],
+            "skate_up": ["red_up", "blue_up"],
+            "skate_down": ["red_down", "blue_down"],
+            "hard_turn_left": ["red_down", "blue_up"],
+            "hard_turn_right": ["red_up", "blue_down"],
+            "beacon": ["beacon"]
+        }
+    },
+    "motors": {
+        "wheels": {
+            "left": "outB",
+            "right": "outC"
+        }
+    },
+    "sensors": {
+        "enabled": true,
+        "intervals_min": 0.001,
+        "intervals_max": 10,
+        "monitorables": [
+            {
+                "name": "infrared",
+                "port": "in4",
+                "enabled": true,
+                "class_name": "utils.ev3.sensors.infrared.InfraredSensorReadings"
+            }, {
+                "name": "remote",
+                "port": "in4",
+                "enabled": true,
+                "class_name": "utils.ev3.sensors.remote.RemoteControlReadings"
+            }
+        ]
     }
 }
