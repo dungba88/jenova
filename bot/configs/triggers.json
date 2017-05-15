@@ -9,7 +9,8 @@
     },
     {
         "event": "stop",
-        "action": "triggers.commands.stop.Stop"
+        "action": "triggers.commands.stop.Stop",
+        "stop_all_actions": true
     },
     {
         "event": "tell_story",
@@ -53,7 +54,7 @@
     },
     {
         "event": "sensor_fired",
-        "condition": "event.remote.buttons_pressed is not null and event.remote.buttons_pressed is not empty",
-        "action": "triggers.ev3.remote.RemoteControl"
+        "action": "triggers.ev3.remote.RemoteControl",
+        "stop_all_actions": "event.remote.buttons_pressed is not null and event.remote.buttons_pressed is not empty"
     }
 ]
