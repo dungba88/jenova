@@ -254,7 +254,8 @@ bot_commands = {
                     "name": "go",
                     "args": {
                         "behavior": frags[0],
-                        "power": parseInt(frags[1])
+                        "power": parseInt(frags[1]),
+                        "time": parseFloat(frags[2])
                     }
                 }
             }
