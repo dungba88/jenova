@@ -9,6 +9,7 @@ class RemoteControl(Trigger):
 
     motors = None
     power = 100
+    run_flag = False
 
     def run(self, execution_context):
         self.motors = self.app_context.get_config('ev3.motors.wheels')
@@ -19,13 +20,21 @@ class RemoteControl(Trigger):
         for behavior in control_behaviors:
             if set(buttons_pressed) == set(control_behaviors[behavior]):
                 self.run_behavior(behavior)
+                break
+        else:
+            self.run_behavior(control_behaviors['default'])
 
     def run_behavior(self, behavior):
         """run the behavior"""
         getattr(self, behavior)()
 
-    def beacon(self):
-        """run when beacon is clicked"""
+    def stop(self):
+        if not self.run_flag:
+            return
+        from ev3dev import ev3
+        ev3.LargeMotor(self.motors['left']).stop()
+        ev3.LargeMotor(self.motors['right']).stop()
+        self.run_flag = False
 
     def turn_left(self):
         """turn the robot a soft left"""
@@ -69,5 +78,5 @@ class RemoteControl(Trigger):
 
     def run_motor(self, motor, power):
         """run a large motor"""
+        self.run_flag = True
         move_large.ForeverMoveLarge(self.motors[motor]).run(power=power)
-        
