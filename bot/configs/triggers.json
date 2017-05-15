@@ -50,5 +50,10 @@
     {
         "event": "switch",
         "action": "triggers.admin.switch.Switch"
+    },
+    {
+        "event": "sensor_fired",
+        "condition": "event.remote.buttons_pressed is not null and event.remote.buttons_pressed is not empty",
+        "action": "triggers.ev3.remote.RemoteControl"
     }
 ]
