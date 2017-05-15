@@ -11,13 +11,14 @@ class RemoteControl(Trigger):
     power = 100
 
     def run(self, execution_context):
+        self.motors = self.app_context.get_config('ev3.motors.wheels')
+        self.power = self.app_context.get_config('ev3.remote.power')
+
         buttons_pressed = execution_context.event['remote']['buttons_pressed']
         control_behaviors = self.app_context.get_config('ev3.remote.behavior')
         for behavior in control_behaviors:
             if set(buttons_pressed) == set(control_behaviors[behavior]):
                 self.run_behavior(behavior)
-        self.motors = self.app_context.get_config('ev3.motors.wheels')
-        self.power = self.app_context.get_config('ev3.remote.power')
 
     def run_behavior(self, behavior):
         """run the behavior"""
