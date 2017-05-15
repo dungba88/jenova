@@ -10,5 +10,6 @@ class InfraredSensorReadings(object):
         """read the sensor value"""
         return {
             'proximity': self.sensor.proximity,
-            'raw_value': self.sensor.value
+            'raw_value': self.sensor.value,
+            'sensor': self.sensor
         }

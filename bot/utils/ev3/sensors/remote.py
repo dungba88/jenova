@@ -9,5 +9,6 @@ class RemoteControlReadings(object):
     def read_value(self):
         """read the sensor value"""
         return {
-            'buttons_pressed': self.sensor.buttons_pressed
+            'buttons_pressed': self.sensor.buttons_pressed,
+            'sensor': self.sensor
         }
