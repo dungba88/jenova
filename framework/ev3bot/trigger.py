@@ -112,27 +112,30 @@ class TriggerManager(object):
         if len(triggers) == 0:
             raise TriggerEventNotRegistered("Event. " + name + ". not registered")
 
-        # build the execution context
         execution_context = TriggerExecutionContext(event, name, None)
-
-        trigger = self.get_matching_trigger(triggers, execution_context)
-        if trigger is None:
+        triggers = self.get_matching_triggers(triggers, execution_context)
+        if len(triggers) == 0:
             return
 
         self.stop_all_actions()
 
-        # run the trigger in executor
-        execution_context.trigger = trigger
-        self.executor.submit(self.run_trigger, execution_context)
+        for trigger in triggers:
+            # build the execution context
+            execution_context = TriggerExecutionContext(event, name, None)
+            execution_context.trigger = trigger
+
+            # run the trigger in executor
+            self.executor.submit(self.run_trigger, execution_context)
 
         return self.wait_for_finish(execution_context)
 
-    def get_matching_trigger(self, triggers, execution_context):
+    def get_matching_triggers(self, triggers, execution_context):
         """get the first trigger which satisifies the condition"""
+        matched = list()
         for trigger in triggers:
             if trigger.check_condition(execution_context):
-                return trigger
-        return None
+                matched.append(trigger)
+        return matched
 
     def wait_for_finish(self, execution_context):
         """Wait for the execution to finish"""
