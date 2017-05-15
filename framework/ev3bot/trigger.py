@@ -119,7 +119,7 @@ class TriggerManager(object):
         self.triggers = list()
         self.event_hook = dict()
 
-    def fire(self, name, event=None):
+    def fire(self, name, event=None, wait=True):
         """Fire the event, calling all handlers registered with the event"""
         triggers = self.get_handlers(name)
         if len(triggers) == 0:
@@ -142,6 +142,8 @@ class TriggerManager(object):
             # run the trigger in executor
             self.executor.submit(self.run_trigger, execution_context)
 
+        if not wait:
+            return
         return self.wait_for_finish(execution_context)
 
     def is_eligible_for_stop(self, triggers, execution_context):
