@@ -5,6 +5,10 @@ import time
 import logging
 from concurrent.futures import ThreadPoolExecutor
 
+class TriggerEventNotRegistered(BaseException):
+    """exception when trigger event is not registered"""
+    pass
+
 class TriggerExecutionContext(object):
     """The context a trigger can access whenever executed"""
 
@@ -106,7 +110,7 @@ class TriggerManager(object):
         """Fire the event, calling all handlers registered with the event"""
         triggers = self.get_handlers(name)
         if len(triggers) == 0:
-            raise ValueError("Event. " + name + ". not registered")
+            raise TriggerEventNotRegistered("Event. " + name + ". not registered")
 
         # build the execution context
         execution_context = TriggerExecutionContext(event, name, None)
@@ -165,14 +169,8 @@ class TriggerManager(object):
 
     def create_trigger(self, trigger_name):
         """Create a trigger from class name"""
-        name_parts = trigger_name.rsplit('.', 1)
-        module_name = name_parts[0]
-        class_name = name_parts[1]
-
-        trigger_module = __import__(module_name, fromlist=[class_name])
-        trigger_class = getattr(trigger_module, class_name)
-
-        trigger = trigger_class()
+        from . import class_loader
+        trigger = class_loader.load_class(trigger_name)
         trigger.app_context = self.app_context
         return trigger
 
