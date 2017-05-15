@@ -40,7 +40,8 @@ class Application(object):
         event = config.get('event', None)
         condition = config.get('condition', None)
         action = config['action']
-        self.trigger_manager.register_trigger_by_name(action, event, condition)
+        stop_all_actions = config.get('stop_all_actions', None)
+        self.trigger_manager.register_trigger_by_name(action, event, condition, stop_all_actions)
 
     def run(self):
         """Run the application"""

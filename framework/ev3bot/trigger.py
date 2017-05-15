@@ -16,6 +16,7 @@ class TriggerExecutionContext(object):
         self.event = event
         self.event_name = event_name
         self.trigger = trigger
+        self.trigger_manager = None
         self.result = None
         self.exception = None
         self.finished = False
@@ -55,6 +56,7 @@ class Trigger(object):
     def __init__(self):
         self.condition = None
         self.app_context = None
+        self.stop_all_actions = False
 
     def get_config(self, name):
         """Get the config from application context"""
@@ -68,6 +70,17 @@ class Trigger(object):
             if not self.condition.satisfied_by(execution_context):
                 return False
         return True
+
+    def check_stop_all_actions(self, execution_context):
+        """check if the condition of stop_all_actions is satisfied"""
+        if self.stop_all_actions is None:
+            return False
+        if isinstance(self.stop_all_actions, bool):
+            return self.stop_all_actions
+        if isinstance(self.stop_all_actions, str):
+            condition = TriggerCondition(self.stop_all_actions)
+            return condition.satisfied_by(execution_context)
+        return False
 
     def run(self, execution_context):
         """run the trigger"""
@@ -117,17 +130,26 @@ class TriggerManager(object):
         if len(triggers) == 0:
             return
 
-        self.stop_all_actions()
+        if self.is_eligible_for_stop(triggers, execution_context):
+            self.stop_all_actions()
 
         for trigger in triggers:
             # build the execution context
             execution_context = TriggerExecutionContext(event, name, None)
             execution_context.trigger = trigger
+            execution_context.trigger_manager = self
 
             # run the trigger in executor
             self.executor.submit(self.run_trigger, execution_context)
 
         return self.wait_for_finish(execution_context)
+
+    def is_eligible_for_stop(self, triggers, execution_context):
+        """check if any of the triggers is eligible to stop all actions"""
+        for trigger in triggers:
+            if trigger.check_stop_all_actions(execution_context):
+                return True
+        return False
 
     def get_matching_triggers(self, triggers, execution_context):
         """get the first trigger which satisifies the condition"""
@@ -199,11 +221,17 @@ class TriggerManager(object):
                 self.error_handler.handle_error(e)
             else:
                 logging.getLogger(__name__).error(e)
+        finally:
+            self.current_trigger = None
 
-    def register_trigger_by_name(self, trigger_name, event=None, condition_str=None):
+    def register_trigger_by_name(self, trigger_name,
+                                 event=None,
+                                 condition_str=None,
+                                 stop_all_actions=None):
         """create and register the trigger"""
         trigger = self.create_trigger(trigger_name)
         if condition_str is not None and condition_str is not '':
             trigger.condition = TriggerCondition(condition_str)
+        trigger.stop_all_actions = stop_all_actions
         self.register_trigger(event, trigger)
         return trigger
