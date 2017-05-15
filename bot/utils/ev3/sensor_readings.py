@@ -85,7 +85,7 @@ class SensorMonitor(object):
                     self.gain()
             if len(event) > 0:
                 try:
-                    self.trigger_manager.fire('sensor_fired', event)
+                    self.trigger_manager.fire('sensor_fired', event, wait=False)
                 except Exception as ex:
                     self.logger.error('Uncaught exception when executing trigger: %s', str(ex))
                     self.penalize()
