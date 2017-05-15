@@ -24,7 +24,7 @@ class RemoteControl(GoBase):
             execution_context.finish(control_behaviors['default'])
             self.run_behavior(control_behaviors['default'], power)
 
-    def stop(self):
+    def stop(self, power):
         if not self.run_flag:
             return
         from ev3dev import ev3
