@@ -8,6 +8,11 @@
             "port": "in4",
             "enabled": true,
             "class_name": "utils.ev3.sensors.infrared.InfraredSensorReadings"
+        }, {
+            "name": "remote",
+            "port": "in4",
+            "enabled": true,
+            "class_name": "utils.ev3.sensors.remote.RemoteControlReadings"
         }
     ]
 }
