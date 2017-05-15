@@ -2,7 +2,6 @@
 
 import re
 import time
-import random
 import logging
 from concurrent.futures import ThreadPoolExecutor
 
