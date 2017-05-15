@@ -25,6 +25,7 @@ class RemoteControl(GoBase):
             self.run_behavior(control_behaviors['default'], power)
 
     def stop(self, power):
+        """stop both engines"""
         if not self.run_flag:
             return
         from ev3dev import ev3
