@@ -2,6 +2,7 @@
     "remote": {
         "power": 100,
         "behavior": {
+            "default": "stop",
             "turn_left": ["blue_up"],
             "turn right": ["red_up"],
             "turn_left_back": ["blue_down"],
@@ -9,8 +10,7 @@
             "skate_up": ["red_up", "blue_up"],
             "skate_down": ["red_down", "blue_down"],
             "hard_turn_left": ["red_down", "blue_up"],
-            "hard_turn_right": ["red_up", "blue_down"],
-            "beacon": ["beacon"]
+            "hard_turn_right": ["red_up", "blue_down"]
         }
     },
     "motors": {
@@ -27,7 +27,7 @@
             {
                 "name": "infrared",
                 "port": "in4",
-                "enabled": true,
+                "enabled": false,
                 "class_name": "utils.ev3.sensors.infrared.InfraredSensorReadings"
             }, {
                 "name": "remote",
