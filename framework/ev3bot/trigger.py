@@ -123,7 +123,8 @@ class TriggerManager(object):
         """Fire the event, calling all handlers registered with the event"""
         triggers = self.get_handlers(name)
         if len(triggers) == 0:
-            raise TriggerEventNotRegistered("Event. " + name + ". not registered")
+            logging.getLogger(__name__).warning("Event. " + name + ". not registered")
+            return
 
         execution_context = TriggerExecutionContext(event, name, None)
         triggers = self.get_matching_triggers(triggers, execution_context)
