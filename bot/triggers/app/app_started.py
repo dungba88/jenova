@@ -21,8 +21,8 @@ class AppStarted(Trigger):
         from ev3dev.ev3 import Leds
         Leds.set_color(Leds.LEFT, Leds.GREEN)
         Leds.set_color(Leds.LEFT, Leds.GREEN)
-        Leds.set(Leds.LEFT, trigger='delay-on')
-        Leds.set(Leds.RIGHT, trigger='delay-on')
+        Leds.set(Leds.LEFT, trigger='default-on')
+        Leds.set(Leds.RIGHT, trigger='default-on')
         time.sleep(0.5)
         Leds.all_off()
 
