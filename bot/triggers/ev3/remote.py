@@ -36,4 +36,4 @@ class RemoteControl(GoBase):
     def run_motor(self, motor, power):
         """run a large motor"""
         self.run_flag = True
-        super.run_motor(motor, power)
+        super(RemoteControl, self).run_motor(motor, power)
