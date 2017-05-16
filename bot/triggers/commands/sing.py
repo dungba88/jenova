@@ -32,7 +32,8 @@ class Sing(Trigger):
         song_type = song.get('type')
         song_players = {
             'vocal': VocalSongPlayer(),
-            'tone': ToneSongPlayer()
+            'tone': ToneSongPlayer(),
+            'wav': WavSongPlayer()
         }
         song_players.get(song_type).play(song)
 
@@ -56,3 +57,19 @@ class ToneSongPlayer(object):
         for lyric in lyrics:
             result.append((lyric[0], lyric[1], lyric[2]))
         return result
+
+class WavSongPlayer(object):
+    """API for playing a WAV file"""
+    def play(self, song):
+        """Play the song"""
+        file_name = song.get('file_name')
+        from ev3dev.ev3 import Sound
+        Sound.play(file_name).wait()
+
+class BeepSongPlayer(object):
+    """API for playing a song with beeps"""
+    def play(self, song):
+        """Play the song"""
+        lyrics = song.get('lyrics')
+        from ev3dev.ev3 import Sound
+        Sound.beep(lyrics).wait()
