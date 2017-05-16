@@ -33,7 +33,8 @@ class Sing(Trigger):
         song_players = {
             'vocal': VocalSongPlayer(),
             'tone': ToneSongPlayer(),
-            'wav': WavSongPlayer()
+            'wav': WavSongPlayer(),
+            'beep': BeepSongPlayer()
         }
         song_players.get(song_type).play(song)
 
