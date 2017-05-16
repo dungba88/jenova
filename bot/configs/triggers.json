@@ -61,5 +61,15 @@
         "event": "go",
         "action": "triggers.ev3.go.GoEV3",
         "stop_all_actions": true
+    },
+    {
+        "event": "app_starting",
+        "action": "triggers.app.app_starting.AppStarting",
+        "stop_all_actions": true
+    },
+    {
+        "event": "app_started",
+        "action": "triggers.app.app_started.AppStarted",
+        "stop_all_actions": true
     }
 ]
