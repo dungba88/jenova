@@ -18,10 +18,12 @@ class ApplicationBootstrap(object):
 
     def run(self):
         """Run the application"""
+        self.trigger_manager.fire('app_starting')
         self.register_error_handlers()
         self.register_routes()
         self.register_locale()
         self.register_sensors()
+        self.trigger_manager.fire('app_started')
 
     def register_sensors(self):
         """register sensors readings"""
