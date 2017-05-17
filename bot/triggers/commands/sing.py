@@ -6,6 +6,33 @@ from ev3bot.trigger import Trigger
 
 from utils import tts
 
+NOTE_FREQ = {
+    "C4": 261.6,
+    "C#4": 277.2,
+    "D4": 293.7,
+    "D#4": 311.1,
+    "E4": 329.6,
+    "F4": 349.2,
+    "F#4": 370.0,
+    "G4": 392.0,
+    "G#4": 415.3,
+    "A4": 440.0,
+    "A#4": 466.2,
+    "B4": 493.9,
+    "C5": 523.3,
+    "C#5": 554.4,
+    "D5": 587.3,
+    "D#5": 622.3,
+    "E5": 659.3,
+    "F5": 698.5,
+    "F#5": 740.0,
+    "G5": 784.0,
+    "G#5": 415.3,
+    "A5": 830.6,
+    "A#5": 880.0,
+    "B5": 987.8
+}
+
 class Sing(Trigger):
     """Trigger to sing a song"""
     def run(self, execution_context):
@@ -56,7 +83,7 @@ class ToneSongPlayer(object):
         """convert lyrics to EV3 format"""
         result = list()
         for lyric in lyrics:
-            result.append((lyric[0], lyric[1], lyric[2]))
+            result.append((NOTE_FREQ[lyric[0]], lyric[1], lyric[2]))
         return result
 
 class WavSongPlayer(object):
