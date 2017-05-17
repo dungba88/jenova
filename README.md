@@ -32,6 +32,8 @@ Well, the bot capabilities depends on what you have trained him to understand, a
     + Hello/Hi/Good morning/Good afternoon/Good evening
     + What is your name?/How are you?/Who are you?
 
+- Sing a song
+
 - Inquire about some general information, e.g:
     
     + What time is it?/What date is it?...
