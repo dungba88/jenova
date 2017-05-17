@@ -1,5 +1,6 @@
 """Trigger implementation to sing"""
 
+import json
 import random
 
 from ev3bot.trigger import Trigger
@@ -75,9 +76,11 @@ class ToneSongPlayer(object):
     """API for playing a song with tones"""
     def play(self, song):
         """Play the song"""
-        lyrics = song.get('lyrics')
         from ev3dev.ev3 import Sound
-        Sound.tone(self.convert_lyrics(lyrics)).wait()
+        file_name = song.get('file_name')
+        with open(file_name) as data_file:
+            lyrics = json.load(data_file)
+            Sound.tone(self.convert_lyrics(lyrics)).wait()
 
     def convert_lyrics(self, lyrics):
         """convert lyrics to EV3 format"""
@@ -98,6 +101,8 @@ class BeepSongPlayer(object):
     """API for playing a song with beeps"""
     def play(self, song):
         """Play the song"""
-        lyrics = song.get('lyrics')
-        from ev3dev.ev3 import Sound
-        Sound.beep(lyrics).wait()
+        file_name = song.get('file_name')
+        with open(file_name) as data_file:
+            lyrics = data_file.read()
+            from ev3dev.ev3 import Sound
+            Sound.beep(lyrics).wait()
