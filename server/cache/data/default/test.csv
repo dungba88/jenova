@@ -76,3 +76,6 @@ what is the distance to it,inquire.entity.distance
 where is andromeda galaxy,inquire.entity.location
 where is the earth,inquire.entity.location
 where is it,inquire.entity.location
+what is your battery level?,inquire.battery
+how is your battery?,inquire.battery
+what is your battery?,inquire.battery
