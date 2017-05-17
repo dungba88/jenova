@@ -56,3 +56,5 @@ what is the distance to x y,inquire.entity.distance
 what is the distance to x,inquire.entity.distance
 where is x y?,inquire.entity.location
 where is x?,inquire.entity.location
+what is your battery level?,inquire.battery
+how is your battery?,inquire.battery
