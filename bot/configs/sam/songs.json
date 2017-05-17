@@ -1,41 +1,36 @@
 [{
     "id": "happy_birthday",
     "name": "Happy Birthday",
-    "type": "vocal",
-    "lyrics": [
-        "Happy birthday to you",
-        "Happy birthday to you",
-        "Happy birthday to {owner}",
-        "Happy birthday to you"
-    ]
+    "type": "beep",
+    "file_name": "cache/songs/happy_birthday.txt"
 }, {
     "id": "darth_vader",
     "name": "Darth Vader's theme",
     "type": "tone",
-    "lyrics": [
-        ["G4", 350, 100], ["G4", 350, 100], ["G4", 350, 100], ["D#4", 250, 100],
-        ["A#4", 25, 100], ["G4", 350, 100], ["D#4", 250, 100], ["A#4", 25, 100],
-        ["G4", 700, 100], ["E5", 350, 100], ["E5", 350, 100],
-        ["E5", 350, 100], ["E#5", 250, 100], ["A#4", 25, 100],
-        ["F#4", 350, 100], ["D#4", 250, 100], ["A#4", 25, 100], ["G4", 700, 100]]
+    "file_name": "cache/songs/darth_vader.json"
 }, {
     "id": "electrical_sweep",
     "name": "Electrical Sweep",
     "type": "wav",
-    "file_name": "cache/sound/electrical_sweep.wav"
+    "file_name": "cache/songs/electrical_sweep.wav"
 }, {
     "id": "victory_fanfare",
     "name": "FF Victory Fanfare",
     "type": "beep",
-    "lyrics": "-f987 -l53 -D53 -n -f987 -l53 -D53 -n -f987 -l53 -D53 -n -f987 -l428 -n -f784 -l428 -n -f880 -l428 -n -f987 -l107 -D214 -n -f880 -l107 -n -f987 -l857"
+    "file_name": "cache/songs/victory_fanfare.txt"
 }, {
     "id": "axel_f",
     "name": "Axel F",
     "type": "beep",
-    "lyrics": "-f 659 -l 460 -n -f 784 -l 340 -n -f 659 -l 230 -n -f 659 -l 110 -n -f 880 -l 230 -n -f 659 -l 230 -n -f 587 -l 230 -n -f 659 -l 460 -n -f 988 -l 340 -n -f 659 -l 230 -n -f 659 -l 110 -n -f 1047-l 230 -n -f 988 -l 230 -n -f 784 -l 230 -n -f 659 -l 230 -n -f 988 -l 230 -n -f 1318 -l 230 -n -f 659 -l 110 -n -f 587 -l 230 -n -f 587 -l 110 -n -f 494 -l 230 -n -f 740 -l 230 -n -f 659 -l 460"
+    "file_name": "cache/songs/axel_f.txt"
 }, {
     "id": "mario_victory",
     "name": "Mario Victory Song",
     "type": "beep",
-    "lyrics": "-f 130 -l 100 -n -f 262 -l 100 -n -f 330 -l 100 -n -f 392 -l 100 -n -f 523 -l 100 -n -f 660 -l 100 -n -f 784 -l 300 -n -f 660 -l 300 -n -f 146 -l 100 -n -f 262 -l 100 -n -f 311 -l 100 -n -f 415 -l 100 -n -f 523 -l 100 -n -f 622 -l 100 -n -f 831 -l 300 -n -f 622 -l 300 -n -f 155 -l 100 -n -f 294 -l 100 -n -f 349 -l 100 -n -f 466 -l 100 -n -f 588 -l 100 -n -f 699 -l 100 -n -f 933 -l 300 -n -f 933 -l 100 -n -f 933 -l 100 -n -f 933 -l 100 -n -f 1047 -l 400"
+    "file_name": "cache/songs/mario_victory.txt"
+}, {
+    "id": "mario_main",
+    "name": "Mario Main Theme",
+    "type": "beep",
+    "file_name": "cache/songs/mario_main.txt"
 }]
