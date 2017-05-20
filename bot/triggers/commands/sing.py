@@ -37,12 +37,57 @@ NOTE_FREQ = {
 class Sing(Trigger):
     """Trigger to sing a song"""
     def run(self, execution_context):
+        no_song_react = self.app_context.get_config('behavior.sing.no_song')
+
         song_id = execution_context.event.get('song_id', None)
-        song = self.find_song(song_id)
-        execution_context.finish('singing ' + song.get('name'))
+        tagged_text = execution_context.event.get('tagged_text', None)
+        tagged_text = self.filter_tagged_text(tagged_text)
+        song = None
+
+        if song_id is None and len(tagged_text) > 0:
+            # there are song name mentioned in tagged text. find it
+            song = self.find_tagged_song(tagged_text)
+            if song is None:
+                tts.say_random_finish(no_song_react, execution_context)
+                return
+        else:
+            song = self.find_song(song_id)
 
         if song is not None:
+            execution_context.finish('singing ' + song.get('name'))
             self.sing_the_song(song)
+        else:
+            tts.say_random_finish(no_song_react, execution_context)
+
+    def filter_tagged_text(self, tagged_text):
+        """filter tagged text"""
+        if tagged_text is None:
+            return list()
+        filtered = self.app_context.get_config('behavior.sing.filtered_tagged_text')
+        return [t[0] for t in tagged_text
+                if (t[1] == 'NN' or t[1] == 'NNS') and t[0] not in filtered]
+
+    def find_tagged_song(self, tagged_text):
+        """find the tagged song"""
+        songs = self.get_config('songs')
+        score = 1
+        matched_song = None
+
+        for song in songs:
+            matching_score = self.match_score(song.get('id'), tagged_text)
+            if matching_score >= score:
+                matched_song = song
+                score = matching_score
+        return matched_song
+
+    def match_score(self, name, tagged_text):
+        """calculate the matched score between the song name and tagged text"""
+        frags = name.split('_')
+        score = 0
+        for frag in frags:
+            if frag in tagged_text:
+                score += 1
+        return score
 
     def find_song(self, song_id):
         """Find a song by id, or pick a random song if song_id is None"""
