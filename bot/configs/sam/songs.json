@@ -33,4 +33,9 @@
     "name": "Mario Main Theme",
     "type": "beep",
     "file_name": "cache/songs/mario_main.txt"
+}, {
+    "id": "fur_elis",
+    "name": "Fur Elise",
+    "type": "beep",
+    "file_name": "cache/songs/fur_elise.txt"
 }]
