@@ -31,7 +31,8 @@ NOTE_FREQ = {
     "G#5": 415.3,
     "A5": 830.6,
     "A#5": 880.0,
-    "B5": 987.8
+    "B5": 987.8,
+    "C6": 1046.5
 }
 
 class Sing(Trigger):
@@ -129,9 +130,10 @@ class ToneSongPlayer(object):
 
     def convert_lyrics(self, lyrics):
         """convert lyrics to EV3 format"""
+        delay = 100
         result = list()
         for lyric in lyrics:
-            result.append((NOTE_FREQ[lyric[0]], lyric[1], lyric[2]))
+            result.append((NOTE_FREQ[lyric[0]], lyric[1], delay))
         return result
 
 class WavSongPlayer(object):
