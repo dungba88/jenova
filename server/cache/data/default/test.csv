@@ -23,6 +23,10 @@ stop,stop
 leave me alone,stop
 sing a song,sing
 do you know any song,sing
+play a song,sing
+play music,sing
+play beethoven,sing
+play darth vader theme,sing
 what is your favourite?,inquire.interests
 what your favourite,inquire.interests
 what is your hobby?,inquire.interests

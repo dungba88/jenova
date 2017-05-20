@@ -21,6 +21,7 @@ stop,stop
 leave me alone,stop
 sing song,sing
 do you know any song,sing
+play music,sing
 what are your interests?,inquire.interests
 what is your favourite?,inquire.interests
 what is your hobby?,inquire.interests
