@@ -1,20 +1,20 @@
 [{
-    "id": "happy_birthday",
+    "id": "happi_birthday",
     "name": "Happy Birthday",
     "type": "beep",
     "file_name": "cache/songs/happy_birthday.txt"
 }, {
-    "id": "darth_vader",
+    "id": "darth_vader_theme",
     "name": "Darth Vader's theme",
     "type": "tone",
     "file_name": "cache/songs/darth_vader.json"
 }, {
-    "id": "electrical_sweep",
+    "id": "electr_sweep",
     "name": "Electrical Sweep",
     "type": "wav",
     "file_name": "cache/songs/electrical_sweep.wav"
 }, {
-    "id": "victory_fanfare",
+    "id": "victori_fanfar",
     "name": "FF Victory Fanfare",
     "type": "beep",
     "file_name": "cache/songs/victory_fanfare.txt"
@@ -24,7 +24,7 @@
     "type": "beep",
     "file_name": "cache/songs/axel_f.txt"
 }, {
-    "id": "mario_victory",
+    "id": "mario_victori",
     "name": "Mario Victory Song",
     "type": "beep",
     "file_name": "cache/songs/mario_victory.txt"
