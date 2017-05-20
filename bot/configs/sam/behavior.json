@@ -55,6 +55,10 @@
         "ok": ["I am fine. Thank you for asking.", "I am good", "Nothing wrong with my system", "All parameters are within limit"]
     },
     "app": {
-        "started_song": "victory_fanfare"
+        "started_song": "victori_fanfar"
+    },
+    "sing": {
+        "filtered_tagged_text": ["play", "song"],
+        "no_song": ["Sorry, I cannot play that song"]
     }
 }
