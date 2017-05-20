@@ -41,6 +41,6 @@
 }, {
     "id": "eye_on_me",
     "name": "Eyes On Me",
-    "type": "beep",
+    "type": "tone",
     "file_name": "cache/songs/eyes_on_me.json"
 }]
