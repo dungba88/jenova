@@ -15,14 +15,10 @@ class Test(Trigger):
 
         config = persist.get_data_config(data_name)
 
-        reader = self.open_test_file(data_name)
-        result = self.test_data(reader, data_name, config)
-        execution_context.finish(result)
-
-    def open_test_file(self, data_name):
-        """Open the test file of a data_name"""
         with open('cache/data/' + data_name + '/test.csv') as data_file:
-            return csv.reader(data_file)
+            reader = csv.reader(data_file)
+            result = self.test_data(reader, data_name, config)
+            execution_context.finish(result)
 
     def test_data(self, reader, data_name, config):
         """test the model"""
