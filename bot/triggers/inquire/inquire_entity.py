@@ -3,18 +3,17 @@
 import json
 from os import listdir
 
-from ev3bot.trigger import Trigger
-
 from utils import tts
 
-class InquireEntity(Trigger):
+class InquireEntity(object):
     """Trigger to inquire information about an entity"""
 
-    def run(self, execution_context):
+    def run(self, execution_context, app_context):
+        """run the action"""
         # opening = app.get_config('behavior.entity_react.opening')
-        no_data_react = self.get_config('behavior.entity_react.no_data')
-        confused_react = self.get_config('behavior.entity_react.confused')
-        not_support_react = self.get_config('behavior.entity_react.not_support')
+        no_data_react = app_context.get_config('behavior.entity_react.no_data')
+        confused_react = app_context.get_config('behavior.entity_react.confused')
+        not_support_react = app_context.get_config('behavior.entity_react.not_support')
 
         inquire_type = execution_context.event_name.split('.')[2]
         tagged_text = execution_context.event.get('tagged_text')

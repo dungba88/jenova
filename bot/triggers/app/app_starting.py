@@ -1,13 +1,12 @@
 """Trigger implementation for inquiring entity info"""
 
-from ev3bot.trigger import Trigger
-
 from utils.ev3 import led
 
-class AppStarting(Trigger):
+class AppStarting(object):
     """Trigger to inquire information about an entity"""
 
-    def run(self, execution_context):
+    def run(self, execution_context, _):
+        """run the action"""
         execution_context.finish()
 
         # notify by EV3 LED

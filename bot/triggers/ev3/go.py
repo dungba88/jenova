@@ -1,10 +1,8 @@
 """Trigger to make the bot go"""
 
-from ev3bot.trigger import Trigger
-
 from utils.ev3 import move_large
 
-class GoBase(Trigger):
+class GoBase(object):
     """Base class for make EV3 go"""
     motors = None
 
@@ -60,8 +58,9 @@ class GoEV3(GoBase):
     """class for remote control"""
     time = 1
 
-    def run(self, execution_context):
-        self.motors = self.app_context.get_config('ev3.motors.wheels')
+    def run(self, execution_context, app_context):
+        """run the action"""
+        self.motors = app_context.get_config('ev3.motors.wheels')
         power = execution_context.event['power']
         behavior = execution_context.event['behavior']
         execution_context.finish(behavior)

@@ -1,16 +1,14 @@
 """Trigger implementation for inquiring weather"""
 
-from ev3bot.trigger import Trigger
-
 from utils import tts
 from utils import dynamic_facts
 
-class InquireWeather(Trigger):
+class InquireWeather(object):
     """Trigger to inquire weather"""
 
-    def run(self, execution_context):
+    def run(self, execution_context, app_context):
         """run the action"""
-        opening_reacts = self.get_config('behavior.weather_react.opening')
+        opening_reacts = app_context.get_config('behavior.weather_react.opening')
         tts.say_random(opening_reacts)
 
         # get weather info
@@ -21,7 +19,7 @@ class InquireWeather(Trigger):
         pressure = weather['main']['pressure']
         humidity = weather['main']['humidity']
 
-        react_config = self.get_config('behavior.weather_react')
+        react_config = app_context.get_config('behavior.weather_react')
 
         main_weather_react = react_config.get('main.' + main_weather, [])
         clouds_react = react_config.get('clouds', [])

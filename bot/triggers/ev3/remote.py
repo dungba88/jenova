@@ -8,12 +8,13 @@ class RemoteControl(GoBase):
     power = 100
     run_flag = False
 
-    def run(self, execution_context):
-        self.motors = self.app_context.get_config('ev3.motors.wheels')
+    def run(self, execution_context, app_context):
+        """run the action"""
+        self.motors = app_context.get_config('ev3.motors.wheels')
 
         buttons_pressed = execution_context.event['remote']['buttons_pressed']
-        power = self.app_context.get_config('ev3.remote.power')
-        control_behaviors = self.app_context.get_config('ev3.remote.behavior')
+        power = app_context.get_config('ev3.remote.power')
+        control_behaviors = app_context.get_config('ev3.remote.behavior')
 
         for behavior in control_behaviors:
             if set(buttons_pressed) == set(control_behaviors[behavior]):
@@ -24,7 +25,7 @@ class RemoteControl(GoBase):
             execution_context.finish(control_behaviors['default'])
             self.run_behavior(control_behaviors['default'], power)
 
-    def stop(self, power):
+    def stop(self, _):
         """stop both engines"""
         if not self.run_flag:
             return

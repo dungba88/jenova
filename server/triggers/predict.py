@@ -5,8 +5,6 @@ import logging
 
 import nltk
 
-from ev3bot.trigger import Trigger
-
 from utils import http
 from utils.learn import classifier
 from utils.learn import pre_process
@@ -15,11 +13,12 @@ from utils.factory.tokenizer import TokenizerFactory
 
 LOGGER = logging.getLogger(__name__)
 
-class Predict(Trigger):
+class Predict(object):
     """Trigger to predict the intent of a text"""
 
-    def run(self, execution_context):
-        filtered_word_types = self.get_config('train.filtered_word_types')
+    def run(self, execution_context, app_context):
+        """run the action"""
+        filtered_word_types = app_context.get_config('train.filtered_word_types')
 
         data_name = execution_context.event.get('data_name', 'default')
         text = execution_context.event.get('text')
@@ -38,9 +37,12 @@ class Predict(Trigger):
         result_proba *= 100
 
         # pos tagging the text
-        tagged_text = self.tag_text(tokenizer(text))
+        filtered_word_type = app_context.get_config('predict.filtered_word_types')
+        tagged_text = self.tag_text(tokenizer(text), filtered_word_type)
 
-        _, content = self.send_msg(result_word, result_proba, tagged_text)
+
+        url = app_context.get_config('bot.url')
+        _, content = self.send_msg(result_word, result_proba, tagged_text, url)
         content_obj = json.loads(content.decode('utf-8'))
 
         result = 'predict: ' + result_word + ' with probability: ' \
@@ -54,15 +56,13 @@ class Predict(Trigger):
             'bot_response': content_obj.get('msg')
         })
 
-    def tag_text(self, tokenized_text):
+    def tag_text(self, tokenized_text, filtered_word_type):
         """pos tagging text"""
-        filtered_word_type = self.get_config('predict.filtered_word_types')
         tagged_text = nltk.pos_tag(tokenized_text)
         return [(w, wtype) for w, wtype in tagged_text if not wtype in filtered_word_type]
 
-    def send_msg(self, result_word, result_proba, filtered_text):
+    def send_msg(self, result_word, result_proba, filtered_text, url):
         """send the message to bot"""
-        url = self.get_config('bot.url')
         msg = {
             'name': result_word,
             'args': {

@@ -3,8 +3,6 @@
 import json
 import random
 
-from ev3bot.trigger import Trigger
-
 from utils import tts
 
 NOTE_FREQ = {
@@ -35,24 +33,26 @@ NOTE_FREQ = {
     "C6": 1046.5
 }
 
-class Sing(Trigger):
+class Sing(object):
     """Trigger to sing a song"""
-    def run(self, execution_context):
-        no_song_react = self.app_context.get_config('behavior.sing.no_song')
+    def run(self, execution_context, app_context):
+        """run the action"""
+        no_song_react = app_context.get_config('behavior.sing.no_song')
 
+        songs = app_context.get_config('songs')
         song_id = execution_context.event.get('song_id', None)
         tagged_text = execution_context.event.get('tagged_text', None)
-        tagged_text = self.filter_tagged_text(tagged_text)
+        tagged_text = self.filter_tagged_text(tagged_text, app_context)
         song = None
 
         if song_id is None and len(tagged_text) > 0:
             # there are song name mentioned in tagged text. find it
-            song = self.find_tagged_song(tagged_text)
+            song = self.find_tagged_song(songs, tagged_text)
             if song is None:
                 tts.say_random_finish(no_song_react, execution_context)
                 return
         else:
-            song = self.find_song(song_id)
+            song = self.find_song(songs, song_id)
 
         if song is not None:
             execution_context.finish('singing ' + song.get('name'))
@@ -60,17 +60,16 @@ class Sing(Trigger):
         else:
             tts.say_random_finish(no_song_react, execution_context)
 
-    def filter_tagged_text(self, tagged_text):
+    def filter_tagged_text(self, tagged_text, app_context):
         """filter tagged text"""
         if tagged_text is None:
             return list()
-        filtered = self.app_context.get_config('behavior.sing.filtered_tagged_text')
+        filtered = app_context.get_config('behavior.sing.filtered_tagged_text')
         return [t[0] for t in tagged_text
                 if (t[1] == 'NN' or t[1] == 'NNS') and t[0] not in filtered]
 
-    def find_tagged_song(self, tagged_text):
+    def find_tagged_song(self, songs, tagged_text):
         """find the tagged song"""
-        songs = self.get_config('songs')
         score = 1
         matched_song = None
 
@@ -90,10 +89,8 @@ class Sing(Trigger):
                 score += 1
         return score
 
-    def find_song(self, song_id):
+    def find_song(self, songs, song_id):
         """Find a song by id, or pick a random song if song_id is None"""
-        songs = self.get_config('songs')
-
         if song_id is None:
             num_song = len(songs)
             rand_song_idx = random.randint(0, num_song - 1)

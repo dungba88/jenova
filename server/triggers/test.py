@@ -2,27 +2,27 @@
 
 import csv
 
-from ev3bot.trigger import Trigger
-
 from utils.learn import classifier
 from utils.learn import pre_process
 from utils.learn import persist
 
-class Test(Trigger):
+class Test(object):
     """Trigger to test the accuracy of the trained model"""
-    def run(self, execution_context):
+    def run(self, execution_context, app_context):
+        """run the action"""
         data_name = execution_context.event.get('data_name', 'default')
 
         config = persist.get_data_config(data_name)
 
+        filtered_word_types = app_context.get_config('train.filtered_word_types')
+
         with open('cache/data/' + data_name + '/test.csv') as data_file:
             reader = csv.reader(data_file)
-            result = self.test_data(reader, data_name, config)
+            result = self.test_data(reader, data_name, config, filtered_word_types)
             execution_context.finish(result)
 
-    def test_data(self, reader, data_name, config):
+    def test_data(self, reader, data_name, config, filtered_word_types):
         """test the model"""
-        filtered_word_types = self.get_config('train.filtered_word_types')
 
         # parse the csv
         input_texts, output_texts = pre_process.parse_csv(reader, config, filtered_word_types)

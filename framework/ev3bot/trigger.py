@@ -3,11 +3,15 @@
 import re
 import time
 import logging
+from enum import Enum
 from concurrent.futures import ThreadPoolExecutor
 
-class TriggerEventNotRegistered(BaseException):
-    """exception when trigger event is not registered"""
-    pass
+class TriggerExecutionStatus(Enum):
+    """Represent the status of the execution"""
+    CREATED = 1
+    EXECUTING = 2
+    FINISHED = 3
+    REJECTED = 4
 
 class TriggerExecutionContext(object):
     """The context a trigger can access whenever executed"""
@@ -19,23 +23,26 @@ class TriggerExecutionContext(object):
         self.trigger_manager = None
         self.result = None
         self.exception = None
-        self.finished = False
-        self.rejected = False
+        self.status = TriggerExecutionStatus.CREATED
+
+    def is_completed(self):
+        """check if the execution is completed, whether finished successfully or failed"""
+        return self.status == TriggerExecutionStatus.FINISHED \
+                or self.status == TriggerExecutionStatus.REJECTED
 
     def finish(self, result=None):
         """mark execution as finished"""
-        if self.finished or self.rejected:
+        if self.is_completed():
             return
         self.result = result
-        self.finished = True
+        self.status = TriggerExecutionStatus.FINISHED
 
     def reject(self, ex=None):
         """mark execution as rejected"""
-        if self.finished or self.rejected:
+        if self.is_completed():
             return
         self.exception = ex
-        self.finished = True
-        self.rejected = True
+        self.status = TriggerExecutionStatus.REJECTED
 
 class TriggerCondition(object):
     """Represent a trigger condition"""
@@ -50,19 +57,13 @@ class TriggerCondition(object):
         """test the predicate against the execution context"""
         return self.predicate.evaluate(execution_context)
 
-class Trigger(object):
-    """Represent a single Trigger"""
+class TriggerConfig(object):
+    """Represent a Trigger configuration"""
 
     def __init__(self):
         self.condition = None
-        self.app_context = None
         self.stop_all_actions = False
-
-    def get_config(self, name):
-        """Get the config from application context"""
-        if self.app_context is None:
-            return None
-        return self.app_context.get_config(name)
+        self.trigger = None
 
     def check_condition(self, execution_context):
         """check if the condition is satisfied"""
@@ -81,14 +82,6 @@ class Trigger(object):
             condition = TriggerCondition(self.stop_all_actions)
             return condition.satisfied_by(execution_context)
         return False
-
-    def run(self, execution_context):
-        """run the trigger"""
-        pass
-
-    def stop(self):
-        """stop the trigger"""
-        pass
 
 class TriggerManager(object):
     """Manage all triggers"""
@@ -121,24 +114,24 @@ class TriggerManager(object):
 
     def fire(self, name, event=None, wait=True):
         """Fire the event, calling all handlers registered with the event"""
-        triggers = self.get_handlers(name)
-        if len(triggers) == 0:
+        trigger_configs = self.get_handlers(name)
+        if len(trigger_configs) == 0:
             logging.getLogger(__name__).warning("Event. " + name + ". not registered")
             return
 
         execution_context = TriggerExecutionContext(event, name, None)
-        triggers = self.get_matching_triggers(triggers, execution_context)
-        if len(triggers) == 0:
+        trigger_configs = self.get_matching_triggers(trigger_configs, execution_context)
+        if len(trigger_configs) == 0:
             return
 
-        if self.is_eligible_for_stop(triggers, execution_context):
+        if self.is_eligible_for_stop(trigger_configs, execution_context):
             self.stop_all_actions()
 
         result = None
-        for trigger in triggers:
+        for config in trigger_configs:
             # build the execution context
             execution_context = TriggerExecutionContext(event, name, None)
-            execution_context.trigger = trigger
+            execution_context.trigger = config.trigger
             execution_context.trigger_manager = self
 
             if wait:
@@ -193,7 +186,9 @@ class TriggerManager(object):
     def stop_all_actions(self):
         """stop all executing actions"""
         if self.current_trigger is not None:
-            self.current_trigger.stop()
+            stop_fn = getattr(self.current_trigger, 'stop', None)
+            if callable(stop_fn):
+                self.current_trigger.stop()
         time.sleep(0.1)
         for handler in self.stop_hooks:
             handler()
@@ -202,8 +197,10 @@ class TriggerManager(object):
         """Create a trigger from class name"""
         from . import class_loader
         trigger = class_loader.load_class(trigger_name)
-        trigger.app_context = self.app_context
-        return trigger
+
+        config = TriggerConfig()
+        config.trigger = trigger
+        return config
 
     def register_trigger(self, name, trigger):
         """Register a trigger and run it"""
@@ -220,7 +217,7 @@ class TriggerManager(object):
         self.current_trigger = trigger
 
         try:
-            return trigger.run(execution_context)
+            return trigger.run(execution_context, self.app_context)
         except Exception as e:
             execution_context.reject(e)
             if self.error_handler is not None:
