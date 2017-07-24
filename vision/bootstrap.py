@@ -38,5 +38,5 @@ class ApplicationBootstrap(object):
 
         logging.info('Route registered')
 
-    def init_cafe(self):
+    def init_caffe(self):
         """initialize caffe models"""
