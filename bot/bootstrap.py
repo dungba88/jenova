@@ -2,28 +2,27 @@
 
 import logging
 
+from ev3bot.bootstrap import BaseBootstrap
+
 from controllers import error
 from controllers import IndexResource
 from controllers import MessageResource
 
 from utils.ev3.sensor_readings import SensorReadings
 
-class ApplicationBootstrap(object):
+class ApplicationBootstrap(BaseBootstrap):
     """Bootstrap class"""
 
     def __init__(self):
-        self.app_context = None
-        self.trigger_manager = None
+        BaseBootstrap.__init__(self)
         self.sensor_readings = None
 
-    def run(self):
+    def do_run(self):
         """Run the application"""
-        self.trigger_manager.fire('app_starting')
         self.register_error_handlers()
         self.register_routes()
         self.register_locale()
         self.register_sensors()
-        self.trigger_manager.fire('app_started')
 
     def register_sensors(self):
         """register sensors readings"""
