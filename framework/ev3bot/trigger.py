@@ -162,7 +162,7 @@ class TriggerManager(object):
         """Wait for the execution to finish"""
         start = time.time()
         while True:
-            if execution_context.finished:
+            if execution_context.is_completed():
                 if execution_context.exception is not None:
                     raise execution_context.exception # pylint: disable=E0702
                 return execution_context.result
