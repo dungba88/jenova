@@ -20,7 +20,7 @@
         }
     },
     "sensors": {
-        "enabled": true,
+        "enabled": false,
         "intervals_min": 0.001,
         "intervals_max": 10,
         "monitorables": [
