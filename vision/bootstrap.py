@@ -16,7 +16,7 @@ class ApplicationBootstrap(BaseBootstrap):
         """Run the application"""
         self.register_error_handlers()
         self.register_routes()
-        self.init_caffe()
+        self.init_paths()
 
     def register_error_handlers(self):
         """Register error handlers"""
@@ -36,5 +36,14 @@ class ApplicationBootstrap(BaseBootstrap):
 
         logging.info('Route registered')
 
-    def init_caffe(self):
-        """initialize caffe models"""
+    def init_paths(self):
+        """Initialize python path"""
+        from os import path
+        this_dir = path.dirname(__file__)
+        add_path(path.join(this_dir, 'lib'))
+
+def add_path(path):
+    """add path to system path if not exist"""
+    import sys
+    if path not in sys.path:
+        sys.path.insert(0, path)

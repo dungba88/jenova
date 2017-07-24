@@ -1,3 +1,6 @@
 [
-    
+    {
+        "event": "app.started",
+        "action": "triggers.caffe.init.InitCaffe"
+    }
 ]
