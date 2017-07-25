@@ -49,7 +49,7 @@ function run_streamer() {
             return;
         }
         tick = now;
-        var base64 = dataUrl.substring('data:image/jpeg;base64,'.length);
+        var base64 = dataUrl.substring('data:image/jpeg;base64,'.length - 1);
         detect_object(base64, function(result) {
             if (!DETECTION_ENABLED)
                 return;
@@ -98,7 +98,7 @@ function imageChange(e) {
         });
         image.src = reader.result;
 
-        var base64 = reader.result.substring('data:image/jpeg;base64,'.length);
+        var base64 = reader.result.substring('data:image/jpeg;base64,'.length - 1);
         detect_object(base64, function(result) {
             var detection_results = result.msg.detections;
             var boxes = build_box_html(detection_results);
