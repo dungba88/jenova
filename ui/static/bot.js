@@ -55,6 +55,19 @@ function startDictation() {
     }                
 }
 
+function detect_object(base64, onResult, onError) {
+    $.post(VISION_URL, JSON.stringify({
+        "name": "detect",
+        "args": {
+            "image": base64
+        }
+    }), function(res) {
+        onResult(res);
+    }).fail(function(xhr, status, err) {
+        onError(err);
+    });
+}
+
 function call_service(text) {
     call_raw(JSON.stringify({
         "name": "predict",

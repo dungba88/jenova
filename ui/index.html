@@ -25,14 +25,76 @@
             </ul>
         </p>
 
+
+        <p>
+            <input type="file" onchange="imageChange(event)" />
+            <div id="preview"></div>
+        </p>
+
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"
                 integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
                 crossorigin="anonymous"></script>
 
         <script src="static/bot.js"></script>
 
+        <script>
+            function imageChange(e) {
+                var file = e.target.files[0];
+
+                elPreview = document.getElementById("preview");
+                var reader = new FileReader();
+                reader.addEventListener("load", function () {
+                    var image  = new Image();
+        
+                    image.addEventListener("load", function () {
+                        $(elPreview).html('')
+                        var imageInfo = file.name +' '+
+                        image.width +'x'+
+                        image.height +' '+
+                        file.type +' '+
+                        Math.round(file.size/1024) +'KB';
+
+                        // Show image and info
+                        elPreview.appendChild( this );
+                        elPreview.insertAdjacentHTML("beforeend", imageInfo +'<br>');
+                    });
+                    image.src = reader.result;
+
+                    var base64 = reader.result.substring('data:image/jpeg;base64,'.length);
+                    detect_object(base64, function(result) {
+                        window.detection_results = result.msg.detections;
+                        var boxes = detection_results.map(result => {
+                            result.boxes.forEach(box => box.class = result.class);
+                            return result.boxes;
+                        })
+                        .reduce((a, b) => a.concat(b))
+                        .map(box => ({
+                            'class': box.class,
+                            'coord': {
+                                'top': box.coord[1],
+                                'left': box.coord[0],
+                                'width': box.coord[2] - box.coord[0],
+                                'height': box.coord[3] - box.coord[1]
+                            },
+                            'score': box.score
+                        })).map(box => build_box_html(box));
+                        $(elPreview).append(boxes);
+                    }, function(err) {
+                        alert(err);
+                    });
+                });
+
+                function build_box_html(box) {
+                    return '<div class="detection-box"  style="top: '+box.coord.top+'px; left: '+box.coord.left+'px; width: '+box.coord.width+'px; height: '+box.coord.height+'px"><div class="detection-class">'+box.class+' ('+Math.round(box.score * 100)+'%)'+'</div></div>';
+                }
+
+                reader.readAsDataURL(file);
+            }
+        </script>
+
         <script type="text/javascript">
             window.SERVER_URL = 'http://localhost:8080/msg';
+            window.VISION_URL = 'http://localhost:8082/msg';
             window.LANG = "en-US";
             window.DATA_NANE = "default";
             window.BOT_VERSION = "0.1";
