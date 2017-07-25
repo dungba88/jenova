@@ -2,5 +2,9 @@
     {
         "event": "app.started",
         "action": "triggers.caffe.init.InitCaffe"
+    },
+    {
+        "event": "detect",
+        "action": "triggers.caffe.detect.DetectObject"
     }
 ]
