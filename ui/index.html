@@ -137,6 +137,8 @@
 
             function toggle_detection() {
                 DETECTION_ENABLED = !DETECTION_ENABLED;
+                if (!DETECTION_ENABLED)
+                    $(streamerBox).html('');
             }
 
             function run_streamer() {
@@ -157,6 +159,8 @@
                     tick = now;
                     var base64 = dataUrl.substring('data:image/jpeg;base64,'.length);
                     detect_object(base64, function(result) {
+                        if (!DETECTION_ENABLED)
+                            return;
                         var detection_results = result.msg.detections;
                         var boxes = build_box_html(detection_results);
                         $(streamerBox).html(boxes);
