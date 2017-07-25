@@ -5,7 +5,7 @@ import logging
 class InitCaffe(object):
     """Trigger to initialize caffe"""
 
-    def run(self, execution_context, app_context):
+    def run(self, _, app_context):
         """run the action"""
         import caffe
 
