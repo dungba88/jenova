@@ -81,6 +81,8 @@
             }
 
             function build_box_html(detection_results) {
+                if (detection_results.length == 0)
+                    return '';
                 return detection_results.map(result => {
                     result.boxes.forEach(box => box.class = result.class);
                     return result.boxes;
@@ -149,7 +151,7 @@
                     image.src = dataUrl;
 
                     var now = Date.now();
-                    if (now - tick < window.DETECTION_DELAY && DETECTION_ENABLED) {
+                    if (now - tick < window.DETECTION_DELAY || !DETECTION_ENABLED) {
                         return;
                     }
                     tick = now;
