@@ -96,7 +96,7 @@ li.resp {
 
 .detection-box {
   position: absolute;
-  border: 2px dashed white;
+  border: 2px solid red;
 }
 
 .detection-class {
