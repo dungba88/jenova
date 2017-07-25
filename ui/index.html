@@ -30,6 +30,13 @@
             <input type="file" onchange="imageChange(event)" />
             <div id="preview"></div>
         </p>
+    
+        <button onclick="run_streamer()">start streamer</button>
+        <button onclick="toggle_detection()">toggle detection</button>
+        <div id="streamer">
+            <div id="streamer_image"></div>
+            <div id="streamer_box"></div>
+        </div>
 
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"
                 integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
@@ -62,43 +69,51 @@
 
                     var base64 = reader.result.substring('data:image/jpeg;base64,'.length);
                     detect_object(base64, function(result) {
-                        window.detection_results = result.msg.detections;
-                        var boxes = detection_results.map(result => {
-                            result.boxes.forEach(box => box.class = result.class);
-                            return result.boxes;
-                        })
-                        .reduce((a, b) => a.concat(b))
-                        .map(box => ({
-                            'class': box.class,
-                            'coord': {
-                                'top': box.coord[1],
-                                'left': box.coord[0],
-                                'width': box.coord[2] - box.coord[0],
-                                'height': box.coord[3] - box.coord[1]
-                            },
-                            'score': box.score
-                        })).map(box => build_box_html(box));
+                        var detection_results = result.msg.detections;
+                        var boxes = build_box_html(detection_results);
                         $(elPreview).append(boxes);
                     }, function(err) {
-                        alert(err);
+                        console.log(err);
                     });
                 });
 
-                function build_box_html(box) {
-                    return '<div class="detection-box"  style="top: '+box.coord.top+'px; left: '+box.coord.left+'px; width: '+box.coord.width+'px; height: '+box.coord.height+'px"><div class="detection-class">'+box.class+' ('+Math.round(box.score * 100)+'%)'+'</div></div>';
-                }
-
                 reader.readAsDataURL(file);
             }
+
+            function build_box_html(detection_results) {
+                return detection_results.map(result => {
+                    result.boxes.forEach(box => box.class = result.class);
+                    return result.boxes;
+                })
+                .reduce((a, b) => a.concat(b))
+                .map(box => ({
+                    'class': box.class,
+                    'coord': {
+                        'top': box.coord[1],
+                        'left': box.coord[0],
+                        'width': box.coord[2] - box.coord[0],
+                        'height': box.coord[3] - box.coord[1]
+                    },
+                    'score': box.score
+                })).map(box => map_box_html(box));
+            }
+
+            function map_box_html(box) {
+                return '<div class="detection-box"  style="top: '+box.coord.top+'px; left: '+box.coord.left+'px; width: '+box.coord.width+'px; height: '+box.coord.height+'px"><div class="detection-class">'+box.class+' ('+Math.round(box.score * 100)+'%)'+'</div></div>';
+            }
+
         </script>
 
         <script type="text/javascript">
-            window.SERVER_URL = 'http://localhost:8080/msg';
+            SERVER_URL = 'http://localhost:8080/msg';
             window.VISION_URL = 'http://localhost:8082/msg';
             window.LANG = "en-US";
             window.DATA_NANE = "default";
             window.BOT_VERSION = "0.1";
             window.ENABLE_TTS = false;
+            window.STREAM_URL = 'http://localhost:8080/?action=snapshot';
+            window.DETECTION_DELAY = 450;
+            window.DETECTION_ENABLED = true;
             
             function handleLanguageChange(event) {
                 DATA_NANE = $('#lang').val();
@@ -112,6 +127,56 @@
 
             add_response("Bot Interface - v" + BOT_VERSION, true);
             add_response("Type <b>help</b> for all available commands");
+
+            var streamerBox = document.getElementById('streamer_box');
+            var streamerImage = document.getElementById('streamer_image');
+
+            var tick = Date.now();
+
+            function toggle_detection() {
+                DETECTION_ENABLED = !DETECTION_ENABLED;
+            }
+
+            function run_streamer() {
+                toDataURL(STREAM_URL, function(dataUrl) {
+                    var image  = new Image();
+            
+                    image.addEventListener("load", function () {
+                        $(streamerImage).html('');
+                        streamerImage.appendChild( this );
+                        run_streamer();
+                    });
+                    image.src = dataUrl;
+
+                    var now = Date.now();
+                    if (now - tick < window.DETECTION_DELAY && DETECTION_ENABLED) {
+                        return;
+                    }
+                    tick = now;
+                    var base64 = dataUrl.substring('data:image/jpeg;base64,'.length);
+                    detect_object(base64, function(result) {
+                        var detection_results = result.msg.detections;
+                        var boxes = build_box_html(detection_results);
+                        $(streamerBox).html(boxes);
+                    }, function(err) {
+                        console.log(err);
+                    });
+                });
+            }
+
+            function toDataURL(url, callback) {
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function() {
+                    var reader = new FileReader();
+                    reader.onloadend = function() {
+                    callback(reader.result);
+                    }
+                    reader.readAsDataURL(xhr.response);
+                };
+                xhr.open('GET', url);
+                xhr.responseType = 'blob';
+                xhr.send();
+            }
         </script>
     </body>
 </html>

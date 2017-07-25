@@ -109,3 +109,13 @@ li.resp {
   color: white;
   white-space: nowrap;
 }
+
+#streamer {
+  position: relative;
+}
+
+#streamer_box {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
