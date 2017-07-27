@@ -27,11 +27,15 @@ var streamerImage = document.getElementById('streamer_image');
 
 var tick = Date.now();
 
+var NMS_THRESH = 0.9;
+
 function toggle_detection() {
     DETECTION_ENABLED = !DETECTION_ENABLED;
     if (!DETECTION_ENABLED)
         $(streamerBox).html('');
 }
+
+var lastBoxes = []
 
 function run_streamer() {
     toDataURL(STREAM_URL, function(dataUrl) {
@@ -53,8 +57,10 @@ function run_streamer() {
         detect_object(base64, function(result) {
             if (!DETECTION_ENABLED)
                 return;
-            var detection_results = result.msg.detections;
-            var boxes = build_box_html(detection_results);
+            var detectionResults = result.msg.detections;
+            detectionResults = compareAndSuppress(detectionResults, lastBoxes);
+            lastBoxes = detectionResults;
+            var boxes = build_box_html(detectionResults);
             $(streamerBox).html(boxes);
         }, function(err) {
             console.log(err);
@@ -62,12 +68,47 @@ function run_streamer() {
     });
 }
 
+function compareAndSuppress(curBoxes, lastBoxes) {
+    if (lastBoxes.length == 0)
+        return curBoxes;
+    for(var i in curBoxes) {
+        var curBox = curBoxes[i];
+        var lastBoxesWithSameClass = lastBoxes.filter(b => b.class == curBox.class);
+        var classBoxes = lastBoxesWithSameClass.length > 0 ? lastBoxesWithSameClass[0].boxes : [];
+        if (classBoxes.length == 0)
+            continue;
+        curBox.boxes = curBox.boxes.map(box => getOverlap(box, classBoxes));
+    }
+    return curBoxes;
+}
+
+function getOverlap(box, classBoxes) {
+    var overlaps = classBoxes.filter(classBox => isOverlap(box.coord, classBox.coord));
+    if (overlaps.length == 0) {
+        return box;
+    }
+    return overlaps[0];
+}
+
+function isOverlap(box, classBox) {
+    var leftMax = Math.max(box[0], classBox[0]);
+    var topMax = Math.max(box[1], classBox[1]);
+    var rightMin = Math.min(box[2], classBox[2]);
+    var bottomMin = Math.max(box[3], classBox[3]);
+
+    if (rightMin < leftMax || bottomMin < topMax)   // not overlap at all
+        return false;
+    var overlapArea = (rightMin - leftMax) * (bottomMin - topMax);
+    var boxArea = (box[2] - box[0]) * (box[3] - box[1]);
+    return overlapArea / boxArea >= NMS_THRESH;
+}
+
 function toDataURL(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.onload = function() {
         var reader = new FileReader();
         reader.onloadend = function() {
-        callback(reader.result);
+            callback(reader.result);
         }
         reader.readAsDataURL(xhr.response);
     };
