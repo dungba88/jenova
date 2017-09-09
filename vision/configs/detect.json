@@ -4,5 +4,14 @@
            "bottle", "bus", "car", "cat", "chair",
            "cow", "diningtable", "dog", "horse",
            "motorbike", "person", "pottedplant",
-           "sheep", "sofa", "train", "tvmonitor"]
+           "sheep", "sofa", "train", "tvmonitor"],
+    "distance_meter": {
+        "real_metric_mappings": {
+            "person": {
+                "w": 0.02,
+                "h": 0.04
+            }
+        },
+        "focal_length": 1300
+    }
 }

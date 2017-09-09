@@ -8,6 +8,7 @@ function build_box_html(detection_results) {
     .reduce((a, b) => a.concat(b))
     .map(box => ({
         'class': box.class,
+        'distance': box.distance,
         'coord': {
             'top': box.coord[1],
             'left': box.coord[0],
@@ -19,7 +20,7 @@ function build_box_html(detection_results) {
 }
 
 function map_box_html(box) {
-    return '<div class="detection-box"  style="top: '+box.coord.top+'px; left: '+box.coord.left+'px; width: '+box.coord.width+'px; height: '+box.coord.height+'px"><div class="detection-class">'+box.class+' ('+Math.round(box.score * 100)+'%)'+'</div></div>';
+    return '<div class="detection-box"  style="top: '+box.coord.top+'px; left: '+box.coord.left+'px; width: '+box.coord.width+'px; height: '+box.coord.height+'px"><div class="detection-class">'+box.class+' ('+Math.round(box.score * 100)+'%)'+'<div class="distance">Distance: '+(box.distance ? box.distance.toFixed(2) : '???')+'m</div></div></div>';
 }
 
 var streamerBox = document.getElementById('streamer_box');

@@ -27,12 +27,32 @@ class DetectObject(object):
             'nms_thresh': 0.3
         })
 
+        distance_meter = app_context.get_config('detect.distance_meter')
+        metric_mappings = distance_meter['real_metric_mappings']
+        focal_length = distance_meter['focal_length']
+
         # convert class indexes to names
         for detection in detection_results:
             detection['class'] = classes[detection['class']]
+            if detection['class'] in metric_mappings:
+                populate_distances(metric_mappings[detection['class']], focal_length, detection['boxes'])
 
         result = {
             'detections': detection_results,
             'time': time.time() - start
         }
         execution_context.finish(result)
+
+def populate_distances(metric_mapping, focal_length, boxes):
+    """calculate distance to target heuristically"""
+    for box in boxes:
+        box_width = box['coord'][2] - box['coord'][0]
+        box_height = box['coord'][3] - box['coord'][1]
+        box['distance'] = calculate_distance(metric_mapping, focal_length, box_width, box_height)
+
+def calculate_distance(metric_mapping, focal_length, box_width, box_height):
+    """calculate distance for a single box"""
+    use_width = box_width < box_height
+    if use_width:
+        return metric_mapping['w'] / box_width * focal_length
+    return metric_mapping['h'] / box_height * focal_length
