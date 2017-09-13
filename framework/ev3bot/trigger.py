@@ -5,7 +5,7 @@ import time
 import logging
 import threading
 from enum import Enum
-from concurrent.futures import ThreadPoolExecutor
+from queue import PriorityQueue, Empty
 
 class TriggerExecutionStatus(Enum):
     """Represent the status of the execution"""
@@ -26,6 +26,7 @@ class TriggerExecutionContext(object):
         self.exception = None
         self.status = TriggerExecutionStatus.CREATED
         self.lock = threading.Lock()
+        self.priority = 0
 
     def start_lock(self):
         """start locking the context"""
@@ -56,6 +57,9 @@ class TriggerExecutionContext(object):
         self.status = TriggerExecutionStatus.REJECTED
         self.lock.release()
 
+    def __cmp__(self, other):
+        return (self.priority > other.priority) - (self.priority < other.priority)
+
 class TriggerCondition(object):
     """Represent a trigger condition"""
 
@@ -74,25 +78,35 @@ class TriggerConfig(object):
 
     def __init__(self):
         self.condition = None
-        self.stop_all_actions = False
         self.trigger = None
+        self.priority = 0
 
     def check_condition(self, execution_context):
         """check if the condition is satisfied"""
         if self.condition is None:
             return True
-        return self.condition.satisfied_by(execution_context):
+        return self.condition.satisfied_by(execution_context)
 
-    def check_stop_all_actions(self, execution_context):
-        """check if the condition of stop_all_actions is satisfied"""
-        if self.stop_all_actions is None:
-            return False
-        if isinstance(self.stop_all_actions, bool):
-            return self.stop_all_actions
-        if isinstance(self.stop_all_actions, str):
-            condition = TriggerCondition(self.stop_all_actions)
-            return condition.satisfied_by(execution_context)
-        return False
+class TriggerExecutionThread(threading.Thread):
+    """Thread for watching and executing triggers"""
+
+    def __init__(self, manager):
+        threading.Thread.__init__(self)
+        self.manager = manager
+        self.stopped = False
+
+    def run(self):
+        while not self.stopped:
+            try:
+                execution_context = self.manager.queue.get_nowait()
+                self.manager.run_trigger(execution_context)
+            except Empty:
+                pass
+            time.sleep(0.01)
+
+    def stop(self):
+        """stop the thread"""
+        self.stopped = True
 
 class TriggerManager(object):
     """Manage all triggers"""
@@ -100,12 +114,19 @@ class TriggerManager(object):
     def __init__(self):
         self.triggers = list()
         self.event_hook = dict()
-        self.executor = ThreadPoolExecutor(max_workers=1)
         self.current_trigger = None
+        self.current_trigger_priority = -1
         self.error_handler = None
         self.timeout = 3
         self.app_context = None
         self.stop_hooks = list()
+        self.queue = PriorityQueue()
+        self.executor = TriggerExecutionThread(self)
+        self.executor.start()
+
+    def on_shutdown(self):
+        """function called on shutdown"""
+        self.executor.stop()
 
     def add_stop_hook(self, handler):
         """Register a handler for when trigger needs to be stopped"""
@@ -135,7 +156,9 @@ class TriggerManager(object):
         if len(trigger_configs) == 0:
             return
 
-        if self.is_eligible_for_stop(trigger_configs, execution_context):
+        max_priority = max((config.priority for config in trigger_configs), default=-1)
+
+        if max_priority > self.current_trigger_priority:
             self.stop_all_actions()
 
         result = None
@@ -144,9 +167,11 @@ class TriggerManager(object):
             execution_context = TriggerExecutionContext(event, name, None)
             execution_context.trigger = config.trigger
             execution_context.trigger_manager = self
+            execution_context.priority = config.priority
+            execution_context.start_lock()
 
             if wait:
-                self.executor.submit(self.run_trigger, execution_context)
+                self.queue.put(execution_context)
             else:
                 result = self.run_trigger(execution_context)
 
@@ -154,22 +179,15 @@ class TriggerManager(object):
             return result
         return self.wait_for_finish(execution_context)
 
-    def is_eligible_for_stop(self, triggers, execution_context):
-        """check if any of the triggers is eligible to stop all actions"""
-        for trigger in triggers:
-            if trigger.check_stop_all_actions(execution_context):
-                return True
-        return False
-
-    def get_matching_triggers(self, triggers, execution_context):
+    def get_matching_triggers(self, trigger_configs, execution_context):
         """get the first trigger which satisifies the condition"""
-        return filter(lambda trigger: trigger.check_condition(execution_context), triggers)
+        return list(filter(lambda config: config.check_condition(execution_context), trigger_configs))
 
     def wait_for_finish(self, execution_context):
         """Wait for the execution to finish"""
         execution_context.acquire_lock(timeout=self.timeout)
         if not execution_context.is_completed():
-            raise TimeoutError()
+            return None
         if execution_context.exception is not None:
             raise execution_context.exception # pylint: disable=E0702
         return execution_context.result
@@ -178,7 +196,9 @@ class TriggerManager(object):
         """get all handlers registered for an event"""
         if name in self.event_hook:
             return self.event_hook[name]
-        return filter(lambda registered_name: self.match(name, registered_name), self.event_hook)
+        filtered = filter(lambda reg_name: self.match(name, reg_name), self.event_hook)
+        name = next(filtered, None)
+        return self.event_hook[name] if name is not None else list()
 
     def match(self, name, registered_name):
         """check if the name matched a registered name"""
@@ -199,26 +219,26 @@ class TriggerManager(object):
         from . import class_loader
         trigger = class_loader.load_class(trigger_name)
 
-        config = TriggerConfig()
-        config.trigger = trigger
-        return config
+        trigger_config = TriggerConfig()
+        trigger_config.trigger = trigger
+        return trigger_config
 
-    def register_trigger(self, name, trigger):
+    def register_trigger(self, name, trigger_config):
         """Register a trigger and run it"""
-        self.triggers.append(trigger)
+        self.triggers.append(trigger_config)
 
         if name is None:
             return
 
-        self.add_hook(name, trigger)
+        self.add_hook(name, trigger_config)
 
     def run_trigger(self, execution_context):
         """Run the trigger"""
         trigger = execution_context.trigger
         self.current_trigger = trigger
+        self.current_trigger_priority = execution_context.priority
 
         try:
-            execution_context.start_lock()
             return trigger.run(execution_context, self.app_context)
         except Exception as e:
             execution_context.reject(e)
@@ -228,15 +248,16 @@ class TriggerManager(object):
                 logging.getLogger(__name__).error(e)
         finally:
             self.current_trigger = None
+            self.current_trigger_priority = -1
 
     def register_trigger_by_name(self, trigger_name,
                                  event=None,
                                  condition_str=None,
-                                 stop_all_actions=None):
+                                 priority=0):
         """create and register the trigger"""
-        trigger = self.create_trigger(trigger_name)
+        trigger_config = self.create_trigger(trigger_name)
         if condition_str is not None and condition_str is not '':
-            trigger.condition = TriggerCondition(condition_str)
-        trigger.stop_all_actions = stop_all_actions
-        self.register_trigger(event, trigger)
-        return trigger
+            trigger_config.condition = TriggerCondition(condition_str)
+        trigger_config.priority = priority
+        self.register_trigger(event, trigger_config)
+        return trigger_config

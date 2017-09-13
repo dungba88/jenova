@@ -1,5 +1,6 @@
 """Main application"""
 
+import signal
 from os import listdir
 from os.path import join
 
@@ -16,6 +17,11 @@ class Application(object):
         self.trigger_manager = TriggerManager()
         self.reload_config()
         self.bootstrap = None
+        signal.signal(signal.SIGINT, self.on_shutdown)
+
+    def on_shutdown(self):
+        """function called on shutdown"""
+        self.trigger_manager.on_shutdown()
 
     def reload_config(self, config_name=None):
         """reload configuration"""
@@ -40,8 +46,8 @@ class Application(object):
         event = config.get('event', None)
         condition = config.get('condition', None)
         action = config['action']
-        stop_all_actions = config.get('stop_all_actions', None)
-        self.trigger_manager.register_trigger_by_name(action, event, condition, stop_all_actions)
+        priority = config.get('priority', 0)
+        self.trigger_manager.register_trigger_by_name(action, event, condition, priority)
 
     def run(self):
         """Run the application"""
