@@ -79,10 +79,9 @@ class TriggerConfig(object):
 
     def check_condition(self, execution_context):
         """check if the condition is satisfied"""
-        if self.condition is not None:
-            if not self.condition.satisfied_by(execution_context):
-                return False
-        return True
+        if self.condition is None:
+            return True
+        return self.condition.satisfied_by(execution_context):
 
     def check_stop_all_actions(self, execution_context):
         """check if the condition of stop_all_actions is satisfied"""
@@ -164,11 +163,7 @@ class TriggerManager(object):
 
     def get_matching_triggers(self, triggers, execution_context):
         """get the first trigger which satisifies the condition"""
-        matched = list()
-        for trigger in triggers:
-            if trigger.check_condition(execution_context):
-                matched.append(trigger)
-        return matched
+        return filter(lambda trigger: trigger.check_condition(execution_context), triggers)
 
     def wait_for_finish(self, execution_context):
         """Wait for the execution to finish"""
@@ -183,10 +178,7 @@ class TriggerManager(object):
         """get all handlers registered for an event"""
         if name in self.event_hook:
             return self.event_hook[name]
-        for registered_name in self.event_hook:
-            if self.match(name, registered_name):
-                return self.event_hook[registered_name]
-        return []
+        return filter(lambda registered_name: self.match(name, registered_name), self.event_hook)
 
     def match(self, name, registered_name):
         """check if the name matched a registered name"""
