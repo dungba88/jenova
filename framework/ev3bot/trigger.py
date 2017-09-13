@@ -3,6 +3,7 @@
 import re
 import time
 import logging
+import threading
 from enum import Enum
 from concurrent.futures import ThreadPoolExecutor
 
@@ -24,6 +25,15 @@ class TriggerExecutionContext(object):
         self.result = None
         self.exception = None
         self.status = TriggerExecutionStatus.CREATED
+        self.lock = threading.Lock()
+
+    def start_lock(self):
+        """start locking the context"""
+        self.lock.acquire(blocking=False)
+
+    def acquire_lock(self, timeout=-1):
+        """start locking the context"""
+        self.lock.acquire(timeout=timeout)
 
     def is_completed(self):
         """check if the execution is completed, whether finished successfully or failed"""
@@ -36,6 +46,7 @@ class TriggerExecutionContext(object):
             return
         self.result = result
         self.status = TriggerExecutionStatus.FINISHED
+        self.lock.release()
 
     def reject(self, ex=None):
         """mark execution as rejected"""
@@ -43,6 +54,7 @@ class TriggerExecutionContext(object):
             return
         self.exception = ex
         self.status = TriggerExecutionStatus.REJECTED
+        self.lock.release()
 
 class TriggerCondition(object):
     """Represent a trigger condition"""
@@ -160,15 +172,12 @@ class TriggerManager(object):
 
     def wait_for_finish(self, execution_context):
         """Wait for the execution to finish"""
-        start = time.time()
-        while True:
-            if execution_context.is_completed():
-                if execution_context.exception is not None:
-                    raise execution_context.exception # pylint: disable=E0702
-                return execution_context.result
-            if time.time() - start > self.timeout:
-                break
-            time.sleep(0.001)
+        execution_context.acquire_lock(timeout=self.timeout)
+        if not execution_context.is_completed():
+            raise TimeoutError()
+        if execution_context.exception is not None:
+            raise execution_context.exception # pylint: disable=E0702
+        return execution_context.result
 
     def get_handlers(self, name):
         """get all handlers registered for an event"""
@@ -217,6 +226,7 @@ class TriggerManager(object):
         self.current_trigger = trigger
 
         try:
+            execution_context.start_lock()
             return trigger.run(execution_context, self.app_context)
         except Exception as e:
             execution_context.reject(e)
