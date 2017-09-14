@@ -46,8 +46,8 @@ class Application(object):
         event = config.get('event', None)
         condition = config.get('condition', None)
         action = config['action']
-        priority = config.get('priority', 0)
-        self.trigger_manager.register_trigger_by_name(action, event, condition, priority)
+        extended_properties = config.get('ext', None)
+        self.trigger_manager.register_trigger_by_name(action, event, condition, extended_properties)
 
     def run(self):
         """Run the application"""
