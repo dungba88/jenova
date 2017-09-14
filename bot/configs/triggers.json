@@ -10,7 +10,9 @@
     {
         "event": "stop",
         "action": "triggers.commands.stop.Stop",
-        "stop_all_actions": true
+        "ext": {
+            "priority": 100
+        }
     },
     {
         "event": "tell_story",
