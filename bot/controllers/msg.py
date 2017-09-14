@@ -10,7 +10,8 @@ class MessageResource(object):
         """Handle POST method"""
         res.set_header('Access-Control-Allow-Origin', '*')
         res.set_header("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
-        res.set_header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+        res.set_header('Access-Control-Allow-Headers', \
+                       'Origin, X-Requested-With, Content-Type, Accept')
 
         msg = encode.decode_from_request(req)
         if msg is None:
