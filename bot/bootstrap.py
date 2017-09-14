@@ -20,6 +20,7 @@ class ApplicationBootstrap(BaseBootstrap):
     def do_run(self):
         """Run the application"""
         self.register_error_handlers()
+        self.register_stop_hooks()
         self.register_routes()
         self.register_locale()
         self.register_sensors()
@@ -41,6 +42,8 @@ class ApplicationBootstrap(BaseBootstrap):
 
         self.trigger_manager.error_handler = error.BotErrorHandler()
 
+    def register_stop_hooks(self):
+        """register stop hooks"""
         from ev3bot import audio
         self.trigger_manager.add_stop_hook(audio.stop)
 
