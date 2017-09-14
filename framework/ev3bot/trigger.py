@@ -27,10 +27,20 @@ class TriggerExecutionContext(object):
         self.status = TriggerExecutionStatus.CREATED
         self.lock = threading.Lock()
         self.priority = 0
+        self.time_to_live = -1
+        self.start_time = -1
 
     def start_lock(self):
         """start locking the context"""
+        self.start_time = time.time()
         self.lock.acquire(blocking=False)
+
+    def is_expired(self):
+        """check if the execution is expired"""
+        if self.time_to_live == -1:
+            return False
+        cur_time = time.time()
+        return cur_time - self.start_time >= self.time_to_live
 
     def acquire_lock(self, timeout=-1):
         """start locking the context"""
@@ -80,6 +90,13 @@ class TriggerConfig(object):
         self.condition = None
         self.trigger = None
         self.priority = 0
+        self.time_to_live = -1
+
+    def set_extended_properties(self, extended_properties):
+        """set the extended properties"""
+        for prop_name in extended_properties:
+            prop_value = extended_properties[prop_name]
+            setattr(self, prop_name, prop_value)
 
     def check_condition(self, execution_context):
         """check if the condition is satisfied"""
@@ -99,10 +116,12 @@ class TriggerExecutionThread(threading.Thread):
         while not self.stopped:
             try:
                 execution_context = self.manager.queue.get_nowait()
-                self.manager.run_trigger(execution_context)
+                if execution_context.is_expired():
+                    execution_context.reject(TimeoutError())
+                else:
+                    self.manager.run_trigger(execution_context)
             except Empty:
-                pass
-            time.sleep(0.01)
+                time.sleep(0.001)
 
     def stop(self):
         """stop the thread"""
@@ -168,6 +187,7 @@ class TriggerManager(object):
             execution_context.trigger = config.trigger
             execution_context.trigger_manager = self
             execution_context.priority = config.priority
+            execution_context.time_to_live = config.time_to_live
             execution_context.start_lock()
 
             if wait:
@@ -177,11 +197,12 @@ class TriggerManager(object):
 
         if not wait:
             return result
+
         return self.wait_for_finish(execution_context)
 
     def get_matching_triggers(self, trigger_configs, execution_context):
         """get the first trigger which satisifies the condition"""
-        return list(filter(lambda config: config.check_condition(execution_context), trigger_configs))
+        return list(filter(lambda cfg: cfg.check_condition(execution_context), trigger_configs))
 
     def wait_for_finish(self, execution_context):
         """Wait for the execution to finish"""
@@ -210,7 +231,6 @@ class TriggerManager(object):
             stop_fn = getattr(self.current_trigger, 'stop', None)
             if callable(stop_fn):
                 self.current_trigger.stop()
-        time.sleep(0.1)
         for handler in self.stop_hooks:
             handler()
 
@@ -240,12 +260,12 @@ class TriggerManager(object):
 
         try:
             return trigger.run(execution_context, self.app_context)
-        except Exception as e:
-            execution_context.reject(e)
+        except Exception as ex:
+            execution_context.reject(ex)
             if self.error_handler is not None:
-                self.error_handler.handle_error(e)
+                self.error_handler.handle_error(ex)
             else:
-                logging.getLogger(__name__).error(e)
+                logging.getLogger(__name__).error(ex)
         finally:
             self.current_trigger = None
             self.current_trigger_priority = -1
@@ -253,11 +273,12 @@ class TriggerManager(object):
     def register_trigger_by_name(self, trigger_name,
                                  event=None,
                                  condition_str=None,
-                                 priority=0):
+                                 extended_properties=None):
         """create and register the trigger"""
         trigger_config = self.create_trigger(trigger_name)
         if condition_str is not None and condition_str is not '':
             trigger_config.condition = TriggerCondition(condition_str)
-        trigger_config.priority = priority
+        if extended_properties is not None:
+            trigger_config.set_extended_properties(extended_properties)
         self.register_trigger(event, trigger_config)
         return trigger_config
