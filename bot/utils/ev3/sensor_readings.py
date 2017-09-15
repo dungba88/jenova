@@ -89,7 +89,6 @@ class SensorMonitor(object):
                 except Exception as ex:
                     self.logger.error('Uncaught exception when executing trigger: %s', str(ex))
                     self.penalize()
-
             time.sleep(self.intervals)
 
     def try_read_sensor(self, sensor):
