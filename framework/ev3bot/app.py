@@ -19,7 +19,7 @@ class Application(object):
         self.bootstrap = None
         signal.signal(signal.SIGINT, self.on_shutdown)
 
-    def on_shutdown(self):
+    def on_shutdown(self, *arg):
         """function called on shutdown"""
         self.trigger_manager.on_shutdown()
 
