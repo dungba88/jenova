@@ -2,9 +2,7 @@
 
 import time
 
-from ev3bot import audio
-
-from utils import tts
+from utils import tts, audio
 
 class Stop(object):
     """Trigger to stop the action"""

@@ -1,6 +1,6 @@
 """Index view"""
 
-from ev3bot import encode
+from orion import encode
 
 class IndexResource(object):
     """Controller for index resource"""

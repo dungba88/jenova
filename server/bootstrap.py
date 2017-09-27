@@ -3,7 +3,7 @@
 import logging
 from falcon import HTTPError
 
-from ev3bot.bootstrap import BaseBootstrap
+from orion.bootstrap import BaseBootstrap
 
 from controllers import error
 from controllers import IndexResource

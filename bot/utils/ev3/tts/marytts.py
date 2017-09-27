@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import urlencode
 
 from httplib2 import Http
-from ev3bot import audio
+from utils.ev3 import audio
 
 class MaryTTS(object):
     """Wrapper class for MaryTTS"""
