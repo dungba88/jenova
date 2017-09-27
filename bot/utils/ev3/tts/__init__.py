@@ -1,7 +1,7 @@
 """Package for TTS support"""
 
-from ev3bot.tts.ev3 import EV3TTSEngine
-from ev3bot.tts.python import PyttsxEngine
-from ev3bot.tts.python import GTTSEngine
-from ev3bot.tts.native import OSXTTSEngine
-from ev3bot.tts.marytts import MaryTTS
+from utils.ev3.tts.ev3 import EV3TTSEngine
+from utils.ev3.tts.python import PyttsxEngine
+from utils.ev3.tts.python import GTTSEngine
+from utils.ev3.tts.native import OSXTTSEngine
+from utils.ev3.tts.marytts import MaryTTS
