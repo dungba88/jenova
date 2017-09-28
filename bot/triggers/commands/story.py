@@ -3,24 +3,21 @@
 import time
 import random
 
-from ev3bot.trigger import Trigger
-
 from utils import tts
 
-class Story(Trigger):
+class Story(object):
     """Trigger to tell a story"""
 
     def __init__(self):
-        Trigger.__init__(self)
         self.stopped = False
 
-    def run(self, execution_context):
+    def run(self, execution_context, app_context):
         """run the action"""
         self.stopped = False
-        openings = self.get_config('story.opening')
-        no_story = self.get_config('story.no_story')
-        pause_time = self.get_config('story.pause_time')
-        stories = self.get_config('story.stories')
+        openings = app_context.get_config('story.opening')
+        no_story = app_context.get_config('story.no_story')
+        pause_time = app_context.get_config('story.pause_time')
+        stories = app_context.get_config('story.stories')
         tag = execution_context.event.get('tag', None)
 
         if tag is not None:

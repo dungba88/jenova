@@ -1,6 +1,6 @@
 """Error handling"""
 
-from ev3bot import encode
+from orion import encode
 from falcon import HTTPError
 import logging
 

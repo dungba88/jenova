@@ -1,0 +1,5 @@
+{
+    "test_model": "pascal_voc/ZF/faster_rcnn_alt_opt/faster_rcnn_test.pt",
+    "trained_data": "pascal_voc_models/ZF_faster_rcnn_final.caffemodel",
+    "cpu_mode": false
+}

@@ -89,3 +89,33 @@ li.resp {
   color: orange;
   font-weight: bold;
 }
+
+#preview {
+  position: relative;
+}
+
+.detection-box {
+  position: absolute;
+  border: 2px solid red;
+}
+
+.detection-class {
+  position: absolute;
+  top: -40px;
+  left: -25px;
+  background: rgba(0, 0, 134, 0.6);
+  padding: 5px;
+  z-index: 10000;
+  color: white;
+  white-space: nowrap;
+}
+
+#streamer {
+  position: relative;
+}
+
+#streamer_box {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

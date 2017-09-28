@@ -1,11 +1,46 @@
 [{
-    "id": "happy_birthday",
+    "id": "happi_birthday",
     "name": "Happy Birthday",
-    "type": "vocal",
-    "lyrics": [
-        "Happy birthday to you",
-        "Happy birthday to you",
-        "Happy birthday to {owner}",
-        "Happy birthday to you"
-    ]
+    "type": "beep",
+    "file_name": "cache/songs/happy_birthday.txt"
+}, {
+    "id": "darth_vader_theme",
+    "name": "Darth Vader's theme",
+    "type": "tone",
+    "file_name": "cache/songs/darth_vader.json"
+}, {
+    "id": "electr_sweep",
+    "name": "Electrical Sweep",
+    "type": "wav",
+    "file_name": "cache/songs/electrical_sweep.wav"
+}, {
+    "id": "victori_fanfar",
+    "name": "FF Victory Fanfare",
+    "type": "beep",
+    "file_name": "cache/songs/victory_fanfare.txt"
+}, {
+    "id": "axel_f",
+    "name": "Axel F",
+    "type": "beep",
+    "file_name": "cache/songs/axel_f.txt"
+}, {
+    "id": "mario_victori",
+    "name": "Mario Victory Song",
+    "type": "beep",
+    "file_name": "cache/songs/mario_victory.txt"
+}, {
+    "id": "mario_main",
+    "name": "Mario Main Theme",
+    "type": "beep",
+    "file_name": "cache/songs/mario_main.txt"
+}, {
+    "id": "fur_elis",
+    "name": "Fur Elise",
+    "type": "beep",
+    "file_name": "cache/songs/fur_elise.txt"
+}, {
+    "id": "eye_on_me",
+    "name": "Eyes On Me",
+    "type": "tone",
+    "file_name": "cache/songs/eyes_on_me.json"
 }]

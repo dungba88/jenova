@@ -1,11 +1,10 @@
 """Trigger implementation for input"""
 
-from ev3bot.trigger import Trigger
-
-class Learn(Trigger):
+class Learn(object):
     """Trigger to learn new sample"""
 
-    def run(self, execution_context):
+    def run(self, execution_context, _):
+        """run the action"""
         event = execution_context.event
         data_file = event.get('data_file', 'default')
         input_text = event.get('input')

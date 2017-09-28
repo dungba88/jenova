@@ -14,4 +14,5 @@ def download():
 
     nltk.download()
 
-download()
+if __name__ == '__main__':
+    download()

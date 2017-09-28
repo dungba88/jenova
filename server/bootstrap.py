@@ -3,18 +3,16 @@
 import logging
 from falcon import HTTPError
 
+from orion.bootstrap import BaseBootstrap
+
 from controllers import error
 from controllers import IndexResource
 from controllers import MessageResource
 
-class ApplicationBootstrap(object):
+class ApplicationBootstrap(BaseBootstrap):
     """Bootstrap class"""
 
-    def __init__(self):
-        self.app_context = None
-        self.trigger_manager = None
-
-    def run(self):
+    def do_run(self):
         """Run the application"""
         self.register_error_handlers()
         self.register_routes()

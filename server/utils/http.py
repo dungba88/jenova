@@ -16,5 +16,6 @@ def call(url, msg):
         headers={'Content-Type': 'application/json; charset=UTF-8'},
         body=json.dumps(msg),
     )
-    LOGGER.warning('response from bot: %s', resp)
+    LOGGER.info('response from bot: %s', resp)
+    LOGGER.info('response from bot: %s', content)
     return resp, content

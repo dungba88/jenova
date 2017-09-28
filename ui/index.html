@@ -25,18 +25,36 @@
             </ul>
         </p>
 
+
+        <p>
+            <input type="file" onchange="imageChange(event)" />
+            <div id="preview"></div>
+        </p>
+    
+        <button onclick="run_streamer()">start streamer</button>
+        <button onclick="toggle_detection()">toggle detection</button>
+        <div id="streamer">
+            <div id="streamer_image"></div>
+            <div id="streamer_box"></div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"
                 integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
                 crossorigin="anonymous"></script>
 
         <script src="static/bot.js"></script>
+        <script src="static/detect.js"></script>
 
         <script type="text/javascript">
-            window.SERVER_URL = '/server/msg';
+            SERVER_URL = 'http://localhost:8080/msg';
+            window.VISION_URL = 'http://localhost:8082/msg';
             window.LANG = "en-US";
             window.DATA_NANE = "default";
-            window.BOT_VERSION = "0.1-ev3.dungba.org";
-            window.ENABLE_TTS = true;
+            window.BOT_VERSION = "0.1";
+            window.ENABLE_TTS = false;
+            window.STREAM_URL = 'http://localhost:8080/?action=snapshot';
+            window.DETECTION_DELAY = 450;
+            window.DETECTION_ENABLED = true;
             
             function handleLanguageChange(event) {
                 DATA_NANE = $('#lang').val();

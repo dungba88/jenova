@@ -1,6 +1,6 @@
 {
     "tts": {
-        "engine": "none",
+        "engine": "pyttsx",
         "osx": {
             "voice": "Ava"
         },

@@ -1,16 +1,15 @@
 """Trigger implementation for inquiring interest"""
 
-from ev3bot.trigger import Trigger
-
 from utils import tts
 
-class InquireInterest(Trigger):
+class InquireInterest(object):
     """Trigger to inquire the bot's interest"""
 
-    def run(self, execution_context):
-        interests = self.get_config('facts.tokenized_interests')
-        has_interest_react = self.get_config('behavior.interest_react.yes')
-        no_interest_react = self.get_config('behavior.interest_react.no')
+    def run(self, execution_context, app_context):
+        """run the action"""
+        interests = app_context.get_config('facts.tokenized_interests')
+        has_interest_react = app_context.get_config('behavior.interest_react.yes')
+        no_interest_react = app_context.get_config('behavior.interest_react.no')
         tagged_text = execution_context.event.get('tagged_text')
 
         for word in tagged_text:

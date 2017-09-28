@@ -2,20 +2,18 @@
 
 import csv
 
-from ev3bot.trigger import Trigger
-
 from utils.learn import persist
 
-class Teach(Trigger):
+class Teach(object):
     """Trigger to teach the bot"""
 
-    def run(self, execution_context):
+    def run(self, execution_context, app_context):
         """run the action"""
         event = execution_context.event
         data_name = event.get('data_name', 'default')
         text = event.get('text')
 
-        self.validate(text)
+        self.validate(text, app_context)
 
         data_config = persist.get_data_config(data_name)
         if not data_config.get('allow_teaching'):
@@ -29,7 +27,7 @@ class Teach(Trigger):
 
         execution_context.finish('teach done')
 
-    def validate(self, text):
+    def validate(self, text, app_context):
         """validate the input text"""
         if text is None or text is '':
             raise ValueError('text cannot be null')
@@ -37,7 +35,7 @@ class Teach(Trigger):
         if not isinstance(text, str):
             raise ValueError('text must be string. ' + str(type(text))  + ' found.')
 
-        max_input_length = self.get_config('train.max_input_length')
+        max_input_length = app_context.get_config('train.max_input_length')
         if len(text) > max_input_length:
             raise ValueError('text length cannot be greater than ' + str(max_input_length))
 

@@ -3,24 +3,23 @@
 import json
 from os import listdir
 
-from ev3bot.trigger import Trigger
-
 from utils import tts
 
-class InquireEntity(Trigger):
+class InquireEntity(object):
     """Trigger to inquire information about an entity"""
 
-    def run(self, execution_context):
+    def run(self, execution_context, app_context):
+        """run the action"""
         # opening = app.get_config('behavior.entity_react.opening')
-        no_data_react = self.get_config('behavior.entity_react.no_data')
-        confused_react = self.get_config('behavior.entity_react.confused')
-        not_support_react = self.get_config('behavior.entity_react.not_support')
+        no_data_react = app_context.get_config('behavior.entity_react.no_data')
+        confused_react = app_context.get_config('behavior.entity_react.confused')
+        not_support_react = app_context.get_config('behavior.entity_react.not_support')
 
         inquire_type = execution_context.event_name.split('.')[2]
         tagged_text = execution_context.event.get('tagged_text')
         entity_name = [w[0] for w in tagged_text if w[1] == 'NN' or w[1] == 'JJ']
 
-        file_names = get_file_names(entity_name)
+        file_names = self.get_file_names(entity_name)
         no_files = len(file_names)
 
         # not found
@@ -30,14 +29,14 @@ class InquireEntity(Trigger):
 
         # duplicates found
         if no_files > 1:
-            entitie_names = [get_entity_name(f) for f in file_names]
+            entitie_names = [self.get_entity_name(f) for f in file_names]
             tts.say_random_finish(confused_react, execution_context, {
                 'count': no_files,
                 'entities': ', '.join(entitie_names)
             })
             return
 
-        entity = get_entity(file_names[0])
+        entity = self.get_entity(file_names[0])
         # not supported
         if inquire_type not in entity:
             tts.say_random_finish(not_support_react, execution_context)

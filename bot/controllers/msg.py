@@ -1,6 +1,6 @@
 """Message view"""
 
-from ev3bot import encode
+from orion import encode
 from app import APP_INSTANCE as app
 
 class MessageResource(object):
@@ -10,7 +10,8 @@ class MessageResource(object):
         """Handle POST method"""
         res.set_header('Access-Control-Allow-Origin', '*')
         res.set_header("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
-        res.set_header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+        res.set_header('Access-Control-Allow-Headers', \
+                       'Origin, X-Requested-With, Content-Type, Accept')
 
         msg = encode.decode_from_request(req)
         if msg is None:

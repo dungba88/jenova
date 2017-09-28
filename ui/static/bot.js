@@ -7,6 +7,7 @@ var command_helps = {
         talk: 'Send a text to the bot server. Usage: talk {sentence}',
         audio: 'Start dictation',
         say: 'Make the robot say a sentence. Usage: say {sentence}',
+        go: 'Make the robot go',
         switch: 'Switch the bot. Usage: switch {bot_name}',
         teach: 'Teach the robot. Usage: teach {sentence},{intent}',
         train: 'Train the bot server',
@@ -52,6 +53,19 @@ function startDictation() {
         recognition.stop();
         add_error('Audio failed: ' + e.error);
     }                
+}
+
+function detect_object(base64, onResult, onError) {
+    $.post(VISION_URL, JSON.stringify({
+        "name": "detect",
+        "args": {
+            "image": base64
+        }
+    }), function(res) {
+        onResult(res);
+    }).fail(function(xhr, status, err) {
+        onError(err);
+    });
 }
 
 function call_service(text) {
@@ -225,6 +239,9 @@ bot_commands = {
     },
 
     say: function(text) {
+        if (!text) {
+            throw new Error('Sentence is empty');
+        }
         call_raw(JSON.stringify({
             "name": "pass",
             "args": {
@@ -238,7 +255,30 @@ bot_commands = {
         }));
     },
 
+    go: function(text) {
+        if (!text) {
+            throw new Error('Direction is empty');
+        }
+        frags = text.split(' ')
+        call_raw(JSON.stringify({
+            "name": "pass",
+            "args": {
+                "command": {
+                    "name": "go",
+                    "args": {
+                        "behavior": frags[0],
+                        "power": parseInt(frags[1]),
+                        "time": parseFloat(frags[2])
+                    }
+                }
+            }
+        }));
+    },
+
     switch: function(text) {
+        if (!text) {
+            throw new Error('Bot name is empty');
+        }
         call_raw(JSON.stringify({
             "name": "pass",
             "args": {

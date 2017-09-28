@@ -2,22 +2,33 @@
 
 import logging
 
+from orion.bootstrap import BaseBootstrap
+
 from controllers import error
 from controllers import IndexResource
 from controllers import MessageResource
 
-class ApplicationBootstrap(object):
+from utils.ev3.sensor_readings import SensorReadings
+
+class ApplicationBootstrap(BaseBootstrap):
     """Bootstrap class"""
 
     def __init__(self):
-        self.app_context = None
-        self.trigger_manager = None
+        BaseBootstrap.__init__(self)
+        self.sensor_readings = None
 
-    def run(self):
+    def do_run(self):
         """Run the application"""
         self.register_error_handlers()
+        self.register_stop_hooks()
         self.register_routes()
         self.register_locale()
+        self.register_sensors()
+
+    def register_sensors(self):
+        """register sensors readings"""
+        self.sensor_readings = SensorReadings(self.trigger_manager, self.app_context)
+        self.sensor_readings.run()
 
     def register_locale(self):
         """register locale based on config"""
@@ -30,6 +41,11 @@ class ApplicationBootstrap(object):
         api.add_error_handler(BaseException, error.default_error_handler)
 
         self.trigger_manager.error_handler = error.BotErrorHandler()
+
+    def register_stop_hooks(self):
+        """register stop hooks"""
+        from utils.ev3 import audio
+        self.trigger_manager.add_stop_hook(audio.stop)
 
     def register_routes(self):
         """Register REST routes"""
