@@ -20,10 +20,11 @@ class MessageResource(object):
         msg_args = msg.get('args', dict())
 
         try:
-            result = app.trigger_manager.fire(msg_name, msg_args)
+            execution_context = app.trigger_manager.fire(msg_name, msg_args)
+            execution_result = execution_context.wait_for_finish(timeout=3000)
             result = {
                 'status': 0,
-                'msg': result
+                'msg': execution_result
             }
         except Exception as ex:
             result = {
