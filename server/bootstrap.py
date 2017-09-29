@@ -31,6 +31,6 @@ class ApplicationBootstrap(BaseBootstrap):
 
         api = self.app_context.api
         api.add_route('/', IndexResource())
-        api.add_route('/msg', MessageResource())
+        api.add_route('/msg', MessageResource(self.trigger_manager))
 
         logging.info('Route registered')

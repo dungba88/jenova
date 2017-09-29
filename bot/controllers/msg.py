@@ -1,10 +1,12 @@
 """Message view"""
 
 from orion import encode
-from app import APP_INSTANCE as app
 
 class MessageResource(object):
     """Controller for message resource"""
+
+    def __init__(self, trigger_manager):
+        self.trigger_manager = trigger_manager
 
     def on_post(self, req, res):
         """Handle POST method"""
@@ -21,7 +23,7 @@ class MessageResource(object):
         msg_args = msg.get('args', dict())
 
         try:
-            execution_context = app.trigger_manager.fire(msg_name, msg_args)
+            execution_context = self.trigger_manager.fire(msg_name, msg_args)
             execution_result = execution_context.wait_for_finish(timeout=3000)
             result = {
                 'status': 0,
