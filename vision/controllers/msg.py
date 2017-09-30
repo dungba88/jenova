@@ -24,7 +24,10 @@ class MessageResource(object):
 
         try:
             execution_context = self.trigger_manager.fire(msg_name, msg_args)
-            execution_result = execution_context.wait_for_finish(timeout=3000)
+            if execution_context is not None:
+                execution_result = execution_context.wait_for_finish(timeout=3000)
+            else:
+                execution_result = None
             result = {
                 'status': 0,
                 'msg': execution_result
