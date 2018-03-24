@@ -72,6 +72,15 @@
     {
         "event": "app_started",
         "action": "triggers.app.app_started.AppStarted",
-        "stop_all_actions": true
+        "ext": {
+            "priority": 50
+        }
+    },
+    {
+        "event": "surveillance_on",
+        "action": "triggers.ev3.surveillance.Surveillance",
+        "ext": {
+            "priority": 50
+        }
     }
 ]

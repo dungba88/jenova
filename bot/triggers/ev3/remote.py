@@ -25,7 +25,7 @@ class RemoteControl(GoBase):
             execution_context.finish(control_behaviors['default'])
             self.run_behavior(control_behaviors['default'], power)
 
-    def stop(self, _):
+    def stop(self):
         """stop both engines"""
         if not self.run_flag:
             return
