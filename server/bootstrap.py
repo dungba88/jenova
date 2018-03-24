@@ -3,7 +3,7 @@
 import logging
 from falcon import HTTPError
 
-from ev3bot.bootstrap import BaseBootstrap
+from orion.bootstrap import BaseBootstrap
 
 from controllers import error
 from controllers import IndexResource
@@ -31,6 +31,6 @@ class ApplicationBootstrap(BaseBootstrap):
 
         api = self.app_context.api
         api.add_route('/', IndexResource())
-        api.add_route('/msg', MessageResource())
+        api.add_route('/msg', MessageResource(self.trigger_manager))
 
         logging.info('Route registered')

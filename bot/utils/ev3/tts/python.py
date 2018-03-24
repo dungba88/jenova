@@ -1,7 +1,6 @@
 """TTS Engine by Python"""
 
 from tempfile import NamedTemporaryFile
-from ev3bot import audio
 
 class PyttsxEngine(object):
     """Wrapper class for pyttsx"""
@@ -31,6 +30,7 @@ class GTTSEngine(object):
         tmp_file = NamedTemporaryFile()
         tts.write_to_fp(tmp_file)
         # play it with pyaudio
+        from utils.ev3 import audio
         audio.play(tmp_file.name)
         # remove it
         tmp_file.close()

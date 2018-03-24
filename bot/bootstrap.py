@@ -2,7 +2,7 @@
 
 import logging
 
-from ev3bot.bootstrap import BaseBootstrap
+from orion.bootstrap import BaseBootstrap
 
 from controllers import error
 from controllers import IndexResource
@@ -44,7 +44,7 @@ class ApplicationBootstrap(BaseBootstrap):
 
     def register_stop_hooks(self):
         """register stop hooks"""
-        from ev3bot import audio
+        from utils.ev3 import audio
         self.trigger_manager.add_stop_hook(audio.stop)
 
     def register_routes(self):
@@ -53,6 +53,6 @@ class ApplicationBootstrap(BaseBootstrap):
 
         api = self.app_context.api
         api.add_route('/', IndexResource())
-        api.add_route('/msg', MessageResource())
+        api.add_route('/msg', MessageResource(self.trigger_manager))
 
         logging.info('Route registered')

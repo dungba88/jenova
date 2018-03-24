@@ -6,11 +6,11 @@ import re
 
 from utils import dynamic_facts
 
-from ev3bot.tts import PyttsxEngine
-from ev3bot.tts import GTTSEngine
-from ev3bot.tts import EV3TTSEngine
-from ev3bot.tts import OSXTTSEngine
-from ev3bot.tts import MaryTTS
+from utils.ev3.tts import PyttsxEngine
+from utils.ev3.tts import GTTSEngine
+from utils.ev3.tts import EV3TTSEngine
+from utils.ev3.tts import OSXTTSEngine
+from utils.ev3.tts import MaryTTS
 
 REGEX = re.compile(r'\{([^\}]*)\}')
 

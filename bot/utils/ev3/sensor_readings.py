@@ -4,7 +4,7 @@ import time
 import logging
 from concurrent.futures import ThreadPoolExecutor
 
-from ev3bot import class_loader
+from orion import class_loader
 
 class SensorReadings(object):
     """Sensor readings class"""

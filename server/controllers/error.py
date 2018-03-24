@@ -3,7 +3,7 @@
 import logging
 import traceback
 
-from ev3bot import encode
+from orion import encode
 
 class DefaultErrorHandler(object):
     """default error handler class"""

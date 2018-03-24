@@ -1,10 +1,12 @@
 """Message view"""
 
-from ev3bot import encode
-from app import APP_INSTANCE as app
+from orion import encode
 
 class MessageResource(object):
     """Controller for message resource"""
+
+    def __init__(self, trigger_manager):
+        self.trigger_manager = trigger_manager
 
     def on_post(self, req, res):
         """Handle POST method"""
@@ -21,10 +23,14 @@ class MessageResource(object):
         msg_args = msg.get('args', dict())
 
         try:
-            result = app.trigger_manager.fire(msg_name, msg_args)
+            execution_context = self.trigger_manager.fire(msg_name, msg_args)
+            if execution_context is not None:
+                execution_result = execution_context.wait_for_finish(timeout=3000)
+            else:
+                execution_result = None
             result = {
                 'status': 0,
-                'msg': result
+                'msg': execution_result
             }
         except Exception as ex:
             result = {
